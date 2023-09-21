@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Restaurants Test</title>
+</head>
+<body>
+    <button id="testButton">Test Get Restaurants</button>
+    <div id="output"></div>
+
+    <script>
+        document.getElementById("testButton").addEventListener("click", function () {
+            // Make an AJAX request to getRestaurants.php
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "getRestaurants.php", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Display the response in the "output" div
+                    document.getElementById("output").textContent = JSON.stringify(response, null, 2);
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
