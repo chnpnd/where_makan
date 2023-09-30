@@ -1,33 +1,42 @@
 <template>
     <h1>Restaurants</h1>
-    <ul>
-        <li v-for="store in restaurants" :key="store.id" class="restaurants">
-            {{ store.name }}
-            <!-- {{ store.operating_hours }} -->
-        </li>
-    </ul>
+        <div>
+            <!-- {{result}} -->
+            <ul>
+                <!-- <li v-for="store in result.result.records">
+                    {{ store.name_of_centre }}
+                </li> -->
+                <li v-for="restaurant in restaurants" :key="restaurant.id">
+                    {{ restaurant.name_of_centre }}
+                </li>
+            </ul>
+
+        </div>
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
     data() {
         return{
-            restaurants: []
+            result: {
+                result: {
+                    records: []
+                }
+            }
         }
     },
     mounted() {
-        // Fetch data when the component is mounted
-        axios.get('../../../queries/getRestaurants.php')
-        .then(response => {
-            this.restaurants = response.data;
-        })
-        .catch(error => {
-            // Handle errors
-        });
-  },
-}
+        this.GetAllHawkerCentres()
+    },
+    methods: {
+        async GetAllHawkerCentres() {
+            const res = await fetch("https://data.gov.sg/api/action/datastore_search?resource_id=8f6bba57-19fc-4f36-8dcf-c0bda382364d")
+            this.result = await res.json()
+          },
+      },
+  };
+
 </script>
 
 <style>

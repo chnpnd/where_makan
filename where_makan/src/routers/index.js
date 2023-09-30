@@ -3,11 +3,15 @@ import App from '../App.vue';
 import Home from '../views/Home.vue';
 import About from '../views/About.vue'
 import Restaurant from '../views/Restaurant/Restaurant.vue'
+import Login from '../views/SweeLong.vue'
+import Analytics from '../views/Analytics.vue';
 
 const routes = [
     { path: '/', component: Home },
     { path: '/about', component: About },
     { path: '/restaurant', component: Restaurant },
+    { path: '/login', component: Login },
+    { path: '/analytics', component: Analytics },
 ];
 
 const router = createRouter({
