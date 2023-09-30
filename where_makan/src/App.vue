@@ -3,10 +3,30 @@
   <div id="nav">
     <router-link to="/">Home</router-link> | 
     <router-link to="/about">About</router-link> | 
-    <router-link to="/restaurant">Restaurants</router-link>
+    <router-link to="/restaurant">Restaurants</router-link> |
+    <router-link to="/login">Login</router-link> |
+    <router-link to="/analytics">Analytics</router-link>
+    <router-view :showModal="showModal" />
   </div>
   <router-view/>
+
+  <button id="show-modal" @click="showModal = true">Show Modal</button>
+
+  <Teleport to="body">
+    <!-- use the modal component, pass in the prop -->
+    <modal :show="showModal" @close="showModal = false">
+      <template #header>
+        <h3>custom header</h3>
+      </template>
+    </modal>
+  </Teleport>
 </template>
+
+<script setup>
+  import Modal from './views/Modal.vue'
+  import { ref } from 'vue'
+  const showModal = ref(false)
+</script>
 
 <style>
   #app{
