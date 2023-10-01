@@ -3,7 +3,7 @@ import App from '../App.vue';
 import Home from '../views/Home.vue';
 import About from '../views/About.vue'
 import Restaurant from '../views/Restaurant/Restaurant.vue'
-import Login from '../views/Login.vue'
+import Login from '../GoogleMap.vue'
 import Analytics from '../views/Analytics.vue';
 
 const routes = [

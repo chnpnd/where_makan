@@ -8,9 +8,8 @@
     <router-link to="/analytics">Analytics</router-link>
     <router-view :showModal="showModal" />
   </div>
-  <router-view/>
 
-  <button id="show-modal" @click="showModal = true">Show Modal</button>
+  <button id="show-modal" @click="showModal = true">Login</button>
 
   <Teleport to="body">
     <!-- use the modal component, pass in the prop -->
@@ -28,7 +27,7 @@
   const showModal = ref(false)
 </script>
 
-<style>
+<style scoped>
   #app{
     font-family: Avenir, Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
