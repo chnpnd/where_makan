@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div class="container mt-6">
         <router-link to="/restaurant" class="btn btn-primary">Back to Restaurant List</router-link>
         <h1 class="display-4">{{ store.name }}</h1>
         <p class="lead">{{ store.address }}</p>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mt-5">
         <h1 class="display-4">Restaurants</h1>
         <div class="searchContainer">
             <!-- Search input -->
@@ -21,6 +21,16 @@
                 <img :src="store.photo_url" alt="Store Photo" class="mr-3" style="max-width: 50px; max-height: 50px;">
                 {{ store.name }}
             </router-link>
+        </div>
+
+        <div class="video-container">
+            <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/ERyJ_9IIfU8"
+                frameborder="0"
+                allowfullscreen
+            ></iframe>
         </div>
     </div>
 
@@ -93,7 +103,7 @@ export default {
         position: relative;
     }
 
-        /* CSS for the search input */
+    /* CSS for the search input */
     .input {
         width: 100%;
         padding: 10px;
@@ -105,7 +115,7 @@ export default {
         transition: box-shadow 0.3s ease-in-out;
     }
 
-        /* Add styles for various states of the input */
+    /* Add styles for various states of the input */
     .input:focus {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -114,5 +124,21 @@ export default {
     }
     .input::placeholder {
         font-style: italic;
+    }
+
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+    }
+
+    /* Style for the embedded iframe */
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 </style>

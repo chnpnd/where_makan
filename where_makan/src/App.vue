@@ -1,23 +1,48 @@
 <template>
   <router-view :showModal="showModal" />
-  <div id="nav">
-    <router-link to="/">Home</router-link> | 
-    <router-link to="/about">About</router-link> | 
-    <router-link to="/restaurant">Restaurants</router-link> |
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/analytics">Analytics</router-link>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <!-- Navigation links at the top left -->
+    <router-link to="/" class="navbar-logo-link">
+      <img src="@/assets/where_makan_logo.png" alt="Logo" class="navbar-logo">
+    </router-link>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav">
+          <router-link class="nav-link" to="/" exact active-class="active">Home</router-link>
+          <router-link class="nav-link" to="/about" exact active-class="active">About</router-link>
+          <router-link class="nav-link" to="/restaurant" exact active-class="active">Restaurants</router-link>
+          <router-link class="nav-link" to="/login" exact active-class="active">Login</router-link>
+          <router-link class="nav-link" to="/analytics" exact active-class="active">Analytics</router-link>
+      </div>
+    </div>
 
-  <button id="show-modal" @click="showModal = true" class="login-button">Login</button>
-
-  <Teleport to="body">
-    <!-- use the modal component, pass in the prop -->
-    <modal :show="showModal" @close="showModal = false">
-      <template #header>
-        <h3>custom header</h3>
-      </template>
-    </modal>
+    <!-- Login button at the top right -->
+    <button
+      id="show-modal"
+      @click="showModal = true"
+      class="btn btn-primary ml-auto login-button"
+    >
+      Login
+    </button>
+    <Teleport to="body">
+      <!-- use the modal component, pass in the prop -->
+      <modal :show="showModal" @close="showModal = false">
+        <template #header>
+          <h3>custom header</h3>
+        </template>
+      </modal>
   </Teleport>
+  </nav>
 </template>
 
 <script setup>
@@ -30,10 +55,10 @@
   /* Define a custom class for the "Login" button */
   .login-button {
     font-size: 16px; /* Adjust the font size as needed */
-    padding: 10px 20px; /* Adjust the padding as needed */
     max-width: 200px; /* Limit the maximum width of the button */
-    width: 100%; /* Make sure the button takes the full available width */
-    box-sizing: border-box; /* Include padding in width calculation */
+    position: absolute; /* Position the button absolutely */
+    top: 30px; /* Adjust the top position as needed */
+    right: 75px; /* Adjust the right position as needed */
   }
   #app{
     font-family: Avenir, Arial, Helvetica, sans-serif;
@@ -42,17 +67,17 @@
     text-align: center;
     color: #2c3e50;
   }
-  #nav{
-    padding: 30px;
+  .active {
+    background-color: #42b983; /* Set the background color for the active link */
+    color: #fff; /* Set the text color for the active link */
+  }
+  .navbar-logo-link {
+    margin-left: 20px; /* Adjust the value as needed to control the space */
   }
 
-  #nav a{
-    font-weight: bold;
-    color: #2c3e50
-  }
-
-  #nav a.router-link-exact-active
-  {
-    color: #42b983;
+  .navbar-logo {
+    max-width: 60px; /* Set the width as needed */
+    height: auto; /* Maintain the aspect ratio */
+    margin-right: 10px; /* Add spacing if needed */
   }
 </style>
