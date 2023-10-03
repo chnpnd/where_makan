@@ -1,42 +1,29 @@
 <template>
-    <h1>Restaurants</h1>
-        <div>
+    <div class="container">
+        <h1 class="display-4">Restaurants</h1>
+        <div class="searchContainer">
             <!-- Search input -->
-            <input type="text" v-model="searchValue" placeholder="Search restaurants">
-            
+            <input 
+                type="text" 
+                v-model="searchValue" 
+                placeholder="Search food centre or locations"
+                class="input input--biggest input--noborder input--shadow-large input--rounded">
+        </div>
             <!-- Restaurant list -->
-            <ul>
-                <li v-for="store in filteredResults" :key="store.id">
-                    {{ store.name }} - {{ store.address }}
-                </li>
-            </ul>
-        </div>
-    
-        <div>
+        <div class="list-group listContainer mt-3">
 
-            <!-- {{result}} -->
-            <!-- <ul v-for="store in result">
-                <li>{{ store.name }}</li>
-                <img :src="store.photo_url" alt="Store Photo" />
-                <GMapMap
-                    :center="storePosition(store)"
-                    :zoom="17"
-                    map-type-id="terrain"
-                    style="width: 500px; height: 300px"
-                >
-                    <GMapCluster>
-                    <GMapMarker
-                        :key="index"
-                        :position="storePosition(store)"
-                        :clickable="true"
-                        :draggable="true"
-                        @click="center = storePosition(store)"
-                    />
-                    </GMapCluster>
-                </GMapMap>
-            </ul> -->
-
+            <router-link
+                v-for="store in filteredResults"
+                :key="store.id"
+                class="list-group-item list-group-item-action"
+                :to="{ name: 'store-details', params: { storeId: store.id } }"
+            >
+                <img :src="store.photo_url" alt="Store Photo" class="mr-3" style="max-width: 50px; max-height: 50px;">
+                {{ store.name }}
+            </router-link>
         </div>
+    </div>
+
 </template>
 
 <script>
@@ -95,5 +82,37 @@ export default {
 </script>
 
 <style>
+    .listContainer {
+        width: 900px;
+        max-height: 300px; /* Set a maximum height for the container */
+        overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+    }
 
+    .searchContainer {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+        /* CSS for the search input */
+    .input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-size: 18px;
+        outline: none;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+        /* Add styles for various states of the input */
+    .input:focus {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .input--rounded {
+        border-radius: 25px; /* Adjust the value to control the roundness */
+    }
+    .input::placeholder {
+        font-style: italic;
+    }
 </style>
