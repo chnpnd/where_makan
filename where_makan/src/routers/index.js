@@ -6,6 +6,7 @@ import Restaurant from '../views/Restaurant/Restaurant.vue'
 import Login from '../GoogleMap.vue'
 import Analytics from '../views/Analytics.vue';
 import StoreDetails from '../views/Restaurant/StoreDetails.vue';
+import GeoLocation from '../components/GeoLocation.vue';
 
 const routes = [
     { path: '/', component: Home },
