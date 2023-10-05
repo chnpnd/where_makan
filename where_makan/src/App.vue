@@ -1,30 +1,23 @@
 <template>
-
+  <div class="bg-color">
+    <div>
+    <Navbar />
+  </div>
   <div id="nav">
-    <router-link to="/">Home</router-link> | 
-    <router-link to="/about">About</router-link> | 
-    <router-link to="/restaurant">Restaurants</router-link> |
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/analytics">Analytics</router-link>
-    <router-view :showModal="showModal" />
+    <router-view :showModal="showModal" /> 
+  </div>
   </div>
 
-  <button id="show-modal" @click="showModal = true">Login</button>
-
-  <Teleport to="body">
-    <!-- use the modal component, pass in the prop -->
-    <modal :show="showModal" @close="showModal = false">
-      <template #header>
-        <h3>custom header</h3>
-      </template>
-    </modal>
-  </Teleport>
 </template>
 
 <script setup>
   import Modal from './views/Modal.vue'
   import { ref } from 'vue'
   const showModal = ref(false)
+  import Navbar from '@/components/Navbar.vue';
+  import 'bootstrap/dist/css/bootstrap.css';
+ 
+
 </script>
 
 <style scoped>
@@ -44,8 +37,5 @@
     color: #2c3e50
   }
 
-  #nav a.router-link-exact-active
-  {
-    color: #42b983;
-  }
+  
 </style>
