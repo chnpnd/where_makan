@@ -1,8 +1,7 @@
 <template>
 
     <div class="recommendations">
-      <img alt="Vue logo" class="logo" src="../assets/logo.svg" width="125" height="125" />
-      <HelloWorld msg="You did it!" />
+        <button @click="create()">Food Near Me</button> 
     </div>
  
 </template>
