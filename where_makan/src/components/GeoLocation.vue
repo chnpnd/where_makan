@@ -18,10 +18,10 @@
     },
     //get users coordinates from browser request
       created() {
-        this.$getlocation({})
-            .then(coordinates => {
-                this.coordinates = coordinates;
-            })
+        this.$getLocation(options)
+  .then(coordinates => {
+    console.log(coordinates);
+  });
         .catch(error => alert(error));
   
       }
