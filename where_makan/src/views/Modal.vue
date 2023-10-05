@@ -22,7 +22,8 @@ const props = defineProps({
             <button
               class="modal-default-button"
               @click="$emit('close')"
-            >OK</button>
+            >OK
+          </button>
           </slot>
         </div>
       </div>
@@ -31,6 +32,7 @@ const props = defineProps({
 </template>
 
 <style>
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
