@@ -15,4 +15,4 @@ app.use(VueGoogleMaps, {
         key: 'AIzaSyBCa9b0AaISqJ2I3eidqjG1L_eFzlTOKmw',
     },
 }).mount('#app')
-app.use(VueGeolocation);
+app.use(VueGeolocation).mount('#app');
