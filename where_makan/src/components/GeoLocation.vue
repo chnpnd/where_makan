@@ -6,18 +6,20 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        coordinates: {
-          lat: 0,
-          lng: 0
+    export default {
+        name: 'App',
+        data() {
+          return {
+            coordinates: {
+              lat: 0,
+              lng: 0,
+            }
         }
-    }
-},
-//get users coordinates from browser request
-  created() {
-
-  }
+    },
+    //get users coordinates from browser request
+      created() {
+    
+      }
     
 </script>
+
