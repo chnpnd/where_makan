@@ -15,7 +15,6 @@ const routes = [
     { path: '/store/:storeId', name: 'store-details', component: StoreDetails, props: true }, // Dynamic route for store details
     { path: '/login', component: Login },
     { path: '/analytics', component: Analytics },
-    { path: '/geolocation', component: GeoLocation },
 ];
 
 const router = createRouter({
