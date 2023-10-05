@@ -1,7 +1,7 @@
 <template>
 
     <div class="recommendations">
-        <button @click="create()">Food Near Me</button> 
+        <button @click="created()">Food Near Me</button> 
     </div>
  
 </template>
