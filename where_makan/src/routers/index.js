@@ -6,7 +6,7 @@ import Restaurant from '../views/Restaurant/Restaurant.vue'
 import Login from '../GoogleMap.vue'
 import Analytics from '../views/Analytics.vue';
 import StoreDetails from '../views/Restaurant/StoreDetails.vue';
-import GeoLocation from '../components/GeoLocation.vue';
+import Recommendations from '../views/Recommendations.vue';
 
 const routes = [
     { path: '/', component: Home },
@@ -15,6 +15,7 @@ const routes = [
     { path: '/store/:storeId', name: 'store-details', component: StoreDetails, props: true }, // Dynamic route for store details
     { path: '/login', component: Login },
     { path: '/analytics', component: Analytics },
+    { path: '/recommendations', component: Recommendations },
 ];
 
 const router = createRouter({
