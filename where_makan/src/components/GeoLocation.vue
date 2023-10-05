@@ -6,26 +6,26 @@
 </template>
 
 <script>
-    export default {
-        name: 'App',
-        data() {
-          return {
-            coordinates: {
-              lat: 0,
-              lng: 0,
-            }
-        }
-    },
-    //get users coordinates from browser request
-      created() {
-        this.$getLocation(options)
-          .then(coordinates => {
-            console.log(coordinates);
-  });
-        .catch(error => alert(error));
-  
+  export default {
+      name: 'App',
+      data() {
+        return {
+          coordinates: {
+            lat: 0,
+            lng: 0,
+          }
       }
+  },
+  //get users coordinates from browser request
+    created() {
+      this.$getLocation(options)
+        .then(coordinates => {
+          console.log(coordinates);
+});
+      .catch(error => alert(error));
+
     }
+  }
     
 </script>
 
