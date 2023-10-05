@@ -5,6 +5,8 @@
       <HelloWorld msg="You did it!" />
     </div>
     
+    <button @click="counter++">Add 1</button>
+    
 </template>
 
 <script>
