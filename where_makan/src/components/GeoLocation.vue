@@ -21,7 +21,7 @@
           this.$getlocation({})
               .then(coordinates => {
                   this.coordinates = coordinates;
-              })
+              });
     
       }
     }
