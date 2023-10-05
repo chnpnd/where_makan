@@ -19,4 +19,14 @@
       HelloWorld
     }
   }
+
+import GeoLocation from '@/components/GeoLocation.vue'
+    export default {
+    name: 'GeoLocation',
+    components:{
+        GeoLocation
+    }
+    }
 </script>
+
+  
