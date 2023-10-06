@@ -17,15 +17,8 @@
   export default {
     name: 'Home',
     components:{
-      HelloWorld,
-    },
-  };
+      HelloWorld
+    }
+  }
 
-  import GeolocationTracker from './components/GeolocationTracker.vue';
-  export default {
-    name: 'GeolocationTracker',
-    components: {
-        GeolocationTracker,
-      },
-    };
 </script>
