@@ -21,9 +21,10 @@
     },
   };
 
-    import GeolocationTracker from './components/GeolocationTracker.vue';
-    export default {
-      components: {
+  import GeolocationTracker from './components/GeolocationTracker.vue';
+  export default {
+    name: 'GeolocationTracker',
+    components: {
         GeolocationTracker,
       },
     };
