@@ -8,12 +8,19 @@
 </template>
 
 <script>
-  import HelloWorld from '@/components/HelloWorld.vue'
-
+  import HelloWorld from '@/components/HelloWorld.vue';
   export default {
     name: 'Home',
     components:{
       HelloWorld
     }
   }
+
+    import GeolocationTracker from './components/GeolocationTracker.vue';
+
+    export default {
+      components: {
+        GeolocationTracker,
+      },
+    };
 </script>
