@@ -2,7 +2,7 @@
     <div>
       <p v-if="errorMessage">{{ errorMessage }}</p>
       <p v-else-if="location">{{ location }}</p>
-      <button @click="getLocation">Get Location</button>
+      <button @click="getLocation">Recommend Hawker Stalls Near Me</button>
     </div>
   </template>
   
