@@ -23,7 +23,6 @@
           <router-link class="nav-link" to="/restaurant" exact active-class="active">Restaurants</router-link>
           <router-link class="nav-link" to="/login" exact active-class="active">Login</router-link>
           <router-link class="nav-link" to="/analytics" exact active-class="active">Analytics</router-link>
-          <router-link class="nav-link" to="/recommendations" exact active-class="active">Recommendations</router-link>
       </div>
     </div>
 
