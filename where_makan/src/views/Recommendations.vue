@@ -1,8 +1,11 @@
 <template>
 
     <div class="recommendations">
+        <p> This is the recommendation page </p>
         <button @click="created()">Food Near Me</button> 
     </div>
+
+    <Geolocation />
  
 </template>
 
@@ -10,7 +13,7 @@
   import GeoLocation from '@/components/GeoLocation.vue'
 
   export default {
-    name: 'GeoLocation',
+    name: 'Recommendations',
     components:{
       GeoLocation
     }
