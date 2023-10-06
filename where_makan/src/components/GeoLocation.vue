@@ -6,26 +6,40 @@
 </template>
 
 <script>
-  export default {
-      name: 'App',
-      data() {
-        return {
-          coordinates: {
-            lat: 0,
-            lng: 0,
-          }
-      }
-  },
+import { ref } from 'vue'
+
+export default {
+  data() {
+    return {
+      coordinates: {
+        lat: 0,
+        lng: 0,
+        }
+    }
+},
   //get users coordinates from browser request
+  methods:{
     created() {
       this.$getLocation(options)
         .then(coordinates => {
-          console.log(coordinates);
-});
-      .catch(error => alert(error));
+          console.log(coordinates)
+  }
 
     }
   }
+}
     
 </script>
 
+<style scoped>
+    input
+    {
+        padding: 5px;
+        margin-bottom: 2px;
+    }
+
+    button
+    {
+        margin-top: 20px;
+    }
+</style>
