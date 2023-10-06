@@ -5,11 +5,6 @@
       <HelloWorld msg="You did it!" />
     </div>
 
-    <div>
-      <h1>Recommend Stalls Near Me</h1>
-      <geolocation-tracker></geolocation-tracker>
-    </div>
-
 </template>
 
 <script>
