@@ -1,4 +1,3 @@
-
 <template>
     <div class="container mt-6">
         <router-link to="/hawkerstall" class="btn btn-primary">Back to Restaurant List</router-link>
@@ -35,14 +34,14 @@
   
   <script>
   export default {
-    props: ['storeId'], // This prop is automatically passed by Vue Router
+    props: ['storeIdStall'], // This prop is automatically passed by Vue Router
     data() {
       return {
         store1: null, // Initialize store as null
       };
     },
     created() {
-      // Fetch store details based on the storeId prop
+      // Fetch store details based on the storeIdStall prop
       this.fetchStoreDetails();
     },
     methods: {
@@ -54,9 +53,9 @@
             if (response.ok) {
                 const data = await response.json();
     
-                // Find the store with the matching storeId in the data array
-                const storeId = parseInt(this.storeId); // Convert storeId to a number
-                const matchingStore = data.find((store1) => store1.id === storeId);
+                // Find the store with the matching storeIdStall in the data array
+                const storeIdStall = parseInt(this.storeIdStall); // Convert storeIdStall to a number
+                const matchingStore = data.find((store1) => store1.id === storeIdStall);
     
                 if (matchingStore) {
                 // If a matching store is found, set it to the store data property
