@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <!-- Navigation links at the top left -->
     <router-link to="/" class="navbar-logo-link">
-      <img src="@/assets/where_makan_logo.png" alt="Logo" class="navbar-logo">
+      <img src="" class="navbar-logo">
     </router-link>
     <button
       class="navbar-toggler"
