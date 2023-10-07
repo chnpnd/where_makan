@@ -3,6 +3,8 @@
         <router-link to="/hawkerstall" class="btn btn-primary">Back to Restaurant List</router-link>
         <h1 class="display-4">{{ store1.name }}</h1>
         <p class="lead">{{ store1.address }}</p>
+        <p>"Phone Number: " + {{ store1.phone_number }}</p>
+        <p>"Price: $" + {{ store1.price }}</p>
         <hr>
 
         <!-- Display store photo -->
@@ -12,6 +14,20 @@
 
         <div class="mb-4">
             <p>{{ store1.description }}</p>
+        </div>
+
+          <!-- Display Signature Item -->
+        <div class="mb-4">
+            <h3>Signature Item</h3>
+            <p>{{ store1.signature_item }}</p>
+        </div>
+        
+        <!-- Display Opening Hours-->
+        <div class="mb-4">
+            <h3>Open From:</h3>
+            <p>{{ store1.opening_hours }}</p>
+            <h3>Rest Day(s):</h3>
+            <p>{{ store1.rest_day }}</p>
         </div>
 
         <!-- Display Google Map -->
@@ -29,6 +45,8 @@
                 </GMapCluster>
             </GMapMap>
         </div>
+
+      
     </div>
   </template>
   
