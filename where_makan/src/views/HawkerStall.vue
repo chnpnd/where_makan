@@ -16,7 +16,7 @@
                 v-for="store1 in filteredResults"
                 :key="store1.owner_id"
                 class="list-group-item list-group-item-action"
-                :to="{ name: 'store-details', params: { storeId: store1.owner_id } }"
+                :to="{ name: 'store-details-stall', params: { storeIdStall: store1.owner_id } }"
             >
                 <img :src="store1.store_url" alt="Store Photo" class="mr-3" style="max-width: 50px; max-height: 50px;">
                 {{ store1.name }}
