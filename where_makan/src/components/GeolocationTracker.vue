@@ -1,8 +1,14 @@
 <template>
-    <div>
-      <p v-if="errorMessage">{{ errorMessage }}</p>
-      <p v-else-if="location">{{ location }}</p>
-      <button @click="getLocation">Recommend Hawker Stalls Near Me</button>
+    <div class="container-fluid h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-12 text-center">
+          <p v-if="errorMessage">{{ errorMessage }}</p>
+          <p v-else-if="location">{{ location }}</p>
+          <button @click="getLocation" class="btn btn-custom"> <!-- Use a custom class -->
+            Recommend Hawker Stalls Near Me
+          </button>
+        </div>
+      </div>
     </div>
   </template>
   
@@ -50,6 +56,23 @@
   };
   </script>
   
-  <style scoped>
-  /* Add your component-specific styles here */
-  </style>
+<style scoped>
+  .container-fluid {
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
+
+  .btn-custom {
+    font-size: 20px;
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #3498db; /* Custom background color */
+    color: #fff; /* Text color */
+    border: none; /* Remove border */
+    transition: background-color 0.3s; /* Smooth transition */
+  }
+
+  .btn-custom:hover {
+    background-color: #2980b9; /* Change color on hover */
+  }
+</style>
