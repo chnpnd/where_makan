@@ -7,14 +7,10 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BCard: typeof import('bootstrap-vue-next')['BCard']
-    BCardGroup: typeof import('bootstrap-vue-next')['BCardGroup']
-    BCardText: typeof import('bootstrap-vue-next')['BCardText']
     BCarousel: typeof import('bootstrap-vue-next')['BCarousel']
     BCarouselSlide: typeof import('bootstrap-vue-next')['BCarouselSlide']
-    BIcon: typeof import('bootstrap-vue-next')['BIcon']
-    Explore: typeof import('./src/components/Explore/Explore.vue')['default']
     ExploreCards: typeof import('./src/components/Explore/ExploreCards.vue')['default']
+    GeolocationTracker: typeof import('./src/components/GeolocationTracker.vue')['default']
     HelloWorld: typeof import('./src/components/Home/HelloWorld.vue')['default']
     HomeCards: typeof import('./src/components/Home/HomeCards.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
@@ -23,6 +19,7 @@ declare module 'vue' {
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
+    Modal: typeof import('./src/components/Modal.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
