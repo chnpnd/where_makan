@@ -10,6 +10,9 @@ import Questionnaire from '../views/Questionnaire.vue';
 // import GeolocationTracker from './components/GeolocationTracker.vue';
 // import HawkerStall from './views/HawkerStall.vue';
 // import StoreDetailsStall from './views/StoreDetailsStall.vue';
+import GeolocationTracker from '../components/GeolocationTracker.vue';
+import HawkerStall from '../views/HawkerStall.vue';
+import StoreDetailsStall from '../views/StoreDetailsStall.vue';
 
 const routes = [
     { path: '/', component: Home },
