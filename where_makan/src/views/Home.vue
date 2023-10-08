@@ -20,9 +20,6 @@
   import Header from '@/components/Home/HelloWorld.vue';
   import Map from '@/GoogleMap.vue';
   import Homecards from '@/components/Home/Homecards.vue';
-  
-
-
   export default {
     name: 'Home',
     components:{
@@ -32,6 +29,7 @@
 
     }
   }
+
 </script>
 <style>
 

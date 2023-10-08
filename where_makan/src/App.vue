@@ -1,4 +1,5 @@
 <template>
+
   <div class="bg-color">
     <div>
     <Navbar />
@@ -6,6 +7,7 @@
   <div id="nav">
     <router-view :showModal="showModal" /> 
   </div>
+
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <!-- Navigation links at the top left -->
