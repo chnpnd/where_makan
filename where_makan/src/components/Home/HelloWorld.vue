@@ -1,17 +1,12 @@
-<script setup>
-import router from '../../routers';
 
-</script>
 
 <template>
-
   <div>
     <header>
-    <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-    <div class='container-fluid '>
+      <div class='container-fluid '>
         <div class='row'>
-            <div class='col-md-12'>
-              <div id="carouselExampleCaptions" class="carousel slide carousel-container">
+          <div class='col-md-12'>
+            <div id="carouselExampleCaptions" class="carousel slide carousel-container">
               <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -37,7 +32,7 @@ import router from '../../routers';
               <div class="carousel-caption static-text text-center ">
                 <div class="row">
                   <div class="col-md-12 mx-auto"> <!--ADJUST RESPONSIVENESS FOR THIS-->
-                    <h1>
+                    <h1 class="mt-3">
                       Hawker Heaven: Food Worth Stopping For
                     </h1>
                     <!-- INPUT THE NAVBAR HERE -->
@@ -58,15 +53,16 @@ import router from '../../routers';
               </button>
             </div>
             </div>
-            </div> <!--col-->
+          </div> <!--col-->
         </div> <!-- row -->
-    </div> <!-- container -->
-    
-    
+      </div> <!-- container -->
     </header>
-
-
   </div>
-
 </template>
+
+<script>
+import router from '../../routers';
+
+
+</script>
 

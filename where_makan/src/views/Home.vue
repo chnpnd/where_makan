@@ -14,17 +14,13 @@
     <Homecards />
   </div>
 
-    
- 
 </template>
 
 <script>
-
-
-
   import Header from '@/components/Home/HelloWorld.vue';
   import Map from '@/GoogleMap.vue';
   import Homecards from '@/components/Home/Homecards.vue';
+  
 
 
   export default {
@@ -33,6 +29,7 @@
       Header,
       Map,
       Homecards,
+
     }
   }
 </script>
