@@ -13,7 +13,6 @@
     <v-divider></v-divider>
     <Homecards />
   </div>
-
 </template>
 
 <script>
