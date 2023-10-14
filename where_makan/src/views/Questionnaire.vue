@@ -1,10 +1,12 @@
 <template>
     <div v-if="showModal" class="modal-overlay">
+        <div class="modal-content">
          <!-- <button @click="openModal">Open Questionnaire</button> -->
             <div v-if="page === 1">
                 <!-- <h3>Question 1</h3> -->
                 <label for="foodPreference">What type of cuisine are you in the mood for today?</label>
-                <select id="foodPreference" v-model="answers.food">
+                <div></div>
+                <select id="foodPreference" class="dropdowns" v-model="answers.food">
                     <option value="Chinese">Chinese</option>
                     <option value="Indian">Indian</option>
                     <option value="Thai">Thai</option>
@@ -14,6 +16,7 @@
                 </select>
                 <input v-if="answers.food === 'Others'" type="text" v-model="answers.otherFood"
                     placeholder="Please specify">
+                <div></div>
                 <button @click="nextPage">Next</button>
             </div>
             <template v-else-if="page === 2">
@@ -28,7 +31,7 @@
 
             <template v-else-if="page === 3">
                 <label for="spiciness">How spicy do you like your food?</label>
-                <select id="spiciness" v-model="answers.spiciness">
+                <select id="spiciness" class="dropdowns" v-model="answers.spiciness">
                     <option value="Mild">Mild (1)</option>
                     <option value="Medium">Medium (2)</option>
                     <option value="Spicy">Spicy (3)</option>
@@ -41,7 +44,7 @@
 
             <template v-else-if="page === 4">
                 <label for="budget">What's your budget for this meal (per person)?</label>
-                <select id="budget" v-model="answers.budget">
+                <select id="budget" class="dropdowns" v-model="answers.budget">
                     <option value="Below $5">Below $5</option>
                     <option value="$5 - $10">$5 - $10</option>
                     <option value="Above $10">Above $10</option>
@@ -52,7 +55,7 @@
             <template v-else-if="page === 5">
                 <label for="dishPreference">Are you looking for a specific dish or cuisine, or would you like a
                     recommendation?</label>
-                <select id="dishPreference" v-model="answers.dishPreference">
+                <select id="dishPreference" class="dropdowns" v-model="answers.dishPreference">
                     <option value="Specific dish/cuisine">Specific dish/cuisine</option>
                     <option value="Recommend something based on my preferences">Recommend something based on my preferences
                     </option>
@@ -62,7 +65,7 @@
 
             <template v-else-if="page === 6">
                 <label for="travelDistance">How far are you willing to travel for your meal?</label>
-                <select id="travelDistance" v-model="answers.travelDistance">
+                <select id="travelDistance" class="dropdowns" v-model="answers.travelDistance">
                     <option value="Within 1 mile">Within 1 mile</option>
                     <option value="1-3 miles">1-3 miles</option>
                     <option value="3-5 miles">3-5 miles</option>
@@ -73,7 +76,7 @@
 
             <template v-else-if="page === 7">
                 <label for="orderMethod">Would you like to order for pickup or delivery?</label>
-                <select id="orderMethod" v-model="answers.orderMethod">
+                <select id="orderMethod" class="dropdowns" v-model="answers.orderMethod">
                     <option value="Pickup">Pickup</option>
                     <option value="Delivery">Delivery</option>
                 </select>
@@ -93,7 +96,7 @@
             <template v-else-if="page === 9">
                 <label for="dietaryPreference">Do you have any specific dietary preferences (e.g., vegetarian, vegan,
                     halal)?</label>
-                <select id="dietaryPreference" v-model="answers.dietaryPreference">
+                <select id="dietaryPreference" class="dropdowns" v-model="answers.dietaryPreference">
                     <option value="Vegetarian">Vegetarian</option>
                     <option value="Vegan">Vegan</option>
                     <option value="Halal">Halal</option>
@@ -101,18 +104,16 @@
                 </select>
                 <button @click="nextPage">Next</button>
             </template>
-
-
-
             <template v-else-if="page === 10">
                 <label for="specialRequests">Are there any additional preferences or special requests you have for your
                     meal?</label>
-                <textarea id="specialRequests" v-model="answers.specialRequests"
+                <textarea id="specialRequests" class="dropdowns" v-model="answers.specialRequests"
                     placeholder="Enter your preferences or requests here"></textarea>
 
                 <button @click="prevPage">Previous</button>
                 <button @click="submitAnswers">Submit</button>
             </template>
+        </div>
     </div>
 </template>
   
@@ -141,20 +142,6 @@ export default {
         }
     },
     methods: {
-        openModal() {
-            this.showModal = true;
-            this.page = 1;
-            console.log(this.page);
-        },
-        closeModal() {
-            this.showModal = false;
-            this.page = 1;
-            this.answers = {
-                food: '',
-                budget: '',
-                spiciness: '',
-            };
-        },
         nextPage() {
             this.page++;
         },
@@ -164,6 +151,12 @@ export default {
         submitAnswers() {
             // Handle the submission of answers here
             console.log(this.answers);
+            this.page = 1;
+            this.answers = {
+                food: '',
+                budget: '',
+                spiciness: '',
+            };
             this.$emit('close');
         },
     },
@@ -177,18 +170,30 @@ export default {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: white; /* Semi-transparent black */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
+.dropdowns{
+    border: 2px solid rgb(0, 0, 0);
+}
 .modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   width: 80%;
   max-width: 500px; /* Adjust as needed */
+}
+
+label{
+    font-weight: bold;
+    display:inline-block;
+}
+
+input{
+    display:inline-block;
 }
 </style>
