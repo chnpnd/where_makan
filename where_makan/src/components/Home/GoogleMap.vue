@@ -1,9 +1,64 @@
 
 <template>
+    <div class="map-container">
+        <!-- The div element for the map -->
+        <GMapMap
+            :center="center"
+            :zoom="7"
+            map-type-id="terrain"
+            class="google-map"
+        >
+            <GMapCluster>
+                <GMapMarker
+                    :key="index"
+                    v-for="(m, index) in markers"
+                    :position="m.position"
+                    :clickable="true"
+                    :draggable="true"
+                    @click="center=m.position"
+                />
+            </GMapCluster>
+        </GMapMap>
+    </div>
+</template>
 
-	
-    <div>
-        <!-- Log In trigger modal
+
+<style scoped>
+.map-container {
+    padding: 20px; /* Add some space around the map */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow around the map */
+    border-radius: 8px; /* Optional: Rounded edges for a cleaner look */
+}
+
+.google-map {
+    width: 100%;
+    height: 500px; /* Adjust height as needed */
+}
+</style>
+
+
+<script>
+    export default {
+        name: 'App',
+        data() {
+            return {
+                center: {lat: 1.2796740690582409, lng: 103.84745013835952},
+                markers: [
+                    {
+                        position: {
+                            lat: 1.2796740690582409,
+                            lng: 103.84745013835952,
+                        },
+                    }
+                    , // Along list of clusters
+                ]
+            }
+        },
+    };
+</script>
+
+
+<!-- Log In trigger modal
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#LogInModal">
             Log In
         </button> -->
@@ -143,50 +198,3 @@
                 </div>
             </div>
         </div> -->
-
-        <!--The div element for the map -->
-        <GMapMap
-            :center="center"
-            :zoom="7"
-            map-type-id="terrain"
-            style="width: 500px; height: 300px"
-        >
-            <GMapCluster>
-                <GMapMarker
-                    :key="index"
-                    v-for="(m, index) in markers"
-                    :position="m.position"
-                    :clickable="true"
-                    :draggable="true"
-                    @click="center=m.position"
-                />
-            </GMapCluster>
-        </GMapMap>
-    </div>
-</template>
-
-<style scoped>
-
-
-</style>
-
-
-<script>
-    export default {
-        name: 'App',
-        data() {
-            return {
-                center: {lat: 1.2796740690582409, lng: 103.84745013835952},
-                markers: [
-                    {
-                        position: {
-                            lat: 1.2796740690582409,
-                            lng: 103.84745013835952,
-                        },
-                    }
-                    , // Along list of clusters
-                ]
-            }
-        },
-    };
-</script>

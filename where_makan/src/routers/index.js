@@ -3,7 +3,7 @@ import App from '../App.vue';
 import Home from '../views/Home.vue';
 import Login from '../views/About.vue'
 import Restaurant from '../views/Restaurant/Restaurant.vue'
-import Explore from '../GoogleMap.vue'
+import Explore from '../components/Home/GoogleMap.vue'
 import Analytics from '../views/Analytics.vue';
 import StoreDetails from '../views/Restaurant/StoreDetails.vue';
 import GeolocationTracker from '../components/GeolocationTracker.vue';

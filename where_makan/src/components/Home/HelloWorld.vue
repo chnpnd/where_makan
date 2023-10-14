@@ -1,9 +1,7 @@
-
-
 <template>
   <div>
     <header>
-      <div class='container-fluid '>
+      <div class='container-fluid'>
         <div class='row'>
           <div class='col-md-12'>
             <div id="carouselExampleCaptions" class="carousel slide carousel-container">
@@ -66,3 +64,8 @@ import router from '../../routers';
 
 </script>
 
+<style>
+  .container-fluid{
+    width:100%;
+  }
+</style>

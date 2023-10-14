@@ -1,9 +1,6 @@
-
-
 <template>
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <div>
-
   <div class="container-fluid pl-0 pr-0">
   <nav class="navbar navbar-expand-lg">
   <router-link to="/" class="navbar-logo-link">
@@ -49,18 +46,70 @@
 </template>
 
 <style lang="scss" scoped>
-  .navbar-nav .nav-item .nav-link:hover {
-    color: #D40000; 
-    background: none;
-  }
-  .navbar-logo-link {
-    margin-left: 20px; /* Adjust the value as needed to control the space */
-  }
-  .navbar-logo {
-    max-width: 60px; /* Set the width as needed */
-    height: auto; /* Maintain the aspect ratio */
-    margin-right: 10px; /* Add spacing if needed */
-  }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap'); // Vintage Fonts
+
+.navbar {
+    background-color: #f3e0d2; // Soft pastel color inspired by shophouses
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+    font-family: 'Source Sans Pro', sans-serif;
+    border-bottom: 3px solid #d4af37; // A touch of gold
+}
+
+.navbar-toggler {
+    border-color: #b08e6e; // Vintage-inspired color
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    .navbar-toggler-icon {
+        background-color: #b08e6e;
+    }
+}
+
+.navbar-nav {
+    .nav-item {
+        .nav-link {
+            color: #625d5d; // Vintage text color
+            transition: color 0.3s ease, background-color 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 10px;
+
+            &:hover {
+                color: #d4af37; // Vintage gold color on hover
+                background-color: rgba(212, 175, 55, 0.1);
+            }
+        }
+        &.active .nav-link {
+            border-bottom: none; // Remove the underline
+            background-color: #b08e6e; // Vintage active color
+        }
+    }
+
+    #show-modal {
+        border: 1px solid #d4af37;
+        border-radius: 5px;
+        color: #d4af37;
+        padding: 10px 20px;
+        font-family: 'Playfair Display', serif; // Vintage font for button
+
+        &:hover {
+            background-color: rgba(212, 175, 55, 0.2);
+        }
+    }
+}
+
+.navbar-logo-link {
+    padding: 5px 0;
+    margin-left: 20px;
+}
+
+.navbar-logo {
+    max-width: 60px;
+    height: auto;
+    margin-right: 10px;
+}
+
+
 </style>
 
 <script setup>

@@ -1,6 +1,7 @@
 <template>
     <div v-if="showModal" class="modal-overlay">
         <div class="modal-content">
+            <button class="close-btn" @click="closeModal">×</button>
          <!-- <button @click="openModal">Open Questionnaire</button> -->
             <div v-if="page === 1">
                 <!-- <h3>Question 1</h3> -->
@@ -20,14 +21,18 @@
                 <button @click="nextPage">Next</button>
             </div>
             <template v-else-if="page === 2">
-                <label for="foodAllergies">Do you have any food allergies or dietary restrictions?</label>
-                <input type="checkbox" id="peanuts" v-model="answers.peanuts">
-                <label for="peanuts">Peanuts</label><br>
-                <input type="checkbox" id="wheat" v-model="answers.wheat">
-                <label for="wheat">Wheat</label><br>
-                <!-- Add more checkboxes for other options -->
-                <button @click="nextPage">Next</button>
-            </template>
+              <label for="foodAllergies">Do you have any food allergies or dietary restrictions?</label>
+              <div class="checkbox-container">
+                  <label id="content" for="peanuts">Peanuts</label>
+                  <input type="checkbox" id="peanuts" v-model="answers.peanuts">
+              </div>
+              <div class="checkbox-container">
+                  <label id="content" for="wheat">Wheat</label>
+                  <input type="checkbox" id="wheat" v-model="answers.wheat">
+              </div>
+              <!-- Add more checkboxes for other options -->
+              <button @click="nextPage">Next</button>
+          </template>
 
             <template v-else-if="page === 3">
                 <label for="spiciness">How spicy do you like your food?</label>
@@ -118,7 +123,7 @@
 </template>
   
 <script>
-import Modal from '../components/Modal.vue'; // Import the modal component
+import Modal from '../Modal.vue'; 
 
 export default {
     components: {
@@ -148,6 +153,9 @@ export default {
         prevPage() {
             this.page--;
         },
+        closeModal() {
+        this.$emit('close');
+        },
         submitAnswers() {
             // Handle the submission of answers here
             console.log(this.answers);
@@ -170,30 +178,63 @@ export default {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.dropdowns{
-    border: 2px solid rgb(0, 0, 0);
-}
 .modal-content {
-  background-color: white;
+  background-color: #f8f9fa; /* Same background color as home-container */
   padding: 20px;
   border-radius: 10px;
   width: 80%;
-  max-width: 500px; /* Adjust as needed */
+  max-width: 500px;
+  position: relative;
 }
 
-label{
-    font-weight: bold;
-    display:inline-block;
+label {
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
-input{
-    display:inline-block;
+input, select, textarea {
+  width: 100%;
+  border: 2px solid rgb(0, 0, 0);
+  padding: 5px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #007BFF;
+}
+
+.checkbox-container {
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+  margin-right: 100px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  color: #007BFF; /* Make close button blue */
+}
+
+.close-btn:hover {
+  opacity: 0.7;
 }
 </style>
