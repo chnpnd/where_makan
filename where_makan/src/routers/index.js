@@ -19,6 +19,7 @@ const routes = [
     { path: '/analytics', component: Analytics, name: "Analytics" },
     { path: '/GeolocationTracker', component: GeolocationTracker },
     { path: '/hawkerstall', component: HawkerStall },
+    { path: '/store/:storeIdStall', name: 'store-details-stall', component: StoreDetailsStall, props: true },
 ];
 
 const router = createRouter({
