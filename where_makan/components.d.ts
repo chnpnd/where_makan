@@ -9,9 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     BCarousel: typeof import('bootstrap-vue-next')['BCarousel']
     BCarouselSlide: typeof import('bootstrap-vue-next')['BCarouselSlide']
-    ExploreCards: typeof import('./src/components/Explore/ExploreCards.vue')['default']
     GeolocationTracker: typeof import('./src/components/GeolocationTracker.vue')['default']
-    HelloWorld: typeof import('./src/components/Home/HelloWorld.vue')['default']
+    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeCards: typeof import('./src/components/Home/HomeCards.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
@@ -23,6 +22,7 @@ declare module 'vue' {
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Test: typeof import('./src/components/test.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }

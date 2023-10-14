@@ -10,28 +10,14 @@
   "dependencies": {
     "@fawmi/vue-google-maps": "^0.9.72",
     "bootstrap": "^5.3.2",
-    "bootstrap-vue": "^2.23.1",
-    "bootstrap-vue-next": "^0.14.8",
     "chart.js": "^4.4.0",
     "vue": "^3.3.4",
-    "vue-carousel": "^0.18.0",
     "vue-chartjs": "^5.2.0",
     "vue-google-oauth2": "^1.5.10",
-    "vue-router": "^4.2.4",
-    "vuetify": "^3.3.20",
-    "vuex": "^4.1.0"
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
-    "@iconify/vue": "^4.1.1",
-    "@nuxtjs/vuetify": "^1.12.3",
     "@vitejs/plugin-vue": "^4.3.1",
-    "@vue/compiler-sfc": "^3.3.4",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.3",
-    "unplugin-icons": "^0.17.0",
-    "unplugin-vue-components": "^0.25.2",
-    "vite": "^4.4.9",
-    "vue-cli-plugin-vuetify": "~2.5.8"
+    "vite": "^4.4.9"
   }
 }

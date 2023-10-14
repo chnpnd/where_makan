@@ -5,7 +5,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <Transition name="modal">
+  <Transition name="modal" v-show="show">
     <div v-if="show" class="modal-mask">
       <div class="modal-container">
         <div class="modal-header">
@@ -22,8 +22,7 @@ const props = defineProps({
             <button
               class="modal-default-button"
               @click="$emit('close')"
-            >OK
-          </button>
+            >OK</button>
           </slot>
         </div>
       </div>
@@ -32,7 +31,6 @@ const props = defineProps({
 </template>
 
 <style>
-
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -41,8 +39,8 @@ const props = defineProps({
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  transition: opacity 0.3s ease;
+  /* display: flex;
+  transition: opacity 0.3s ease; */
 }
 
 .modal-container {

@@ -1,39 +1,33 @@
 <template>
-  <div>
-    <div>
-      <Header />
-    </div>
-    <v-divider></v-divider>
-    <h1 class="homeH1 text-center">Food Nearby You:</h1>
-    <v-divider></v-divider>
-    <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-    <div id="map">
-      <Map />
-    </div>
-    <v-divider></v-divider>
-    <Homecards />
+  <div class="home">
+    <img alt="Vue logo" class="logo" src="../assets/logo.svg" width="125" height="125" />
+    <HelloWorld msg="You did it!" />
+    <button onclick="launchQuestionnaire()">Reccommend Me What to Eat!</button>
   </div>
 </template>
 
-<script>
-  import Header from '@/components/Home/HelloWorld.vue';
-  import Map from '@/GoogleMap.vue';
-  import Homecards from '@/components/Home/Homecards.vue';
-  export default {
-    name: 'Home',
-    components:{
-      Header,
-      Map,
-      Homecards,
+<script >
+import HelloWorld from '@/components/HelloWorld.vue';
+export default {
+  name: 'Home',
+  inheritAttrs: false,
+  components: {
+    HelloWorld
+  }, methods: {
+    async launchQuestionnaire() {
+      try {
+        router.push({ path: 'Questionnaire' })
+      } catch (error) {
 
+      }
     }
   }
 
+}
+
+
 </script>
-<style>
 
 
 
-
-
-</style>
+<!-- DO NOT DELETE - KRYSTAL's PART -->
