@@ -1,5 +1,4 @@
 <template>
-
   <div class="bg-color">
     <div>
       <Navbar />
