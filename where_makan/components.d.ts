@@ -21,7 +21,6 @@ declare module 'vue' {
     Login: typeof import('./src/components/Login.vue')['default']
     Modal: typeof import('./src/components/Modal.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
-    Questionnaire: typeof import('./src/components/Questionnaire.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Test: typeof import('./src/components/test.vue')['default']
