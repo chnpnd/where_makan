@@ -6,34 +6,6 @@
         <GeolocationTracker />
       </div>
     </div>
-<<<<<<< HEAD
-=======
-
-    <!-- Login button at the top right -->
-    <button
-      id="show-modal"
-      @click="showModal = true"
-      class="btn btn-primary ml-auto login-button"
-    >
-      Login
-    </button>
-    <Teleport to="body">
-      <!-- use the modal component, pass in the prop -->
-      <modal :show="showModal" @close="showModal = false">
-        <template #header>
-          <h3>custom header</h3>
-        </template>
-      </modal>
-  </Teleport>
-  </nav>
-  <div class="bg-color">
-    <div>
-      <Navbar />
-      <div>
-        <GeolocationTracker />
-      </div>
-    </div>
->>>>>>> parent of 2195c49 (reverse commit)
   </div>
   <router-view/>
 </template>
