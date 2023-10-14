@@ -24,7 +24,7 @@
   import Header from '@/components/Home/HelloWorld.vue';
   import Map from '@/GoogleMap.vue';
   import Homecards from '@/components/Home/Homecards.vue';
-  import Questionnaire from '@/components/Questionnaire.vue'; // Update the path
+  import Questionnaire from '@/views/Questionnaire.vue'; // Update the path
   export default {
     name: 'Home',
     components:{
