@@ -56,7 +56,7 @@
   };
   </script>
   
-  <style scoped>
+<style scoped>
   .container-fluid {
     height: 100vh;
     background-color: #f8f9fa;

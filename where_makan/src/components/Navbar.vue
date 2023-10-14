@@ -6,7 +6,7 @@
 
   <div class="container-fluid pl-0 pr-0">
   <nav class="navbar navbar-expand-lg">
-    <router-link to="/" class="navbar-logo-link">
+  <router-link to="/" class="navbar-logo-link">
     <img src="@/assets/where_makan_logo.png" alt="Logo" class="navbar-logo">
   </router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcoll" aria-controls="navbarcoll" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,9 +52,6 @@
   .navbar-nav .nav-item .nav-link:hover {
     color: #D40000; 
     background: none;
-  }
-  .navbar-nav .nav-item .nav-link {
-    color: black; /* Set the text color to black */
   }
   .navbar-logo-link {
     margin-left: 20px; /* Adjust the value as needed to control the space */
