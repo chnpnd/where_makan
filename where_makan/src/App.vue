@@ -45,15 +45,6 @@
       </modal>
   </Teleport>
   </nav>
-  <div class="bg-color">
-    <div>
-      <Navbar />
-      <div>
-        <GeolocationTracker />
-      </div>
-    </div>
-  </div>
-  <router-view/>
 </template>
 
 <script setup>
