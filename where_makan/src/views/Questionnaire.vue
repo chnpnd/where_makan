@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <button @click="openModal">Open Questionnaire</button>
-        <modal :show="showModal" @close="closeModal">
+    <div v-if="showModal" class="modal-overlay">
+         <!-- <button @click="openModal">Open Questionnaire</button> -->
             <div v-if="page === 1">
                 <!-- <h3>Question 1</h3> -->
                 <label for="foodPreference">What type of cuisine are you in the mood for today?</label>
@@ -114,7 +113,6 @@
                 <button @click="prevPage">Previous</button>
                 <button @click="submitAnswers">Submit</button>
             </template>
-        </modal>
     </div>
 </template>
   
@@ -135,6 +133,12 @@ export default {
                 spiciness: '',
             },
         };
+    },
+    props: {
+        showModal: {
+            type: Boolean,
+            required: true
+        }
     },
     methods: {
         openModal() {
@@ -160,9 +164,31 @@ export default {
         submitAnswers() {
             // Handle the submission of answers here
             console.log(this.answers);
-            this.closeModal();
+            this.$emit('close');
         },
     },
 };
 </script>
-  
+
+<style scoped>
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white; /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px; /* Adjust as needed */
+}
+</style>
