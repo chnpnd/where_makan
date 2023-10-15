@@ -9,6 +9,8 @@ import StoreDetails from '../views/Restaurant/StoreDetails.vue';
 import GeolocationTracker from '../components/GeolocationTracker.vue';
 import HawkerStall from '../views/HawkerStall.vue';
 import StoreDetailsStall from '../views/StoreDetailsStall.vue';
+import Review from '../components/LeaveReview.vue';
+import Order from '../components/FoodOrder.vue';
 
 const routes = [
     { path: '/', component: Home, name: "Home" },
@@ -20,6 +22,8 @@ const routes = [
     { path: '/GeolocationTracker', component: GeolocationTracker},
     { path: '/hawkerstall', component: HawkerStall },
     { path: '/store/:storeIdStall', name: 'store-details-stall', component: StoreDetailsStall, props: true },
+    { path: '/review', name: 'review', component: Review},
+    { path: '/order', name: 'order', component: Order}
 ];
 
 const router = createRouter({
