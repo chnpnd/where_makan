@@ -1,46 +1,46 @@
 <template>
     <div class="container mt-6">
-        <router-link to="/hawkerstall" class="btn btn-primary">Back to Restaurant List</router-link>
-        <h1 class="display-4">{{ store1.name }}</h1>
-        <p class="lead">{{ store1.address }}</p>
-        <p>"Phone Number: " + {{ store1.phone_number }}</p>
-        <p>"Price: $" + {{ store1.price }}</p>
+        <router-link to="/hawkerstall" class="btn btn-primary">Back to Hawker Stall</router-link>
+        <h1 class="display-4">{{ store.name }}</h1>
+        <p class="lead">{{ store.address }}</p>
+        <p>Phone Number: {{ store.phone_number }}</p>
+        <p>Price: ${{ store.price }}</p>
         <hr>
 
         <!-- Display store photo -->
         <div class="mb-4">
-            <img :src="store1.store_url" alt="Store Photo" class="img-fluid" />
+            <img :src="store.store_url" alt="Store Photo" class="img-fluid" />
         </div>
 
         <div class="mb-4">
-            <p>{{ store1.description }}</p>
+            <p>{{ store.description }}</p>
         </div>
 
           <!-- Display Signature Item -->
         <div class="mb-4">
             <h3>Signature Item</h3>
-            <p>{{ store1.signature_item }}</p>
+            <p>{{ store.signature_item }}</p>
         </div>
         
         <!-- Display Opening Hours-->
         <div class="mb-4">
             <h3>Open From:</h3>
-            <p>{{ store1.opening_hours }}</p>
+            <p>{{ store.opening_hours }}</p>
             <h3>Rest Day(s):</h3>
-            <p>{{ store1.rest_day }}</p>
+            <p>{{ store.rest_day }}</p>
         </div>
 
         <!-- Display Google Map -->
         <div class="mb-4">
             <h4>How to Get There</h4>
-            <GMapMap :center="storePosition(store1)" :zoom="17" map-type-id="terrain" style="height: 300px;">
+            <GMapMap :center="storePosition(store)" :zoom="17" map-type-id="terrain" style="height: 300px;">
                 <GMapCluster>
                 <GMapMarker
                     :key="index"
-                    :position="storePosition(store1)"
+                    :position="storePosition(store)"
                     :clickable="true"
                     :draggable="true"
-                    @click="center = storePosition(store1)"
+                    @click="center = storePosition(store)"
                 />
                 </GMapCluster>
             </GMapMap>
@@ -52,10 +52,10 @@
   
   <script>
   export default {
-    props: ['storeIdStall'], // This prop is automatically passed by Vue Router
+    props: ['storeId'], // This prop is automatically passed by Vue Router
     data() {
       return {
-        store1: null, // Initialize store as null
+        store: null, // Initialize store as null
       };
     },
     created() {
@@ -66,20 +66,21 @@
         async fetchStoreDetails() {
             try {
             const response = await fetch(
-                `https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkerstore/`
+                `https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore/`
             );
             if (response.ok) {
                 const data = await response.json();
-    
-                // Find the store with the matching storeIdStall in the data array
-                const storeIdStall = parseInt(this.storeIdStall); // Convert storeIdStall to a number
-                const matchingStore = data.find((store1) => store1.id === storeIdStall);
+                console.log(data);
+                // Find the store with the matching storeId in the data array
+                const storeId = parseInt(this.storeId); // Convert storeId to a number
+                console.log(storeId);
+                const matchingStore = data.find((store) => store.owner_id === storeId);
     
                 if (matchingStore) {
-                // If a matching store is found, set it to the store data property
-                this.store = matchingStore;
+                    // If a matching store is found, set it to the store data property
+                    this.store = matchingStore;
                 } else {
-                console.error('Store not found');
+                    console.error('Store not found');
                 }
             } else {
                 console.error('Failed to fetch store details:', response.statusText);
@@ -88,8 +89,8 @@
             console.error('An error occurred while fetching store details:', error);
             }
         },
-        storePosition(store1) {
-            return { lat: store1.lat, lng: store1.long };
+        storePosition(store) {
+            return { lat: store.lat, lng: store.long };
         },
     },
   };

@@ -21,7 +21,7 @@ const routes = [
     { path: '/analytics', component: Analytics, name: "Analytics" },
     { path: '/GeolocationTracker', component: GeolocationTracker},
     { path: '/hawkerstall', component: HawkerStall },
-    { path: '/store/:storeIdStall', name: 'store-details-stall', component: StoreDetailsStall, props: true },
+    { path: '/store/:storeId', name: 'store-details-stall', component: StoreDetailsStall, props: true },
     { path: '/review', name: 'review', component: Review},
     { path: '/order', name: 'order', component: Order}
 ];
