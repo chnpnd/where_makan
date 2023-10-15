@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-        <h1 class="display-4">Restaurants</h1>
+        <h1 class="display-4">Hawker Centers</h1>
         <div class="searchContainer">
             <!-- Search input -->
             <input 
@@ -13,13 +13,13 @@
         <div class="list-group listContainer mt-3">
 
             <router-link
-                v-for="store in filteredResults"
-                :key="store.id"
+                v-for="center in filteredResults"
+                :key="center.id"
                 class="list-group-item list-group-item-action"
-                :to="{ name: 'store-details', params: { storeId: store.id } }"
+                :to="{ name: 'center-details', params: { centerId: center.id } }"
             >
-                <img :src="store.photo_url" alt="Store Photo" class="mr-3" style="max-width: 50px; max-height: 50px;">
-                {{ store.name }}
+                <img :src="center.photo_url" alt="Center Photo" class="mr-3" style="max-width: 50px; max-height: 50px;">
+                {{ center.name }}
             </router-link>
         </div>
 
@@ -68,10 +68,7 @@ export default {
             catch (error) {
                 console.error("An error occurred while fetching data:", error);
             }
-        },
-        storePosition(store) {
-            return { lat: store.lat, lng: store.long };
-        },
+        }
     },
     
     computed: {
@@ -81,9 +78,9 @@ export default {
             return [];
             }
 
-            return this.result.filter((store) =>
-                store.name.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-                store.address.toLowerCase().includes(this.searchValue.toLowerCase())
+            return this.result.filter((center) =>
+                center.name.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+                center.address.toLowerCase().includes(this.searchValue.toLowerCase())
             );
         }
     },

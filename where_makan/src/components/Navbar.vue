@@ -21,7 +21,7 @@
         </button>
       </li>
       <li class="nav-item">
-        <router-link :to="{name: 'Restaurant'}" class="nav-link">Restaurants</router-link> 
+        <router-link :to="{name: 'HawkerCenters'}" class="nav-link">Hawker Centers</router-link> 
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'Explore'}" class="nav-link">Explore</router-link>
