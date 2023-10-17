@@ -2,9 +2,9 @@
   <div class="bg-color">
     <div>
       <Navbar />
-      <div>
+      <!-- <div>
         <GeolocationTracker />
-      </div>
+      </div> -->
     </div>
   </div>
   <router-view/>

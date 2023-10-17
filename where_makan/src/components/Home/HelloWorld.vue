@@ -39,6 +39,7 @@
                         <!-- DO I INPUT MAP PAGE? -->
                         <router-link to="/Explore" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2" href="">Surprise Me!</router-link>
                     </div>
+                    <Searchbar/>
                 </div>
             </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -59,9 +60,13 @@
 </template>
 
 <script>
-import router from '../../routers';
+import Searchbar from '@/components/Searchbar.vue';
 
-
+export default {
+  components: {
+    Searchbar,
+  }
+}
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <v-divider></v-divider>
+  <!-- <v-divider></v-divider> -->
   
   <div class="home-container">
     <div class="action-section">

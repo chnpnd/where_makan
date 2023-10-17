@@ -1,6 +1,5 @@
 <template>
     <div class="container mt-6">
-        <router-link to="/hawkerCenters" class="btn btn-primary">Back</router-link>
         <h1 class="display-4">{{ center.name }}</h1>
         <p class="lead">{{ center.address }}</p>
         <hr>
