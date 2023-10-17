@@ -26,7 +26,7 @@
 <script>
 import Header from '@/components/Home/HelloWorld.vue';
 import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
-import Homecards from '@/components/Home/Homecards.vue';
+import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 
 export default {
