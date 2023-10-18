@@ -1,8 +1,6 @@
-
-
 <template>
   <div>
-    <header>
+    <header class="container">
       <div class='container-fluid '>
         <div class='row'>
           <div class='col-md-12'>
@@ -32,14 +30,12 @@
               <div class="carousel-caption static-text text-center ">
                 <div class="row">
                   <div class="col-md-12 mx-auto"> <!--ADJUST RESPONSIVENESS FOR THIS-->
-                    <h1 class="mt-3">
-                      Hawker Heaven: Food Worth Stopping For
-                    </h1>
+                    <h1 class="intro-text mt-3 " ref="introText">Hawker Heaven</h1>
                     <!-- INPUT THE NAVBAR HERE -->
                     <div class="">
-                        <router-link to="/map" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2">Explore Me!</router-link> 
+                        <router-link :to="{name: 'Restaurant'}" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2">Explore Me!</router-link> 
                         <!-- DO I INPUT MAP PAGE? -->
-                        <router-link to="/Explore" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2" href="">Surprise Me!</router-link>
+                        <router-link :to="{name: 'Restaurant'}" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2">Surprise Me!</router-link>
                     </div>
                 </div>
             </div>
@@ -61,8 +57,35 @@
 </template>
 
 <script>
-import router from '../../routers';
+  import animationJS from '@/components/Home/homeAnimation.js';
+  import TopPickcards from '@/components/Home/HomeCards.vue';
+  import recommendedFoodCards from '@/components/Home/recommendedCards.vue';
 
+export default {
+  mounted() {
+    // Use functions from the imported external JavaScript file
+    animationJS.scrollTrigger('.intro-text');
+  },
+  methods: {
+    // custom methods, if any
+  },
+  components:{
+    TopPickcards,
+    recommendedFoodCards,
+  }
 
+  
+};
 </script>
 
+<style scoped>
+  @import '@/components/Home/home.css';
+
+  .carousel-container {
+  height: 100vh; /* Set the carousel container's height to 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+</style>

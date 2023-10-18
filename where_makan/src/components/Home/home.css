@@ -1,0 +1,51 @@
+/*General styling for structure*/
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+
+.carousel {
+  width: 100%; /* Set the width to 100% to take up the entire screen width */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add these styles for the image within the carousel */
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*******/
+
+.intro-text {
+  text-align: center;
+  font-size: 3em;
+  width: 0ch;
+  overflow: hidden;
+  margin: 0 auto;
+  white-space: nowrap;
+  background-image: linear-gradient(155deg, white, white);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.intro-text.active {
+  animation: typeIn 2s steps(28) forwards;
+}
+
+@keyframes typeIn {
+  to {
+    width: 28ch;
+  }
+}
+
+.animated {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+

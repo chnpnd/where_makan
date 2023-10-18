@@ -6,7 +6,9 @@
 
   <div class="container-fluid pl-0 pr-0">
   <nav class="navbar navbar-expand-lg">
-  <router-link :to="{name: 'Home'}" class="navbar-brand">Home</router-link>
+  <router-link :to="{name: 'Home'}" class="navbar-brand">
+    <img src="@/assets/where_makan_logo.png" alt="Logo" class="navbar-logo" width="30" height="40">
+  </router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcoll" aria-controls="navbarcoll" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -41,5 +43,4 @@
   .navbar-nav .nav-item .nav-link {
     color: black; /* Set the text color to black */
   }
-
 </style>

@@ -1,39 +1,63 @@
 <template>
   <div>
-    <div>
-      <Header />
-    </div>
-    <v-divider></v-divider>
-    <h1 class="homeH1 text-center">Food Nearby You:</h1>
-    <v-divider></v-divider>
-    <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-    <div id="map">
-      <Map />
-    </div>
-    <v-divider></v-divider>
-    <Homecards />
+    <!-- <full-page :options="options"> -->
+      <div class="section ">
+        <Header />
+      </div>
+      <v-divider></v-divider>
+      <div>
+        <recommendedFoodCards />
+      </div>
+      <v-divider></v-divider>
+      <div>
+        <TopPickcards />
+      </div>
+    <!-- </full-page> -->
   </div>
 </template>
 
 <script>
   import Header from '@/components/Home/HelloWorld.vue';
   import Map from '@/GoogleMap.vue';
-  import Homecards from '@/components/Home/Homecards.vue';
+  import TopPickcards from '@/components/Home/HomeCards.vue';
+  import recommendedFoodCards from '@/components/Home/recommendedCards.vue';
+  import FullPage from 'vue-fullpage.js'
+
   export default {
     name: 'Home',
     components:{
       Header,
       Map,
-      Homecards,
+      TopPickcards,
+      recommendedFoodCards,
+      FullPage,
 
+    },
+    data(){
+    return{
+      options: {
+        paddingTop: '30px',
+      }
     }
+  },
+  destroyed() {
+      $.fn.fullpage.destroy('all');
+  }
   }
 
 </script>
 <style>
-
-
-
-
-
+/* .section1{
+  background: gray;
+}
+.section2{
+  background: yellow;
+}
+.section3{
+  background: green;
+} */
+.section{
+    width: 100vw;
+    height: 100vh;
+}
 </style>
