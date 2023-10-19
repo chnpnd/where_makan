@@ -18,6 +18,7 @@
     </div>
     
     <v-divider></v-divider>
+    <Video />
     <Homecards />
   </div>
 </template>
@@ -28,6 +29,7 @@ import Header from '@/components/Home/HelloWorld.vue';
 import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
 import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
+import Video from '@/components/Video.vue';
 
 export default {
   name: 'Home',
@@ -35,7 +37,8 @@ export default {
     Header,
     Map,
     Homecards,
-    Questionnaire
+    Questionnaire,
+    Video
   },
   data() {
     return {

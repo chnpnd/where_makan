@@ -3,7 +3,7 @@
     <div class="recommendations">
         <p> This is the recommendation page </p>
         <button @click="created()">Food Near Me</button> 
-    </div>
+    </div><h1></h1>
 
     <Geolocation />
  
