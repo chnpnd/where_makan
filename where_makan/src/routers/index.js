@@ -2,23 +2,32 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from '../App.vue';
 import Home from '../views/Home.vue';
 import Login from '../views/About.vue'
-import Restaurant from '../views/Restaurant/Restaurant.vue'
-import Explore from '../GoogleMap.vue'
+import Search from '../components/Searchbar.vue'
+import Explore from '../components/Home/GoogleMap.vue'
 import Analytics from '../views/Analytics.vue';
-import StoreDetails from '../views/Restaurant/StoreDetails.vue';
+import CenterDetails from '../views/HawkerCenters/CenterDetails.vue';
 import GeolocationTracker from '../components/GeolocationTracker.vue';
-import HawkerStall from '../views/HawkerStall.vue';
-import StoreDetailsStall from '../views/StoreDetailsStall.vue';
+import StallDetails from '../views/HawkerStalls/StallDetails.vue';
+import FoodDetails from '../views/Food/FoodDetails.vue';
+import Review from '../components/LeaveReview.vue';
+import Order from '../components/FoodOrder.vue';
 
 const routes = [
     { path: '/', component: Home, name: "Home" },
     { path: '/login', component: Login, name: "Login" },
-    { path: '/restaurant', component: Restaurant, name: "Restaurant" },
-    { path: '/store/:storeId', name: 'store-details', component: StoreDetails, props: true }, // Dynamic route for store details
+    { path: '/search', component: Search, name: "Search" },
     { path: '/explore', component: Explore, name: "Explore" },
     { path: '/analytics', component: Analytics, name: "Analytics" },
-    { path: '/GeolocationTracker', component: GeolocationTracker },
-    { path: '/hawkerstall', component: HawkerStall },
+    { path: '/GeolocationTracker', component: GeolocationTracker},
+    { path: '/stall/:stallId', name: 'stall-details', component: StallDetails, props: true },
+    { path: '/review', name: 'review', component: Review},
+    { path: '/order', name: 'order', component: Order},
+    // { path: '/stall-/:stallId', name: 'stall-details', component: StallDetails, props: true}
+    // Dynamic Routes for search details
+    { path: '/center/:centerId', name: 'center-details', component: CenterDetails, props: true },
+    { path: '/food-details/:foodId', name: 'food-details', component: FoodDetails, props: true },
+    { path: '/stall-details/:stallId', name: 'stall-details', component: StallDetails, props: true},
+    
 ];
 
 const router = createRouter({

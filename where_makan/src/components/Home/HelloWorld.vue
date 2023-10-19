@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="container">
-      <div class='container-fluid '>
+      <div class='container-fluid'>
         <div class='row'>
           <div class='col-md-12'>
             <div id="carouselExampleCaptions" class="carousel slide carousel-container">
@@ -33,10 +33,11 @@
                     <h1 class="intro-text mt-3 " ref="introText">Hawker Heaven</h1>
                     <!-- INPUT THE NAVBAR HERE -->
                     <div class="">
-                        <router-link :to="{name: 'Restaurant'}" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2">Explore Me!</router-link> 
+                        <router-link :to="{name: 'Home'}" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2 my-4">Explore Me!</router-link> 
                         <!-- DO I INPUT MAP PAGE? -->
-                        <router-link :to="{name: 'Restaurant'}" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2">Surprise Me!</router-link>
+                        <router-link :to="{name: 'Home'}" class="btn custom-button btn-outline-light text-light btn-sm btn-min-block mx-2">Surprise Me!</router-link>
                     </div>
+                    <Searchbar/>
                 </div>
             </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -57,9 +58,9 @@
 </template>
 
 <script>
+
   import animationJS from '@/components/Home/homeAnimation.js';
-  import TopPickcards from '@/components/Home/HomeCards.vue';
-  import recommendedFoodCards from '@/components/Home/recommendedCards.vue';
+  import Searchbar from '@/components/Searchbar.vue';
 
 export default {
   mounted() {
@@ -70,8 +71,7 @@ export default {
     // custom methods, if any
   },
   components:{
-    TopPickcards,
-    recommendedFoodCards,
+    Searchbar
   }
 
   
@@ -89,3 +89,4 @@ export default {
 }
 
 </style>
+

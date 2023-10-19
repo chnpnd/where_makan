@@ -48,4 +48,8 @@ body {
   opacity: 1;
 }
 
+.container-fluid{
+  width:100%;
+}
+
 
