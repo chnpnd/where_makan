@@ -1,71 +1,56 @@
 <template>
-  <div>
-    <!-- <full-page :options="options"> -->
-      <div class="section ">
-        <Header />
-      </div>
-      <v-divider></v-divider>
-      <div>
-        <recommendedFoodCards />
-      </div>
-      <v-divider></v-divider>
-      <div>
-        <TopPickcards />
-      </div>
-      <div>
-        <HawkerCards/>
-      </div>
-
-    <!-- </full-page> -->
+  <Header />
   <!-- <v-divider></v-divider> -->
+  
   <div class="home-container">
     <div class="action-section">
       <button class="recommend-button" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
       <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
     </div>
-  </div>
+    
+    <v-divider></v-divider>
+    
+    <h1 class="homeH1 text-center">Food Nearby You:</h1>
+    <v-divider></v-divider>
+    
+    <div class="map-section">
+      <Map />
+    </div>
+    
+    <v-divider></v-divider>
+    <Video />
+    <Homecards />
   </div>
 </template>
 
+
 <script>
-  import Header from '@/components/Home/HelloWorld.vue';
-  import TopPickcards from '@/components/Home/HomeCards.vue';
-  import recommendedFoodCards from '@/components/Home/recommendedCards.vue';
-  import FullPage from 'vue-fullpage.js'
-  import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
-  import HawkerCards from '@/components/Home/HawkerCentreCards.vue';
+import Header from '@/components/Home/HelloWorld.vue';
+import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
+import Homecards from '@/components/Home/HomeCards.vue';
+import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
+import Video from '@/components/Video.vue';
 
-  export default {
-    name: 'Home',
-    components:{
-      Header,
-      TopPickcards,
-      recommendedFoodCards,
-      FullPage,
-      Questionnaire,
-      HawkerCards
-
-    },
-    data(){
-    return{
-      options: {
-        paddingTop: '30px',
-        showQuestionnaire: false
-      }
-    }
-  },methods: {
+export default {
+  name: 'Home',
+  components: {
+    Header,
+    Map,
+    Homecards,
+    Questionnaire,
+    Video
+  },
+  data() {
+    return {
+      showQuestionnaire: false
+    };
+  },
+  methods: {
     toggleQuestionnaire() {
       this.showQuestionnaire = !this.showQuestionnaire;
-
     }
-  },
-  destroyed() {
-      $.fn.fullpage.destroy('all');
   }
-  }
-
-
-  
+}
 </script>
 
 <style scoped>
@@ -135,19 +120,7 @@ v-divider {
     align-self: center; /* Centering the divider */
 }
 
-/* .section1{
-  background: gray;
-}
-.section2{
-  background: yellow;
-}
-.section3{
-  background: green;
-} */
-.section{
-    width: 100vw;
-    height: 100vh;
-}
 
+/* Add other styles as required */
 </style>
 

@@ -32,6 +32,7 @@ declare module 'vue' {
     Searchbar: typeof import('./src/components/Searchbar.vue')['default']
     Test: typeof import('./src/components/test.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    Video: typeof import('./src/components/Video.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
