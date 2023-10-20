@@ -1,60 +1,55 @@
 <template>
+    <div class = "container">
+        <div class="row">
+            <div class = "col-2"></div>
 
-    <div class="row">
-        <div class = "col-4"></div>
+            <div class="col p-5 userProfile">
+                <div class="card" style="width: 50em;"> 
+                    <div class="card-body"> 
+                        <h2 class="card-title text-center">
+                            Rodger Mok
+                            <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
+                        </h2>
+                    </div> 
+                    <div class="card-body text-center"> 
+                        <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Reviews</router-link>
+                        &nbsp;
+                        <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>
+                    </div> 
+                </div> 
+            </div>
 
-        <div class="col-4 p-5 userProfile">
-            <div class="card" style="width: 50em;"> 
-                <div class="card-body"> 
-                    <h5 class="card-title text-center">
-                        Rodger Mok (Business Owner)
-                        <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
-                    </h5> 
-                </div> 
-                <div class="card-body text-center"> 
-                    <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Reviews</router-link>
-                    &nbsp;
-                    <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>
-                </div> 
-            </div> 
+            <div class = "col-2"></div>  
         </div>
 
-        <div class = "col-4"></div>
-        
+        <div class="row">
+            <div class = "col-2"></div>
+
+            <div class="col p-5 userProfile">
+                <div class="card" style="width: 50em;"> 
+                    <div class="card-body"> 
+                        <h2 class="card-title text-center">
+                            Alice Low
+                            <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
+                        </h2> 
+                    </div> 
+
+                    <div class="card-body text-center"> 
+                        <h3>Reward Points: 125</h3>
+                        <router-link to="/myrewards" class="btn btn-outline-primary btn-lg">My Rewards</router-link>
+                        &nbsp;
+                        <router-link to="/exchangerewards" class="btn btn-outline-primary btn-lg">Exchange Points for Rewards</router-link>
+                        &nbsp;
+                        <router-link to="/favouritedstalls" class="btn btn-outline-primary btn-lg">My Favourite Stalls</router-link>
+                    </div> 
+                </div> 
+            </div>
+
+            <div class = "col-2"></div>
+
+        </div>
     </div>
-
-    <div class="row">
-        <div class = "col-1"></div>
-        <div class="col p-5 userProfile">
-            <div class="card" style="width: 50em;"> 
-                <div class="card-body"> 
-                    <h5 class="card-title text-center">
-                        Alice Low (Consumer)
-                        <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
-                    </h5> 
-                </div> 
-                <div class="card-body text-center"> 
-                    <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Reviews</router-link>
-                    &nbsp;
-                    <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>
-                </div> 
-            </div> 
-        </div>
-
-        <div class = "col-1"></div>
-
-        <div class="col p-5 userRewards">
-            <h1>Reward Points: 125</h1>
-            <router-link to="/myrewards" class="btn btn-outline-primary btn-lg">My Rewards</router-link>
-            <p></p>
-            <router-link to="/exchangerewards" class="btn btn-outline-primary btn-lg">Exchange Points for Rewards</router-link>
-            <p></p>
-            <router-link to="/favouritedstalls" class="btn btn-outline-primary btn-lg">My Favourite Stalls</router-link>
-        </div>
-
-        <div class = "col-1"></div>
-
-    </div>
+   
     
 </template>
   
