@@ -1,4 +1,5 @@
 <template>
+  <div>
   <Header />
   <!-- <v-divider></v-divider> -->
   
@@ -13,20 +14,23 @@
     <h1 class="homeH1 text-center">Food Nearby You:</h1>
     <v-divider></v-divider>
     
-    <div class="map-section">
+
+    
+    <!-- <div class="map-section">
       <Map />
-    </div>
+    </div> -->
     
     <v-divider></v-divider>
     <Video />
     <Homecards />
   </div>
+</div>
 </template>
 
 
 <script>
 import Header from '@/components/Home/HelloWorld.vue';
-import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
+  import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
 import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';

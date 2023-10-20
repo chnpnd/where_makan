@@ -14,7 +14,7 @@ declare module 'vue' {
     GeolocationTracker: typeof import('./src/components/GeolocationTracker.vue')['default']
     GoogleMap: typeof import('./src/components/Home/GoogleMap.vue')['default']
     HawkerCentreCards: typeof import('./src/components/Home/HawkerCentreCards.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    HelloWorld: typeof import('./src/components/Home/HelloWorld.vue')['default']
     HomeCards: typeof import('./src/components/Home/HomeCards.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
