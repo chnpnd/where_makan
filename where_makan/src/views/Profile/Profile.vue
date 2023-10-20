@@ -12,6 +12,7 @@
                         </h2>
                     </div> 
                     <div class="card-body text-center"> 
+                        <!--This router link to the store review, is it possible to link the business user to their own store reviews-->
                         <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Reviews</router-link>
                         &nbsp;
                         <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>
