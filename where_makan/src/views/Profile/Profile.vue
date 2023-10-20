@@ -1,10 +1,10 @@
 <template>
 
     <div class="row">
-        <div class = "col-1"></div>
+        <div class = "col-4"></div>
 
-        <div class="col p-5 userProfile">
-            <div class="card" style="width: auto;"> 
+        <div class="col-4 p-5 userProfile">
+            <div class="card" style="width: 50em;"> 
                 <div class="card-body"> 
                     <h5 class="card-title text-center">
                         Rodger Mok (Business Owner)
@@ -19,19 +19,26 @@
             </div> 
         </div>
 
-        <div class = "col-1"></div>
+        <div class = "col-4"></div>
         
     </div>
 
     <div class="row">
         <div class = "col-1"></div>
         <div class="col p-5 userProfile">
-            <h1>Alice Low (Consumer)</h1> 
-            <p>Username:</p>
-            <p>Password: *******</p>
-            <p>Date of Birth:</p>
-            <p>Address: </p>
-            <p>Phone Number</p>
+            <div class="card" style="width: 50em;"> 
+                <div class="card-body"> 
+                    <h5 class="card-title text-center">
+                        Alice Low (Consumer)
+                        <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
+                    </h5> 
+                </div> 
+                <div class="card-body text-center"> 
+                    <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Reviews</router-link>
+                    &nbsp;
+                    <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>
+                </div> 
+            </div> 
         </div>
 
         <div class = "col-1"></div>
