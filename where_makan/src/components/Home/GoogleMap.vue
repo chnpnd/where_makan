@@ -23,27 +23,10 @@
         <h1 class="text-center">All hawker centres:</h1>
         <div class="card-container">
         <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-        <div class='container-fluid'>
-            <div class='row justify-content-center'>
-                    <v-card v-for="hawkerCenter in hawkerCenters" :key="hawkerCenter.id" max-width="300" max-height="400" style="margin:10px;">
-                        <v-img :src="hawkerCenter.photo_url" cover max-height="100"></v-img>
-                        <v-card-title>{{ hawkerCenter.name }}</v-card-title>
-                        <v-card-text>{{ hawkerCenter.address }}</v-card-text>
-                        <v-card-actions>
-                            <!--    NEED HELP ON WHY IT NEEDS TO CLICK ON 2 CARDS BEFORE SWITCHING-->
-                            <v-btn><router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }">Click me</router-link></v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </div> <!-- col -->
-            </div> <!-- row -->
-        </div> <!-- container -->
-
-
-
-
+            <HawkerCentres />
+        </div>
     </div>
 </template>
-
 
 <style scoped>
 .map-container {
@@ -103,6 +86,8 @@
 
 
 <script>
+import HawkerCentres from './HawkerCentreCards.vue';  
+
     export default {
         name: 'App',
         data() {
@@ -124,6 +109,9 @@
             result: {
             },
             }
+        },
+        components: {
+            HawkerCentres
         },
         created() {
         // Use the created lifecycle hook to fetch data when the component is created
