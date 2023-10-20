@@ -46,17 +46,6 @@
                 {{ stall.name }}
             </router-link>
         </div>
-
-        <!-- Display Sample Youtube video -->
-        <!-- <div class="video-container">
-            <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/ERyJ_9IIfU8"
-                frameborder="0"
-                allowfullscreen
-            ></iframe>
-        </div> -->
     </div>
 
 </template>
@@ -131,79 +120,77 @@ export default {
 </script>
 
 <style>
-    .listContainer {
-        width: 95%;
-        max-height: 256px; /* Set a maximum height for the container */
-        overflow-y: auto; /* Add a vertical scrollbar when content overflows */
-        margin: 0% 2.5% 0% 2.5%;
+/* Base and Layout styles */
+    .container {
+        display: flex;           
+        justify-content: center; 
+        align-items: center;     
+        flex-direction: column;
+        width: 100%;
     }
 
-    .list-group-item-action
-    {
-        text-align: left;
+    .listContainer {
+        width: 95%;
+        max-height: 20rem;
+        overflow-y: auto;
+        margin: 0 2rem;
+    }
+
+    .list-group-item-action {
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .list-group-item-action:hover {
+        background-color: lightgray;
     }
 
     .searchContainer {
-        padding-top: 125px;
+        width: 95%;
+        margin: 0 auto;
     }
 
-    /* CSS for the search input */
+    /* Search Input styles */
     .input {
         width: 100%;
-        padding: 10px 20px 10px 20px;
+        padding: 1rem 1.5rem;
         border: none;
-        border-radius: 4px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        font-size: 18px;
+        border-radius: 1.5rem;
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+        font-size: 1rem;
         outline: none;
-        transition: box-shadow 0.3s ease-in-out;
+        transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
         background-color: white;
     }
 
-    /* Add styles for various states of the input */
     .input:focus {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
     }
-    .input--rounded {
-        border-radius: 25px; /* Adjust the value to control the roundness */
-    }
+
     .input::placeholder {
         font-style: italic;
+        color: #bbb;
     }
 
+    /* Label styles */
     .label {
-        color: white;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 12px;
-        margin-right: 8px;
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 0.75rem;
     }
 
-    .destination-label {
-        background-color: blue;
-    }
+    .destination-label { background-color: #007BFF; }
+    .food-label { background-color: #28A745; }
+    .stall-label { background-color: #FFA500; }
 
-    .food-label {
-        background-color: green;
-    }
-
-    .stall-label {
-        background-color: orange;
-    }
-    
-    .video-container {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        overflow: hidden;
-    }
-
-    /* Style for the embedded iframe */
-    .video-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    /* Image styling within list items */
+    .list-group-item-action img {
+        border-radius: 50%;
+        margin-right: 1rem;
     }
 </style>
