@@ -7,6 +7,11 @@
                    <label class="fw-bold" style="color: purple"> Username </label> 
                    <input type="text" class="form-control" placeholder="Should reflect from Swagger.io"> 
                 </div>
+
+                <div class="col form-group"> 
+                   <label class="fw-bold" style="color: purple"> Full Name </label> 
+                   <input type="text" class="form-control" placeholder="Should reflect from Swagger.io"> 
+                </div>
             </div>
 
             <div class="row" id="password"> 
