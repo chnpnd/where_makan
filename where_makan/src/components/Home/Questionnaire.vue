@@ -123,12 +123,8 @@
 </template>
   
 <script>
-import Modal from '../Modal.vue'; 
 
 export default {
-    components: {
-        Modal, // Register the modal component
-    },
     data() {
         return {
             showModal: false,

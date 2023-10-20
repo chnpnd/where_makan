@@ -1,20 +1,25 @@
 <template>
   <div class="bg-color">
-    <div>
-      <Navbar />
-      <!-- <div>
-        <GeolocationTracker />
-      </div> -->
-    </div>
-  </div>
-  <router-view/>
+    <Navbar />
+  <!-- <div id="nav">
+    <router-view :showModal="showModal" /> 
+  </div> -->
+
+  <router-view/>  
+</div>
+ 
 </template>
 
 <script setup>
+
+  import { ref } from 'vue'
+  const showModal = ref(false)
+  import Navbar from '@/components/Navbar.vue';
   import 'bootstrap/dist/css/bootstrap.css';
 </script>
 
 <style scoped>
+
   /* Define a custom class for the "Login" button */
   .login-button {
     font-size: 16px; /* Adjust the font size as needed */

@@ -1,9 +1,10 @@
 <template>
+  <div>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <div>
   <div class="container-fluid pl-0 pr-0">
   <nav class="navbar navbar-expand-lg">
-  <router-link to="/" class="navbar-logo-link">
+  <router-link :to="{name: 'Home'}" class="navbar-brand">
     <img src="@/assets/where_makan_logo.png" alt="Logo" class="navbar-logo">
   </router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcoll" aria-controls="navbarcoll" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,11 +40,19 @@
         </modal>
     </Teleport>
 </div>
+</div>
 
 </template>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap'); // Vintage Fonts
+  .navbar-nav .nav-item .nav-link:hover {
+    color: #D40000; 
+    background: none;
+  }
+  .navbar-nav .nav-item .nav-link {
+    color: black; /* Set the text color to black */
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap'); // Vintage Fonts
 
 .navbar {
     background-color: #f3e0d2; // Soft pastel color inspired by shophouses

@@ -22,10 +22,12 @@ const routes = [
     { path: '/stall/:stallId', name: 'stall-details', component: StallDetails, props: true },
     { path: '/review', name: 'review', component: Review},
     { path: '/order', name: 'order', component: Order},
+    // { path: '/stall-/:stallId', name: 'stall-details', component: StallDetails, props: true}
     // Dynamic Routes for search details
     { path: '/center/:centerId', name: 'center-details', component: CenterDetails, props: true },
     { path: '/food-details/:foodId', name: 'food-details', component: FoodDetails, props: true },
-    { path: '/stall-details/:stallId', name: 'stall-details', component: StallDetails, props: true}
+    { path: '/stall-details/:stallId', name: 'stall-details', component: StallDetails, props: true},
+    
 ];
 
 const router = createRouter({
