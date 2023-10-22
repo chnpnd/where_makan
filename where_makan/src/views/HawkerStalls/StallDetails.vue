@@ -41,21 +41,35 @@
 
         <!-- Review Form Modal -->
         <!-- Consumer ID is HARDCODED -->
-        <LeaveReview :showModal="showReview" :consumerId = "10" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted"/>
+        <LeaveReview :showModal="showReview" :consumerId = "11" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted"/>
 
 
         <h1 class="display-4 mt-5 text-center">Reviews </h1>
         <div v-if="reviews && reviews.length > 0">
             <div class="review-grid">
-                <div v-for="review in reviews" :key="review.id" class="review-card">
-                    <div class="review-card">
-                        <div class="user-profile">
-                            <strong>{{ review.consumer_name }}</strong>
+                <!-- Consumer Name is HARDCODED  -->
+                <div v-for="review in reviews" :key="review.id" :class="{ 'review-card': true, 'user-own-review': review.consumer_name === loggedInUsername }">
+                    <div class="review-row">
+                        <!-- Left side with image and consumer name -->
+                        <div class="left-side">
+                            <img :src="getConsumerImageURL(review.imageBase64)" alt="Consumer Image" class="consumer-image" />
+                            <strong class="highlighted-name">{{ review.consumer_name }}</strong>
+                            <div class="review-actions" v-if="review.consumer_name === loggedInUsername">
+                                <button @click="editComment(review)">Edit</button>
+                                <button @click="removeComment(review)">Remove</button>
+                            </div>
                         </div>
-                        <div class="review-content">
-                            <p><strong>Ratings:</strong> {{ displayStars(review.rating) }}</p>
-                            <p><strong>Review:</strong> {{ review.comment }}</p>
-                            <p><strong>Reviewed</strong> {{ formatDate(review.date) }}</p>
+                        <!-- Right side with ratings and comment (with show more button) -->
+                        <div class="right-side" :style="{'height': review.expanded ? 'auto' : '240px'}">
+                            <div class="star-rating static-star">{{ displayStars(review.rating) }}</div>
+                            <div class="comment-container">
+                                <div class="comment" :class="{ 'expanded': review.expanded }">
+                                    {{ truncatedComments[reviews.indexOf(review)] }}
+                                    <span v-if="review.comment.length > maxCommentLength" @click="toggleCommentExpand(review)">
+                                    <div>{{ review.expanded ? 'Show Less' : 'Read More' }}</div>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -76,10 +90,13 @@ export default {
     },
     data() {
         return {
+            // Username is HARDCODED
+            loggedInUsername: 'consumer1',
             foodStall: {},
             foodList: {},
             cuisine: {},
-            reviews: { consumer_id: '', hawker_stall_id: '', rating: '', comment: '', date: '', consumer_name: ''},
+            maxCommentLength: 600,
+            reviews: { consumer_id: '', hawker_stall_id: '', rating: '', comment: '', imageBase64: '', date: '', consumer_name: ''},
             showReview: false,
         }
     },
@@ -146,6 +163,12 @@ export default {
         toggleReviewForm() {
             this.showReview = !this.showReview; // Set to true to show the modal
         },
+        getConsumerImageURL(base64String) {
+            if (base64String) {
+                return `data:image/png;base64,${base64String}`;
+            }
+            return '';
+        },
         displayStars(rating) 
         {
             const filledStars = rating;
@@ -167,8 +190,36 @@ export default {
             return new Date(dateString).toLocaleDateString(undefined, options);
         },
         handleReviewSubmitted() {
-        // Update the reviews by fetching them again from the API or any other method you use to update reviews
-        this.fetchReviews();
+            this.fetchReviews();
+        },
+        toggleCommentExpand(review) {
+            review.expanded = !review.expanded;
+            this.$forceUpdate(); // Force Vue to update the DOM
+        },
+        displayLimitedComment(fullComment) {
+            return fullComment.length > this.maxCommentLength
+            ? fullComment.slice(0, this.maxCommentLength) + '...'
+            : fullComment;
+        },
+        editComment(review) {
+            // Show a modal or dialog for editing the comment.
+            // Pass the review object to the modal to pre-fill the comment.
+            // Update the comment after editing.
+        },
+        
+        removeComment(review) {
+            // Show a confirmation dialog to confirm comment removal.
+            // If confirmed, remove the review from the list.
+        },
+    },
+    computed: {
+        truncatedComments() {
+            return this.reviews.map((review) => {
+                if (review.comment.length > this.maxCommentLength && !review.expanded) {
+                    return review.comment.substring(0, this.maxCommentLength) + '...';
+                }
+                return review.comment;
+            });
         },
     },
     components:{
@@ -178,7 +229,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .stall-container {
     max-width: 800px;
     margin: 50px auto;
@@ -236,24 +287,24 @@ export default {
     padding-left: 16px;
     display: inline;
     justify-content: center;
-    margin-top: 20px; /* Adjust margin as needed */
+    margin-top: 20px;
 }
 
 .review-button {
-    background-color: #007BFF; /* Choose a professional color */
-    color: #fff; /* Text color */
-    padding: 10px 20px; /* Adjust padding as needed */
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px; /* Add rounded corners */
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
 .review-button:hover {
-  background-color: #0056b3; /* Change color on hover */
-  transform: translateY(-2px); /* Add a subtle lift on hover */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a box shadow */
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .review-button:active {
@@ -262,17 +313,10 @@ export default {
 
 .review-grid{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-gap: 20px;
-    max-width: 1200px; /* Adjust the width as needed */
+    max-width: 1200px;
     margin: 0 auto;
-}
-
-
-.review-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .review-card {
@@ -281,26 +325,54 @@ export default {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+    max-width: 100%;
+}
+.review-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.row {
-  margin: 0;
+.user-own-review {
+    background-color: #FFFFCC;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
+.left-side {
+    display: flex;
+    align-items: center;
+    margin-right: 400px;
 }
 
-.no-reviews {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100px; /* Set the height as needed */
-  background-color: #f5e8d7; /* Choose a background color */
-  border: 1px solid #ddd; /* Add a border for a professional look */
-  border-radius: 5px; /* Add rounded corners */
-  font-size: 36px; /* Adjust the font size */
-  color: #888; /* Choose a professional text color */
+.right-side {
+    flex: 1;
+    flex-direction: column;
+}
+
+.static-star {
+    font-size: 36px;
+    color: #FFD700;
+}
+
+.consumer-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.highlighted-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.comment-container {
+    max-width: 100%; /* Ensure it doesn't exceed its parent's width */
+    word-wrap: break-word; /* Allow long words to wrap to the next line */
+}
+
+.comment.expanded {
+    max-width: 100%; /* Set to 100% to allow full width */
+    word-wrap: normal; /* Allow long words to overflow container */
 }
 </style>
