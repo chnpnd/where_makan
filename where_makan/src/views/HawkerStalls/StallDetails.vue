@@ -1,44 +1,68 @@
 <template>
-    <div class="container mt-4">
-        <!-- Food Stall Information -->
-        <div v-if="foodStall" class="stall-container d-flex mb-5">
-            <div class="stall-image-container mr-4">
-                <img :src="foodStall.store_url" alt="Stall Image" class="stall-image img-thumbnail" />
-            </div>
-            <div class="stall-details">
-                <h1 class="display-4">{{ foodStall.name }}</h1>
-                <ul class="list-unstyled">
-                    <li><strong>Phone Number:</strong> {{ foodStall.phone_number }}</li>
-                    <li><strong>Address:</strong> {{ foodStall.address }}</li>
-                    <li><strong>Opening Hours:</strong> {{ foodStall.opening_hours }}</li>
-                    <li><strong>Rest Day:</strong> {{ foodStall.rest_day }}</li>
-                    <li><strong>Signature Item:</strong> {{ foodStall.signature_item }}</li>
-                    <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
-                </ul>
-                <a :href="foodStall.source_url" target="_blank" class="btn btn-primary stall-link">Read More</a>
-                <button v-if="showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button">Review</button>
-            </div>
-        </div>
+    <div class="container mt-4 bg-white">
+        <div class="container mt-4">
+            <!-- Food Stall Information -->
+            <div v-if="foodStall" class="stall-container d-flex mb-5">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="stall-details">
+                            <h1 class="display-4 text-left fw-bold">{{ foodStall.name }}</h1>
+                            <ul class="list-unstyled pl-1">
+                                <li><strong>Phone Number:</strong> {{ foodStall.phone_number }}</li>
+                                <li><strong>Address:</strong> {{ foodStall.address }}</li>
+                                <li><strong>Opening Hours:</strong> {{ foodStall.opening_hours }}</li>
+                                <li><strong>Rest Day:</strong> {{ foodStall.rest_day }}</li>
+                                <li><strong>Signature Item:</strong> {{ foodStall.signature_item }}</li>
+                                <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
+                            </ul>
+                            <a :href="foodStall.source_url" target="_blank" class="btn btn-primary stall-link">Read More</a>
+                            <button v-if="showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button">Review</button>
+                        </div>
+                    </div>
 
-        <!-- Food Menu -->
-        <h1 class="display-4 text-center mb-4">Menu: </h1>
-        <div v-if="foodList && foodList.length > 0" class='row justify-content-center'>
-            <div v-for="food in foodList" :key="food.id" class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card h-100">
-                    <img :src="food.url" class="card-img-top" alt="Food Image">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ food.name }}</h5>
+                    <div class="col-6 stall-image-container">
+                        <img :src="foodStall.store_url" alt="Stall Image" class="stall-image img-thumbnail" />
                     </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <router-link :to="{ name: 'food-details', params: { foodId: food.id } }" class="btn btn-info btn-sm">View food</router-link>
-                        <router-link :to="{ name: 'order'}" class="btn btn-success btn-sm">Add to cart <i class="bi bi-cart"></i></router-link>
-                    </div>
+
                 </div>
+
+                <div class="row">
+                    
+                </div>
+                
             </div>
-        </div>
-        <div v-else>
-            <h1 class="display-4 text-center text-muted">No food is available </h1>
-        </div>
+
+                <!-- Food Menu -->
+                <div class="container">
+                    <h1 class="display-4 text-left mb-4 pl-2">Menu </h1>
+                    <div v-if="foodList && foodList.length > 0" class='row justify-content-left'>
+                        <div v-for="food in foodList" :key="food.id" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="card h-100 w-500">
+                                <router-link :to="{ name: 'food-details', params: { foodId: food.id } }" class="text-black text-decoration-none">
+                                    <div class="row">
+                                        <div class = "col-4">
+                                            <img :src="food.url" class="card-img-top" alt="Food Image">
+                                        </div>
+
+                                        <div class = "col-8">
+                                            <h4 class="card-title">{{ food.name }}</h4>
+                                            <h5 class="card-title">${{ food.price }}</h5>
+
+                                        </div>
+                                    </div>
+                                </router-link>
+
+                                <div class="card-footer d-flex justify-content-between">
+                                    <router-link :to="{ name: 'order'}" class="btn btn-success btn-sm">Add to cart <i class="bi bi-cart"></i></router-link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <h1 class="display-4 text-center text-muted">No food is available </h1>
+                    </div>
+            </div>
+    </div>        
 
 
         <!-- Review Form Modal -->
@@ -285,14 +309,25 @@ body {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
+}
+
+.food-container {
+    background-color: #ffffff;
+    width: auto;
+    height: auto;
+    padding: 20px;
+    border-radius: 8px;
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
 }
 
+
+
 .stall-image {
-    width: 200px;
-    height: 200px;
+    width: auto;
+    height: 400px;
     object-fit: cover;
     border-radius: 8px;
+    
 }
 
 .stall-details ul {

@@ -1,16 +1,45 @@
 <template>
-    <div v-if="center" class="container mt-6">
-        <h1 class="display-4">{{ center.name }}</h1>
-        <p class="lead">{{ center.address }}</p>
-        <hr>
+    <div v-if="center" class="container mt-6 bg-white w-10">
+        <div class="row">
+            <div class = "col-8">
+                <div class = "mb-4">
+                    <h1 class="display-4 text-left fw-bold">{{ center.name }}</h1>
+                    <p class="lead">{{ center.address }}</p>
+                </div>
 
-        <!-- Display center photo -->
-        <div class="mb-4">
-            <img :src="center.photo_url" alt="Center Photo" class="img-fluid" />
+                <div class="mb-4">
+                    <p>{{ center.description }}</p>
+                </div>
+            </div>
+
+            <div class = "col-4">
+                 <!-- Display center photo -->
+                <div class="mb-4 rounded mx-auto">
+                    <img :src="center.photo_url" alt="Center Photo" class="img-fluid" />
+                </div>
+            </div>
+
+            <hr>
         </div>
 
-        <div class="mb-4">
-            <p>{{ center.description }}</p>
+        <div class = "row">
+
+              <!-- stalls that this centre has -->
+            <h4 class="display-5 f">Available Stalls </h4>
+            <div class="card-container">
+            <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
+                <div v-if="foodStall" class='row justify-content-left'>
+                        <v-card v-for="stall in foodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px;">
+                            <router-link class= "text-decoration-none text-black" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
+                                <v-img :src="stall.store_url" cover max-height="100"></v-img>
+                                <v-card-title>{{ stall.name }} {{ stall.address }}</v-card-title>
+                                <v-card-text> No reviews yet</v-card-text>
+                                    <!--    NEED HELP ON WHY IT NEEDS TO CLICK ON 2 CARDS BEFORE SWITCHING(duplicated function)--> 
+                            </router-link>
+                        </v-card>
+                </div> 
+                <div v-else><h1>No food is available</h1></div>
+            </div>
         </div>
 
         <!-- Display Google Map -->
@@ -28,25 +57,6 @@
                 </GMapCluster>
             </GMapMap>
         </div>
-
-        <!-- stalls that this centre has -->
-        <h1 class="display-4">Stalls Available: </h1>
-        <div class="card-container">
-        <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-            <div v-if="foodStall" class='row justify-content-center'>
-                    <v-card v-for="stall in foodStall" :key="stall.id" max-width="300" max-height="400" style="margin:10px;">
-                        <v-img :src="stall.store_url" cover max-height="100"></v-img>
-                        <v-card-title>{{ stall.name }}</v-card-title>
-                        <v-card-text>{{ stall.address }}</v-card-text>
-                        <v-card-actions> 
-                            <!--    NEED HELP ON WHY IT NEEDS TO CLICK ON 2 CARDS BEFORE SWITCHING(duplicated function)--> 
-                        <v-btn><router-link :to="{ name: 'stall-details', params: { stallId: stall.id } }">View Menu</router-link></v-btn> 
-                        </v-card-actions>
-                    </v-card>
-                </div> 
-                <div v-else><h1>No food is available</h1>
-                </div>
-            </div>
 
 
 
