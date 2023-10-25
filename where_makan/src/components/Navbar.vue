@@ -18,7 +18,7 @@
             class="nav-link"
             @click="showModal = true"
           >
-            Login
+            Login/Sign Up
         </button>
       </li>
       <li class="nav-item">
@@ -38,7 +38,7 @@
         <!-- use the modal component, pass in the prop -->
         <modal :show="showModal" @close="showModal = false">
           <template #header>
-            <h3>custom header</h3>
+            <h3>&nbsp</h3>
           </template>
         </modal>
     </Teleport>
