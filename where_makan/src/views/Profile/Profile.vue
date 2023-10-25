@@ -14,7 +14,6 @@
                     <div class="row">
                         <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Stall Page</router-link>                    
                 </div>
-
             </div>
 
             <div class="col">
