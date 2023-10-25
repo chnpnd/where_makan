@@ -182,6 +182,7 @@ export default {
         font-size: 0.75rem;
         font-weight: 600;
         margin-right: 0.75rem;
+        color: white;
     }
 
     .destination-label { background-color: #007BFF; }
@@ -190,7 +191,6 @@ export default {
 
     /* Image styling within list items */
     .list-group-item-action img {
-        border-radius: 50%;
         margin-right: 1rem;
     }
 </style>

@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     BCarousel: typeof import('bootstrap-vue-next')['BCarousel']
     BCarouselSlide: typeof import('bootstrap-vue-next')['BCarouselSlide']
+    EditReview: typeof import('./src/components/EditReview.vue')['default']
+    EditReviewModal: typeof import('./src/components/EditReviewModal.vue')['default']
     ExploreCards: typeof import('./src/components/Explore/ExploreCards.vue')['default']
     FoodOrder: typeof import('./src/components/FoodOrder.vue')['default']
     GeolocationTracker: typeof import('./src/components/GeolocationTracker.vue')['default']
