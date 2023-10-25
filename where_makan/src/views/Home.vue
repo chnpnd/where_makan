@@ -1,6 +1,8 @@
 <template>
   <div>
-  <Header />
+
+  <Introduction />
+
   <!-- <v-divider></v-divider> -->
   
   <div class="home-container">
@@ -14,11 +16,13 @@
     <h1 class="homeH1 text-center">Food Nearby You:</h1>
     <v-divider></v-divider>
     
-
-    
     <!-- <div class="map-section">
       <Map />
     </div> -->
+
+    <div class="map-section">
+      <HawkerCard />
+    </div>
     
     <v-divider></v-divider>
     <Video />
@@ -29,8 +33,10 @@
 
 
 <script>
-import Header from '@/components/Home/HelloWorld.vue';
-  import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
+
+import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
+import Introduction from '@/components/Home/Introduction.vue';
+import HawkerCard from '@/components/Home/HawkerCentreCards.vue'; // Moved to Home directory
 import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';
@@ -38,8 +44,8 @@ import Video from '@/components/Video.vue';
 export default {
   name: 'Home',
   components: {
-    Header,
-    Map,
+    Introduction,
+    HawkerCard,
     Homecards,
     Questionnaire,
     Video
@@ -62,8 +68,9 @@ export default {
 
 .home-container {
     background-color: #f3e0d2; /* Soft pastel color inspired by shophouses */
-    padding: 20px 30px; /* Some padding to space out content */
+    padding: 20px 30px; /*Some padding to space out content*/
     display: flex;
+    width:100%;
     flex-direction: column;
     align-items: center; /* This will center the immediate child elements */
     font-family: 'Source Sans Pro', sans-serif;

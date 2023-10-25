@@ -1,11 +1,9 @@
 <template>
+  <div v-if="showModal" class="modal-overlay">
+    <button class="close-btn" @click="closeModal">×</button>
     <div class="vintage-container">
       <h2>Share Your Thoughts</h2>
       <div class="review-form">
-        <div class="form-group">
-          <label for="username">Your Name</label>
-          <input type="text" id="username" v-model="review.name" class="form-control vintage-input" placeholder="John Doe">
-        </div>
         <div class="form-group">
           <label for="rating">Your Rating</label>
           <select id="rating" v-model="review.rating" class="form-control vintage-input">
@@ -22,30 +20,76 @@
         </div>
         <button @click="submitReview" class="btn btn-vintage">Submit Review</button>
       </div>
+      <button @click="closeModal" class="close-button">Close</button>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script>
-  export default {
+<script>
+
+export default {
     data() {
       return {
+        showModal:false,
         review: {
           name: '',
           rating: '5',
-          comments: ''
-        }
+          comments: '',
+        },
+        reviews: {}
       };
     },
+    props: {
+        showModal: {
+            type: Boolean,
+            required: true
+        },
+        stallId: Number,
+        consumerId: Number,
+    },
     methods: {
-      submitReview() {
-        console.log(this.review);
+      async submitReview() {
         alert('Thank you for your feedback!');
+        // Create a JSON object with the review data
+        const reviewData = {
+          consumer_id: this.consumerId, // Replace with the actual consumer_id
+          hawker_stall_id: this.stallId, // Replace with the actual hawker_stall_id
+          rating: this.review.rating,
+          comment: this.review.comments,
+          date: new Date().toISOString(), // Get the current date and time in ISO format
+        };
+        const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewData),
+      };
+
+      try {
+          const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Review/api/create/review`, requestOptions);
+          if (response.ok) {
+            alert('Review submitted successfully!');
+            this.reviews = await response.json();
+            // Reset the review form or perform other actions as needed
+            this.closeModal();
+            this.$emit('review-submitted');
+          } else {
+            console.error('Failed to submit the review:', response.statusText);
+          }
+      } 
+      catch (error) {
+        console.error('An error occurred while submitting the review:', error);
+      }
+        },
+        closeModal() {
+          this.$emit('close');
+          },
       }
     }
-  }
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
   .vintage-container {
     background-color: #f5f5dc;
     background-image: url('path_to_your_paper_texture.png'); /* Replace with a subtle paper texture */
@@ -54,7 +98,7 @@
     border-radius: 10px;
     font-family: 'Times New Roman', Times, serif; /* or another vintage-style font */
     box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    width: 50%;
     margin: 2rem auto;
   }
   
@@ -98,5 +142,18 @@
   .btn-vintage:active {
     transform: translateY(0);
   }
-  </style>
+
+  .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+</style>
   

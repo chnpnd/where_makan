@@ -11,6 +11,12 @@ import StallDetails from '../views/HawkerStalls/StallDetails.vue';
 import FoodDetails from '../views/Food/FoodDetails.vue';
 import Review from '../components/LeaveReview.vue';
 import Order from '../components/FoodOrder.vue';
+import Profile from '../views/Profile/Profile.vue';
+import EditProfile from '../views/Profile/EditProfile.vue';
+import MyRewards from '../views/Rewards/MyRewards.vue';
+import ExchangeRewards from '../views/Rewards/ExchangeRewards.vue';
+
+
 
 const routes = [
     { path: '/', component: Home, name: "Home" },
@@ -27,7 +33,11 @@ const routes = [
     { path: '/center/:centerId', name: 'center-details', component: CenterDetails, props: true },
     { path: '/food-details/:foodId', name: 'food-details', component: FoodDetails, props: true },
     { path: '/stall-details/:stallId', name: 'stall-details', component: StallDetails, props: true},
-    
+    { path: '/profile', component: Profile, name: "Profile" },    
+    { path: '/editprofile', component: EditProfile, name: "EditProfile" },    
+    { path: '/myrewards', component: MyRewards, name: "MyRewards" },    
+    { path: '/exchangerewards', component: ExchangeRewards, name: "ExchangeRewards" },    
+
 ];
 
 const router = createRouter({
