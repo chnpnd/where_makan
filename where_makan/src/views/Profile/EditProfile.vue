@@ -4,8 +4,8 @@
             <h3 class="text-center" style="margin-bottom:10px;"> Edit Your Profile Information </h3> 
             <div class="row" id="username"> 
                 <div class="col form-group"> 
-                   <label class="fw-bold" style="color: purple"> Username </label> 
-                   <input type="text" class="form-control" placeholder="Should reflect from Swagger.io"> 
+                   <label class="fw-bold" style="color: purple" for="loginUser"> Username </label> 
+                   <input id = "loginUser" type="text" class="form-control" placeholder="Should reflect from Swagger.io"> 
                 </div>
 
                 <div class="col form-group"> 

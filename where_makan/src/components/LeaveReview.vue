@@ -6,17 +6,27 @@
       <div class="review-form">
         <div class="form-group">
           <label for="rating">Your Rating</label>
-          <select id="rating" v-model="review.rating" class="form-control vintage-input">
-            <option value="5">★★★★★ (5)</option>
-            <option value="4">★★★★☆ (4)</option>
-            <option value="3">★★★☆☆ (3)</option>
-            <option value="2">★★☆☆☆ (2)</option>
-            <option value="1">★☆☆☆☆ (1)</option>
-          </select>
+          <div class="star-ratings">
+            <span
+              v-for="star in 5"
+              :key="star"
+              @click="setRating(star)"
+              :class="{
+                'selected': star <= review.rating,
+                'unselected': star > review.rating,
+              }"
+            >
+              ★
+            </span>
+          </div>
         </div>
         <div class="form-group">
           <label for="comments">Your Review</label>
           <textarea id="comments" v-model="review.comments" rows="5" class="form-control vintage-input" placeholder="Your thoughts..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="image">Upload an Image:</label>
+          <input type="file" id="image" accept="image/*" @change="handleImageUpload" />
         </div>
         <button @click="submitReview" class="btn btn-vintage">Submit Review</button>
       </div>
@@ -31,10 +41,12 @@ export default {
     data() {
       return {
         showModal:false,
+        image: null,
         review: {
           name: '',
-          rating: '5',
+          rating: 1,
           comments: '',
+          imageBase64String: ''
         },
         reviews: {}
       };
@@ -56,37 +68,52 @@ export default {
           hawker_stall_id: this.stallId, // Replace with the actual hawker_stall_id
           rating: this.review.rating,
           comment: this.review.comments,
+          imageBase64: this.review.imageBase64String,
           date: new Date().toISOString(), // Get the current date and time in ISO format
         };
         const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reviewData),
-      };
-
-      try {
-          const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Review/api/create/review`, requestOptions);
-          if (response.ok) {
-            alert('Review submitted successfully!');
-            this.reviews = await response.json();
-            // Reset the review form or perform other actions as needed
-            this.closeModal();
-            this.$emit('review-submitted');
-          } else {
-            console.error('Failed to submit the review:', response.statusText);
-          }
-      } 
-      catch (error) {
-        console.error('An error occurred while submitting the review:', error);
-      }
-        },
-        closeModal() {
-          this.$emit('close');
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-      }
-    }
+          body: JSON.stringify(reviewData),
+        };
+        try {
+            const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Review/api/create/review`, requestOptions);
+            if (response.ok) {
+              alert('Review submitted successfully!');
+              this.reviews = await response.json();
+              // Reset the review form or perform other actions as needed
+              this.closeModal();
+              this.$emit('review-submitted');
+            } else {
+              console.error('Failed to submit the review:', response.statusText);
+            }
+        } 
+        catch (error) {
+          console.error('An error occurred while submitting the review:', error);
+        }
+      },
+      closeModal() {
+        this.$emit('close');
+      },
+      setRating(rating) {
+        this.review.rating = rating;
+      },
+      handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.review.imageBase64String = reader.result;
+          };
+          reader.readAsDataURL(file);
+          this.image = file;
+        }
+      },
+    },
+    
+  }
 </script>
   
 <style scoped>
@@ -144,16 +171,26 @@ export default {
   }
 
   .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .selected {
+    font-size: 36px;
+    color: #FFD700; /* Change this to your selected star color */
+  }
+
+  .unselected {
+    font-size: 36px;
+    color: grey; /* Change this to your unselected star color */
+  }
 </style>
   

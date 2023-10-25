@@ -1,86 +1,111 @@
 <template>
-    <div>
-    <div v-if="foodStall" class="stall-container d-flex">
-        <div class="stall-image-container mr-4">
-            <img :src="foodStall.store_url" alt="Stall Image" class="stall-image"/>
-        </div>
-        <div class="stall-details">
-            <h1>{{ foodStall.name }}</h1>
-            <p><strong>Phone Number:</strong> {{ foodStall.phone_number }}</p>
-            <p><strong>Address:</strong> {{ foodStall.address }}</p>
-            <p><strong>Opening Hours:</strong> {{ foodStall.opening_hours }}</p>
-            <p><strong>Rest Day:</strong> {{ foodStall.rest_day }}</p>
-            <p><strong>Signature Item:</strong> {{ foodStall.signature_item }}</p>
-            <p><strong>Cuisine Type:</strong> {{ cuisine }}</p>
-            <a :href="foodStall.source_url" target="_blank" class="stall-link">Read More</a>
-            <div class="center-button">   
-                <button @click="toggleReviewForm" class="review-button">Review</button>
+    <div class="container mt-4">
+        <!-- Food Stall Information -->
+        <div v-if="foodStall" class="stall-container d-flex mb-5">
+            <div class="stall-image-container mr-4">
+                <img :src="foodStall.store_url" alt="Stall Image" class="stall-image img-thumbnail" />
+            </div>
+            <div class="stall-details">
+                <h1 class="display-4">{{ foodStall.name }}</h1>
+                <ul class="list-unstyled">
+                    <li><strong>Phone Number:</strong> {{ foodStall.phone_number }}</li>
+                    <li><strong>Address:</strong> {{ foodStall.address }}</li>
+                    <li><strong>Opening Hours:</strong> {{ foodStall.opening_hours }}</li>
+                    <li><strong>Rest Day:</strong> {{ foodStall.rest_day }}</li>
+                    <li><strong>Signature Item:</strong> {{ foodStall.signature_item }}</li>
+                    <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
+                </ul>
+                <a :href="foodStall.source_url" target="_blank" class="btn btn-primary stall-link">Read More</a>
+                <button v-if="showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button">Review</button>
             </div>
         </div>
-    </div>
-        
-    <!-- food that this stall has -->
-    <h1 class="display-4 text-center">Menu: </h1>
-    <div class="card-container">
-    <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
+
+        <!-- Food Menu -->
+        <h1 class="display-4 text-center mb-4">Menu: </h1>
         <div v-if="foodList && foodList.length > 0" class='row justify-content-center'>
-            <v-card v-for="food in foodList" :key="food.id" max-width="300" max-height="400" style="margin:10px;">
-                <v-img :src="food.url" cover max-height="100"></v-img>
-                <v-card-title>{{ food.name }}</v-card-title>
-                <v-card-actions> 
-                    <!--    NEED HELP ON WHY IT NEEDS TO CLICK ON 2 CARDS BEFORE SWITCHING(duplicated function)--> 
-                        <v-btn><router-link :to="{ name: 'food-details', params: { foodId: food.id } }">View food</router-link></v-btn> 
-                        <!-- add to shopping cart for order -->
-                        <v-btn><router-link :to="{ name: 'order'}"> Add to cart<span><Icon icon="material-symbols:shopping-cart" /></span></router-link>
-                        </v-btn> 
-                </v-card-actions>
-            </v-card>
-        </div> 
-        <div v-else><h1 class="display-4 text-center">No food is available </h1></div>
+            <div v-for="food in foodList" :key="food.id" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <img :src="food.url" class="card-img-top" alt="Food Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ food.name }}</h5>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <router-link :to="{ name: 'food-details', params: { foodId: food.id } }" class="btn btn-info btn-sm">View food</router-link>
+                        <router-link :to="{ name: 'order'}" class="btn btn-success btn-sm">Add to cart <i class="bi bi-cart"></i></router-link>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div v-else>
+            <h1 class="display-4 text-center text-muted">No food is available </h1>
+        </div>
+
 
         <!-- Review Form Modal -->
         <!-- Consumer ID is HARDCODED -->
         <LeaveReview :showModal="showReview" :consumerId = "10" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted"/>
+        <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted"/>
 
-
+        <!-- Reviews Section -->
         <h1 class="display-4 mt-5 text-center">Reviews </h1>
         <div v-if="reviews && reviews.length > 0">
-            <div class="review-grid">
-                <div v-for="review in reviews" :key="review.id" class="review-card">
-                    <div class="review-card">
-                        <div class="user-profile">
-                            <strong>{{ review.consumer_name }}</strong>
+            <div class="review-grid mt-4">
+                <div v-for="review in reviews" :key="review.id" class="review-card card mb-4 p-3" :class="{ 'user-own-review': review.consumer_name === loggedInUsername }">
+                    <div class="card-body d-flex">
+                        <!-- Left side with image and consumer name -->
+                        <div class="left-side mr-4">
+                            <img v-bind:src="review.imageBase64" alt="Consumer Image" class="consumer-image"/>
+                            <div class="mt-2">
+                                <strong class="highlighted-name">{{ review.consumer_name }}</strong>
+                            </div>
+                            <div v-if="review.consumer_name === loggedInUsername" class="mt-2">
+                                <button @click="editReview(review)" class="btn btn-outline-primary btn-sm">Edit</button>
+                                <button @click="deleteReview(review)" class="btn btn-outline-danger btn-sm ml-2">Remove</button>
+                                    
+                            </div>
                         </div>
-                        <div class="review-content">
-                            <p><strong>Ratings:</strong> {{ displayStars(review.rating) }}</p>
-                            <p><strong>Review:</strong> {{ review.comment }}</p>
-                            <p><strong>Reviewed</strong> {{ formatDate(review.date) }}</p>
+                        <!-- Right side with ratings and comment -->
+                        <div class="right-side flex-grow-1">
+                            <div class="star-rating static-star mb-2">{{ displayStars(review.rating) }}</div>
+                            <p class="mb-2">{{ formatDate(review.date) }}</p>
+                            <p class="mb-2">{{ truncatedComments[reviews.indexOf(review)] }}</p>
+                            <span v-if="review.comment.length > maxCommentLength" class="text-primary" @click="toggleCommentExpand(review)">
+                                {{ review.expanded ? 'Show Less' : 'Read More' }}
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <p v-else class="no-reviews">No reviews yet</p>
-    </div> 
+        <p v-else class="text-muted text-center mt-5">No reviews yet</p>
+    </div>
 </template>
 
 <script>
 
 import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
+import EditReviewModal from '@/components/EditReviewModal.vue';
 
 export default {
     component:{
-        LeaveReview
+        LeaveReview,
+        EditReviewModal
     },
     data() {
         return {
+            // Username is HARDCODED
+            loggedInUsername: 'consumer1',
             foodStall: {},
             foodList: {},
             cuisine: {},
-            reviews: { consumer_id: '', hawker_stall_id: '', rating: '', comment: '', date: '', consumer_name: ''},
+            maxCommentLength: 600,
+            reviews: { consumer_id: '', hawker_stall_id: '', rating: '', comment: '', imageBase64: '', date: '', consumer_name: ''},
             showReview: false,
+            showReviewBtn: true,
+            showEditModal: false,
+            selectedReview: {},
+            showDeleteConfirmation: false,
         }
     },
     props: ['stallId'],
@@ -128,6 +153,11 @@ export default {
                         );
                         if (response.ok) {
                             this.reviews[i].consumer_name = await response.text();
+                            // Check if logged in user has responded
+                            if(this.loggedInUsername == this.reviews[i].consumer_name)
+                            {
+                                this.showReviewBtn = false;
+                            }
                         } else {
                             console.error('Failed to fetch consumer:', response.statusText);
                         }
@@ -145,6 +175,15 @@ export default {
         },
         toggleReviewForm() {
             this.showReview = !this.showReview; // Set to true to show the modal
+        },
+        editReview(review)
+        {
+            this.selectedReview = review;
+            this.toggleEditReviewForm();
+        },
+        toggleEditReviewForm()
+        {
+            this.showEditModal = !this.showEditModal;
         },
         displayStars(rating) 
         {
@@ -167,8 +206,60 @@ export default {
             return new Date(dateString).toLocaleDateString(undefined, options);
         },
         handleReviewSubmitted() {
-        // Update the reviews by fetching them again from the API or any other method you use to update reviews
-        this.fetchReviews();
+            this.fetchReviews();
+        },
+        toggleCommentExpand(review) {
+            review.expanded = !review.expanded;
+            this.$forceUpdate(); // Force Vue to update the DOM
+        },
+        displayLimitedComment(fullComment) {
+            return fullComment.length > this.maxCommentLength
+            ? fullComment.slice(0, this.maxCommentLength) + '...'
+            : fullComment;
+        },
+        // Add a new method to delete the review
+        async deleteReview(review) {
+            // Display a confirmation dialog for deletion
+            const confirmDeletion = confirm('Are you sure you want to delete this review?');
+            if (confirmDeletion) {
+                const requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                };
+                try {
+                    const response = await fetch(
+                    `https://stingray-app-4wa63.ondigitalocean.app/Review/api/delete/review/${review.hawker_stall_id}/user/${review.consumer_id}`,
+                    requestOptions
+                    );
+                    if (response.ok) {
+                        alert('Review deleted successfully!');
+                        this.reviews = await response.json();
+                        this.$emit('review-deleted');
+                    } else {
+                        console.error('Failed to delete the review:', response.statusText);
+                    }
+                    this.showReviewBtn = true;
+                } catch (error) {
+                    console.error('An error occurred while deleting the review:', error);
+                }
+            } 
+                
+            else {
+                // User canceled the deletion
+                this.showDeleteConfirmation = false;
+            }
+        }
+    },
+    computed: {
+        truncatedComments() {
+            return this.reviews.map((review) => {
+                if (review.comment.length > this.maxCommentLength && !review.expanded) {
+                    return review.comment.substring(0, this.maxCommentLength) + '...';
+                }
+                return review.comment;
+            });
         },
     },
     components:{
@@ -178,129 +269,94 @@ export default {
 
 </script>
 
-<style>
-.stall-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background-color: #f5e8d7;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    font-family: 'Georgia', serif;
+<style scoped>
+/* Basic Styling for Page and Elements */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
 }
 
-.stall-image-container {
-    flex-basis: 40%;
+.container {
+    max-width: 1300px;
+}
+
+.stall-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
 }
 
 .stall-image {
-    max-width: 100%;
-    border-radius: 10px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
-.stall-details {
-    flex-basis: 60%;
-    color: #5a4134;
+.stall-details ul {
+    padding-left: 0;
+    margin-bottom: 20px;
 }
 
-.stall-details h1 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 2px solid #5a4134;
-    padding-bottom: 10px;
+.stall-details li {
+    margin-bottom: 10px;
 }
 
-.stall-link {
-    display: inline-block;
-    padding: 8px 15px;
-    margin-top: 20px;
-    border: 1px solid #5a4134;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    color: #f5e8d7;
-    background-color: #5a4134;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.stall-link:hover {
-    background-color: #f5e8d7;
-    color: #5a4134;
-    text-decoration: underline;
-}
-
-.center-button {
-    padding-left: 16px;
-    display: inline;
-    justify-content: center;
-    margin-top: 20px; /* Adjust margin as needed */
-}
-
+.stall-link,
 .review-button {
-    background-color: #007BFF; /* Choose a professional color */
-    color: #fff; /* Text color */
-    padding: 10px 20px; /* Adjust padding as needed */
-    border: none;
-    border-radius: 5px; /* Add rounded corners */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    margin-top: 15px;
 }
 
-.review-button:hover {
-  background-color: #0056b3; /* Change color on hover */
-  transform: translateY(-2px); /* Add a subtle lift on hover */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a box shadow */
-}
-
-.review-button:active {
-  transform: translateY(0);
-}
-
-.review-grid{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-    max-width: 1200px; /* Adjust the width as needed */
-    margin: 0 auto;
-}
-
-
-.review-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .review-card {
-    border: 1px solid #ddd;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    border: 1px solid #e7e7e7;
 }
 
-.row {
-  margin: 0;
+.consumer-image {
+    object-fit: cover;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
+.static-star {
+    color: #ffcc00; /* golden color for stars */
+    font-size: 36px;
 }
 
-.no-reviews {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100px; /* Set the height as needed */
-  background-color: #f5e8d7; /* Choose a background color */
-  border: 1px solid #ddd; /* Add a border for a professional look */
-  border-radius: 5px; /* Add rounded corners */
-  font-size: 36px; /* Adjust the font size */
-  color: #888; /* Choose a professional text color */
+/* Hover effects */
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.stall-link:hover,
+.review-button:hover {
+    text-decoration: none;
+}
+
+/* User's own review special styling */
+
+.user-own-review {
+    border: 2px solid #007BFF; /* using bootstrap's primary color */
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .stall-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .stall-details ul {
+        text-align: center;
+    }
 }
 </style>

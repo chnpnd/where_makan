@@ -7,28 +7,107 @@ const props = defineProps({
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
-      <div class="modal-container">
-        <div class="modal-header">
-          <slot name="header">default header</slot>
+        <!--Login Page-->
+        <div class="modal-container" id = "loginAccount">
+          <div class="modal-header">
+            <slot name="header">Enter your email and password</slot>
+            <h3 class="text-center">Log in to your Where Makan account</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+              <form> 
+                <div class="container"> 
+                  <label for="emailLogin">Email address</label>
+                  <input id="emailLogin" class="form-control" type="email" placeholder="" v-model="name"/>
+
+                  <br>
+
+                  <label for="pwdLogin">Password</label>
+                  <input id="pwdLogin" class="form-control" type="password" placeholder="" v-model="password"/>
+
+                  <br>
+
+                  <button type="button" class="btn btn-success " >Login</button>
+                </div>
+              </form> 
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              <div class="texxt-center">
+                <p>No Where Makan Account Yet?</p>
+                <button type="button" data-bs-target = "#registerAccount" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-outline-primary">
+                  Click here to Register
+                </button>
+              </div>
+            </slot>
+          </div>
         </div>
 
-        <div class="modal-body">
-          <slot name="body">default body</slot>
-        </div>
+        <!--Register Page-->
 
-        <div class="modal-footer">
-          <slot name="footer">
-            default footer
-            <button
-              class="modal-default-button"
-              @click="$emit('close')"
-            >OK
-          </button>
-          </slot>
+        <div class="modal-container" id = "registerAccount">
+          <div class="modal-header">
+            <slot name="header">Sign Up for your Where Makan Account</slot>
+            <h3 class="text-center">Sign Up for your Where Makan Account</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+              <form> 
+                <div class="container"> 
+                  <label for="f_name">First Name</label>
+                  <input id="f_name" class="form-control" type="text" placeholder="">
+
+                  <label for="L_name">Last Name</label>
+                  <input id="L_name" class="form-control" type="text" placeholder="">
+          
+                  <label for="su_email">Email address</label>
+                  <input id="su_email" class="form-control" type="email" placeholder="">
+
+                  <label for="confirm_email">Confirm Email address</label>
+                  <input id="confirm_email" class="form-control" type="email" placeholder="">
+
+                  <label for="su_pwd">Password</label>
+                  <input id="su_pwd" class="form-control" type="password" placeholder="">
+
+                  <label for="cfm_pwd">Confirm Password</label>
+                  <input id="cfm_pwd" class="form-control" type="password" placeholder="">
+
+                  <button type="button" class="btn btn-success " >Sign Up</button>
+
+                  <br>
+
+                  </div>
+   
+              </form> 
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              <div class="text-center">
+                <p>Already have a Where Makan account?</p>
+                <button type="button" data-bs-target = "#loginAccount" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-outline-primary">
+                  Click here to Login
+                </button>
+              </div>
+            </slot>
+          </div>
         </div>
       </div>
-    </div>
   </Transition>
+ 
 </template>
 
 <style>
