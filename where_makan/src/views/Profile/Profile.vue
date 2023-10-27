@@ -1,57 +1,86 @@
 <template>
-    <div class = "container">
+     <div class="container bg-white">
         <div class="row">
-            <div class = "col-2"></div>
+            <div class="col-4">
+                <div class="container">
+                    <div class="row">
+                        <button class="btn btn-outline-primary btn-lg" data-toggle="button">View Profile</button>
+                    </div>
 
-            <div class="col p-5 userProfile">
-                <div class="card" style="width: 50em;"> 
-                    <div class="card-body"> 
-                        <h2 class="card-title text-center">
-                            Rodger Mok
-                            <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
-                        </h2>
-                    </div> 
-                    <div class="card-body text-center"> 
-                        <!--This router link to the store review, is it possible to link the business user to their own store reviews-->
-                        <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Reviews</router-link>
-                        &nbsp;
-                        <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>
-                    </div> 
-                </div> 
+                    <div class="row">
+                        <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>                    </div>
+                    </div>
+
+                    <div class="row">
+                        <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Stall Page</router-link>                    
+                </div>
             </div>
 
-            <div class = "col-2"></div>  
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <img class="img-thumbnail w-100 h-100" src="src/assets/profile_img.jpeg">
+                    </div>
+
+                    <div class="col text-center pt-10">
+                        <h3>Rodger Mok</h3>
+                        <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
+                    </div>
+
+                    <hr>
+                </div>
+               
+            </div>
         </div>
+      </div>
 
+      <div> <hr> </div>
+
+    <div class="container bg-white">
         <div class="row">
-            <div class = "col-2"></div>
+            <div class="col-4">
+                <div class="container">
+                    <div class="row">
+                        <button class="btn btn-outline-primary btn-lg" data-toggle="button">View Profile</button>
+                    </div>
 
-            <div class="col p-5 userProfile">
-                <div class="card" style="width: 50em;"> 
-                    <div class="card-body"> 
-                        <h2 class="card-title text-center">
-                            Alice Low
-                            <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
-                        </h2> 
-                    </div> 
-
-                    <div class="card-body text-center"> 
-                        <h3>Reward Points: 125</h3>
+                    <div class="row">
                         <router-link to="/myrewards" class="btn btn-outline-primary btn-lg">My Rewards</router-link>
-                        &nbsp;
+                    </div>
+
+                    <div class="row">
                         <router-link to="/exchangerewards" class="btn btn-outline-primary btn-lg">Exchange Points for Rewards</router-link>
-                        &nbsp;
+                    </div>
+
+                    <div class="row">
                         <router-link to="/favouritedstalls" class="btn btn-outline-primary btn-lg">My Favourite Stalls</router-link>
-                    </div> 
-                </div> 
+                    </div>
+
+                    <div class="row">
+                        <router-link to="/pastactivity" class="btn btn-outline-primary btn-lg">View Past Activity</router-link>
+                    </div>
+                    
+                </div>
+
             </div>
 
-            <div class = "col-2"></div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <img class="img-thumbnail w-100 h-100" src="src/assets/profile_img.jpeg">
+                    </div>
 
+                    <div class="col text-center pt-10">
+                        <h3>Alice Low</h3>
+                        <router-link to="/editprofile" class="btn btn-outline-primary btn-lg">Edit Profile</router-link>
+                    </div>
+
+                    <hr>
+                </div>
+               
+            </div>
         </div>
-    </div>
-   
-    
+      </div>
 </template>
   
   <script>

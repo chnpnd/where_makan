@@ -3,14 +3,11 @@
         <Carousel class="carousel" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
             <Slide v-for="hawkerCenter in hawkerCenters" :key="hawkerCenter.id">
                 <v-card class="hawker-card">
-                    <v-img :src="hawkerCenter.photo_url" cover></v-img>
-                    <v-card-title>{{ hawkerCenter.name }}</v-card-title>
-                    <v-card-text>{{ hawkerCenter.address }}</v-card-text>
-                    <v-card-actions>
-                        <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }">
-                            <v-btn>Click me</v-btn>
-                        </router-link>
-                    </v-card-actions>
+                    <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
+                        <v-img :src="hawkerCenter.photo_url" cover></v-img>
+                        <v-card-title>{{ hawkerCenter.name }}</v-card-title>
+                        <v-card-text>{{ hawkerCenter.address }}</v-card-text>
+                    </router-link>
                 </v-card>
             </Slide>
         </Carousel>
