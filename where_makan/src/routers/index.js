@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import App from '../App.vue';
 import Home from '../views/Home.vue';
-import Login from '../views/About.vue'
+import Login from '../views/Login.vue'
 import Search from '../components/Searchbar.vue'
 import Explore from '../components/Home/GoogleMap.vue'
 import Analytics from '../views/Analytics.vue';

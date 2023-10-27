@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     BCarousel: typeof import('bootstrap-vue-next')['BCarousel']
     BCarouselSlide: typeof import('bootstrap-vue-next')['BCarouselSlide']
-    EditReview: typeof import('./src/components/EditReview.vue')['default']
     EditReviewModal: typeof import('./src/components/EditReviewModal.vue')['default']
     ExploreCards: typeof import('./src/components/Explore/ExploreCards.vue')['default']
     FoodOrder: typeof import('./src/components/FoodOrder.vue')['default']
@@ -26,6 +25,7 @@ declare module 'vue' {
     Introduction: typeof import('./src/components/Home/Introduction.vue')['default']
     LeaveReview: typeof import('./src/components/LeaveReview.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
+    LoginFooter: typeof import('./src/components/Login/LoginFooter.vue')['default']
     Modal: typeof import('./src/components/Modal.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     Questionnaire: typeof import('./src/components/Home/Questionnaire.vue')['default']

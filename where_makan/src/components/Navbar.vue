@@ -13,13 +13,14 @@
   <div class="collapse navbar-collapse" id="navbarcoll">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <button
+        <!-- <button
             id="show-modal"
             class="nav-link"
-            @click="showModal = true"
+            @click="login = true"
           >
             Login/Sign Up
-        </button>
+        </button> -->
+        <router-link :to="{name: 'Login'}" class="nav-link">Login</router-link>
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'Explore'}" class="nav-link">Explore</router-link>
@@ -34,14 +35,14 @@
     </div>
   </nav>
   </div>
-  <Teleport to="body">
+  <!-- <Teleport to="body"> -->
         <!-- use the modal component, pass in the prop -->
-        <modal :show="showModal" @close="showModal = false">
-          <template #header>
-            <h3>&nbsp</h3>
-          </template>
-        </modal>
-    </Teleport>
+        <!-- <modal :show="showModal" @close="showModal = false"> -->
+          <!-- <template #header> -->
+            <!-- <h3>&nbsp</h3> -->
+          <!-- </template> -->
+        <!-- </modal> -->
+    <!-- </Teleport> -->
 </div>
 </div>
 
