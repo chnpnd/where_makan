@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" placeholder="Username" ref="name" v-model="name"/>
+        <input type="text" placeholder="Username" v-model="username"/>
         <br>
         <input type="password" placeholder="Password" v-model="password"/>
         <div>
@@ -14,14 +14,14 @@ import { ref } from 'vue'
 
 export default {
     data(){
-        const name = ref('')
-        const password = ref('')
+        username = '',
+        password = ''
     },
     methods:{
         submitForm()
         {
-            console.log(`Form submitted! Username is ${name.value}`)
-            console.log(`Form submitted! Password is ${password.value}`)
+            console.log(`Form submitted! Username is ${this.username}`)
+            console.log(`Form submitted! Password is ${pthis.password}`)
         }
     }
 }

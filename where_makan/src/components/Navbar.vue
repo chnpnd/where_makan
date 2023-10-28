@@ -1,15 +1,10 @@
-
-
 <template>
-
+  <div>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <div>
-
   <div class="container-fluid pl-0 pr-0">
   <nav class="navbar navbar-expand-lg">
-
-
     <router-link to="/" class="navbar-logo-link">
-
     <img src="@/assets/where_makan_logo.png" alt="Logo" class="navbar-logo">
   </router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcoll" aria-controls="navbarcoll" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,17 +18,17 @@
             class="nav-link"
             @click="showModal = true"
           >
-            Login
+            Login/Sign Up
         </button>
-      </li>
-      <li class="nav-item">
-        <router-link :to="{name: 'Restaurant'}" class="nav-link">Restaurants</router-link> 
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'Explore'}" class="nav-link">Explore</router-link>
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'Analytics'}" class="nav-link">Analytics</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link :to="{name: 'Profile'}" class="nav-link">Profile</router-link>
       </li>
     </ul>
     </div>
@@ -43,10 +38,11 @@
         <!-- use the modal component, pass in the prop -->
         <modal :show="showModal" @close="showModal = false">
           <template #header>
-            <h3>custom header</h3>
+            <h3>&nbsp</h3>
           </template>
         </modal>
     </Teleport>
+</div>
 </div>
 
 </template>
@@ -56,7 +52,9 @@
     color: #D40000; 
     background: none;
   }
-
+  .navbar-nav .nav-item .nav-link {
+    color: black; /* Set the text color to black */
+  }
   .navbar-logo-link {
     margin-left: 20px; /* Adjust the value as needed to control the space */
   }

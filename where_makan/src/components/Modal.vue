@@ -5,16 +5,38 @@ const props = defineProps({
 </script>
 
 <template>
-  <Transition name="modal" v-show="show">
+  <Transition name="modal">
     <div v-if="show" class="modal-mask">
-      <div class="modal-container">
-        <div class="modal-header">
-          <slot name="header">default header</slot>
-        </div>
+        <!--Login Page-->
+        <div class="modal-container" id = "loginAccount">
+          <div class="modal-header">
+            <slot name="header">Enter your email and password</slot>
+            <h3 class="text-center">Log in to your Where Makan account</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          
+          </div>
 
-        <div class="modal-body">
-          <slot name="body">default body</slot>
-        </div>
+          <div class="modal-body">
+            <slot name="body">
+              <form> 
+                <div class="container"> 
+                  <label for="emailLogin">Email address</label>
+                  <input id="emailLogin" class="form-control" type="email" placeholder="" v-model="name"/>
+
+                  <br>
+
+                  <label for="pwdLogin">Password</label>
+                  <input id="pwdLogin" class="form-control" type="password" placeholder="" v-model="password"/>
+
+                  <br>
+
+                  <button type="button" class="btn btn-success " >Login</button>
+                </div>
+              </form> 
+            </slot>
+          </div>
 
         <div class="modal-footer">
           <slot name="footer">
@@ -22,13 +44,13 @@ const props = defineProps({
             <button
               class="modal-default-button"
               @click="$emit('close')"
-            >OK
-          </button>
+            >OK</button>
           </slot>
         </div>
       </div>
     </div>
   </Transition>
+ 
 </template>
 
 <style>
@@ -41,8 +63,8 @@ const props = defineProps({
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* display: flex;
-  transition: opacity 0.3s ease; */
+  display: flex;
+  transition: opacity 0.3s ease;
 }
 
 .modal-container {
