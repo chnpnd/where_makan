@@ -6,10 +6,6 @@ import Restaurant from '../views/Restaurant/Restaurant.vue'
 import Explore from '../GoogleMap.vue'
 import Analytics from '../views/Analytics.vue';
 import StoreDetails from '../views/Restaurant/StoreDetails.vue';
-import Questionnaire from '../views/Questionnaire.vue';
-// import GeolocationTracker from './components/GeolocationTracker.vue';
-// import HawkerStall from './views/HawkerStall.vue';
-// import StoreDetailsStall from './views/StoreDetailsStall.vue';
 import GeolocationTracker from '../components/GeolocationTracker.vue';
 import HawkerStall from '../views/HawkerStall.vue';
 import StoreDetailsStall from '../views/StoreDetailsStall.vue';
@@ -34,6 +30,11 @@ const routes = [
     { path: '/hawkerstall', component: HawkerStall },
     { path: '/store/:storeIdStall', name: 'store-details-stall', component: StoreDetailsStall, props: true },
 
+    { path: '/explore', component: Explore, name: "Explore" },
+    { path: '/analytics', component: Analytics, name: "Analytics" },
+    { path: '/GeolocationTracker', component: GeolocationTracker },
+    { path: '/hawkerstall', component: HawkerStall },
+    { path: '/store/:storeIdStall', name: 'store-details-stall', component: StoreDetailsStall, props: true },
 ];
 
 const router = createRouter({
