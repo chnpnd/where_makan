@@ -4,7 +4,7 @@
             <div class="col-4">
                 <div class="container">
                     <div class="row">
-                        <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>                    </div>
+                        <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>
                     </div>
 
                     <button type="button" class="btn btn-primary">Check reviews</button>
