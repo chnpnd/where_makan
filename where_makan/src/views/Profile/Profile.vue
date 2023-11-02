@@ -8,7 +8,8 @@
                     </div>
 
                     <button type="button" class="btn btn-primary">Check reviews</button>
-            </div>
+                 </div>
+             </div>
 
             <div class="col">
                 <div class="row">
@@ -26,7 +27,6 @@
                
             </div>
         </div>
-      </div>
 
       <div> <hr> </div>
 
@@ -71,50 +71,9 @@
       </div>
 </template>
   
-  <script>
-  export default {
-    props: ['accId'], // This prop is automatically passed by Vue Router
-    data() {
-      return {
-        center: null, // Initialize center as null
-      };
-    },
-    created() {
-      // Fetch center details based on the centerId prop
-      this.fetchCenterDetails();
-    },
-    methods: {
-        async fetchCenterDetails() {
-            try {
-            const response = await fetch(
-                `https://stingray-app-4wa63.ondigitalocean.app/User/api/all/users/`
-            );
-            if (response.ok) {
-                const data = await response.json();
-    
-                // Find the center with the matching centerId in the data array
-                const id = parseInt(this.id); // Convert centerId to a number
-                const matchingCenter = data.find((center) => accId.id === centerId);
-    
-                if (matchingCenter) {
-                // If a matching center is found, set it to the center data property
-                this.accId = matchingCenter;
-                } else {
-                console.error('Center not found');
-                }
-            } else {
-                console.error('Failed to fetch center details:', response.statusText);
-            }
-            } catch (error) {
-            console.error('An error occurred while fetching center details:', error);
-            }
-        },
-        centerPosition(center) {
-            return { lat: center.lat, lng: center.long };
-        },
-    },
-  };
-  </script>
+<script>
+  
+</script>
 
 
 <style>
