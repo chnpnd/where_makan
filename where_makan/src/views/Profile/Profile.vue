@@ -42,13 +42,11 @@
                         <router-link to="/exchangerewards" class="btn btn-outline-primary btn-lg">Exchange Points for Rewards</router-link>
                     </div>
 
-                    <div class="row">
-                        <router-link to="/favouritedstalls" class="btn btn-outline-primary btn-lg">My Favourite Stalls</router-link>
-                    </div>
+                  <button type="button" class="btn btn-primary">Favourited Stalls</button>
 
-                    <div class="row">
-                        <router-link to="/pastactivity" class="btn btn-outline-primary btn-lg">View Past Activity</router-link>
-                    </div>
+
+                   <button type="button" class="btn btn-primary">Past orders</button>
+
                     
                 </div>
 
