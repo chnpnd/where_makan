@@ -7,9 +7,7 @@
                         <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>                    </div>
                     </div>
 
-                    <div class="row">
-                        <router-link to="/reviews" class="btn btn-outline-primary btn-lg">Check Stall Page</router-link>                    
-                    </div>
+                    <button type="button" class="btn btn-primary">Check reviews</button>
             </div>
 
             <div class="col">
