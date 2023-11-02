@@ -11,7 +11,7 @@ import StallDetails from '../views/HawkerStalls/StallDetails.vue';
 import FoodDetails from '../views/Food/FoodDetails.vue';
 import Review from '../components/LeaveReview.vue';
 import Order from '../components/FoodOrder.vue';
-import Profile from '../views/Profile/Profile.vue';
+import Profile from '../views/Profile/ProfileNew.vue';
 import EditProfile from '../views/Profile/EditProfile.vue';
 import MyRewards from '../views/Rewards/MyRewards.vue';
 import ExchangeRewards from '../views/Rewards/ExchangeRewards.vue';
