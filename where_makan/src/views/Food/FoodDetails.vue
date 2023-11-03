@@ -30,7 +30,6 @@
     props: ['foodId'],
     data() {
       return {
-        food: null,
         nutrition: null,
       };
     },

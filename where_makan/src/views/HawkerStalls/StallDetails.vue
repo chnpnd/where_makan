@@ -31,7 +31,6 @@
                 </div>
                 
             </div>
-
                 <!-- Food Menu -->
                 <div class="container">
                     <h1 class="display-4 text-left mb-4 pl-2">Menu </h1>
@@ -47,14 +46,10 @@
                                         <div class = "col-8">
                                             <h4 class="card-title">{{ food.name }}</h4>
                                             <h5 class="card-title">${{ food.price }}</h5>
-
                                         </div>
                                     </div>
                                 </router-link>
-
-                                <div class="card-footer d-flex justify-content-between">
-                                    <router-link :to="{ name: 'order'}" class="btn btn-success btn-sm">Order <i class="bi bi-cart"></i></router-link>
-                                </div>
+                                <button @click="openFoodOrderModal(food)">Order</button>
                             </div>
                         </div>
                     </div>
@@ -63,7 +58,7 @@
                     </div>
             </div>
     </div>        
-
+        <FoodOrder :showOrder="showFoodOrderModal" :selectedFood="selectedFoodItem" @close-modal="showFoodOrderModal = false"/>
 
         <!-- Review Form Modal -->
         <!-- Consumer ID is HARDCODED -->
@@ -110,11 +105,13 @@
 import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
+import FoodOrder from '@/components/FoodOrder.vue';
 
 export default {
     component:{
         LeaveReview,
-        EditReviewModal
+        EditReviewModal,
+        FoodOrder
     },
     data() {
         return {
@@ -130,6 +127,8 @@ export default {
             showEditModal: false,
             selectedReview: {},
             showDeleteConfirmation: false,
+            showFoodOrderModal: false,
+            selectedFoodItem: null
         }
     },
     props: ['stallId'],
@@ -146,15 +145,17 @@ export default {
         }
     },
     methods: {
+        openFoodOrderModal(foodItem) {
+            this.selectedFoodItem = foodItem;
+            this.showFoodOrderModal = true;
+        },
         async fetchFoodsInStallDetails() {
-            console.log(this.foodStall.id);
             try {
             const response = await fetch(            
                `https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/hawkerstall/${this.foodStall.id}/food`
             );
             if (response.ok) {
                 this.foodList = await response.json();
-                console.log(this.foodList);
             } else {
                 console.error('Failed to fetch all stall details:', response.statusText);
             }
@@ -294,7 +295,6 @@ export default {
 </script>
 
 <style scoped>
-/* Basic Styling for Page and Elements */
 
 body {
     font-family: 'Arial', sans-serif;
