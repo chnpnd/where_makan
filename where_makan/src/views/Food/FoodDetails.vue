@@ -6,12 +6,23 @@
         <div class="food-details">
             <h1>{{ food.name }}</h1>
             <p><strong>Price:</strong> ${{ food.price }}</p>
-            <p><strong>Calories:</strong> {{ food.calories }} kcal</p>
-            <p><strong>Sodium:</strong> {{ food.sodium }} mg</p>
             <p><strong>Allergens:</strong> {{ food.allergens }}</p>
             <p><strong>Spiciness:</strong> {{ Array(food.spiciness + 1).join('🌶') }}</p>
         </div>
-    </div>
+      </div>
+      <div v-if="nutrition" class="mt-4">
+        <h1>Nutritional Information</h1>
+        <div class="nutrition-table-container">
+          <table class="table nutrition-table">
+            <tbody>
+              <tr v-for="(value, key) in nutrition.items[0]" :key="key">
+                <th scope="row">{{ formatKey(key) }}</th>
+                <td>{{ value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 </template>
   
 <script>
@@ -70,16 +81,19 @@
         } catch (error) {
           console.error('Failed to fetch food nutrition:', error);
         }
+      },
+      formatKey(key) {
+        return key.split('_').join(' ').toUpperCase();
       }
     },
   };
 </script>
   
-<style>
+<style scoped>
 .food-container {
     max-width: 800px;
     margin: 50px auto;
-    background-color: #f5e8d7;
+    background-color: #f5f5f5;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -110,4 +124,67 @@
     padding-bottom: 10px;
 }
 
+.nutrition-table-container {
+  overflow-x: auto; /* Allows table to be scrollable on small screens */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  margin: 0 25%;
+}
+
+.table {
+  width: auto; /* Table width should only be as wide as its content */
+  margin-bottom: 0; /* Remove extra margin from the bootstrap table */
+}
+
+.nutrition-table {
+  background-color: #ffffff;
+  border-collapse: separate;
+  width:100%;
+}
+
+.nutrition-table th,
+.nutrition-table td {
+  border: none; /* Remove default table borders */
+  vertical-align: middle;
+  padding: 10px;
+  text-align: left;
+}
+
+.nutrition-table th {
+  background-color: #f5f5f5; /* Light grey background for header */
+  color: #5a4134; /* Color to match your site's palette */
+  font-weight: bold;
+  width: 50%; /* Give the name column and value column equal width */
+}
+
+.nutrition-table td {
+  background-color: #fff;
+  color: #5a4134;
+  text-align: left; /* Align the numerical values to the right */
+}
+
+@media (max-width: 768px) {
+  .nutrition-table th,
+  .nutrition-table td {
+    display: block;
+    text-align: left;
+    padding: 15px;
+  }
+
+  .nutrition-table th {
+    background-color: transparent; /* Headers look like part of the content on small screens */
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .nutrition-table td {
+    border-top: none;
+  }
+
+  .nutrition-table td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    color: #5a4134;
+  }
+}
 </style>
