@@ -53,7 +53,7 @@
                                 </router-link>
 
                                 <div class="card-footer d-flex justify-content-between">
-                                    <router-link :to="{ name: 'order'}" class="btn btn-success btn-sm">Add to cart <i class="bi bi-cart"></i></router-link>
+                                    <router-link :to="{ name: 'order'}" class="btn btn-success btn-sm">Order <i class="bi bi-cart"></i></router-link>
                                 </div>
                             </div>
                         </div>

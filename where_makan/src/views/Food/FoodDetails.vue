@@ -15,7 +15,7 @@
         <div class="nutrition-table-container">
           <table class="table nutrition-table">
             <tbody>
-              <tr v-for="(value, key) in nutrition.items[0]" :key="key">
+              <tr v-for="(value, key) in filteredNutritionItems" :key="key">
                 <th scope="row">{{ formatKey(key) }}</th>
                 <td>{{ value }}</td>
               </tr>
@@ -37,6 +37,20 @@
     created() {
       // Fetch food details based on the foodId prop
       this.fetchFoodDetails();
+    },
+    computed: {
+      filteredNutritionItems() {
+        if (!this.nutrition || !this.nutrition.items[0]) return {};
+
+        const item = this.nutrition.items[0];
+        const filtered = {};
+        Object.keys(item).forEach(key => {
+          if (key !== 'name') {
+            filtered[key] = item[key];
+          }
+        });
+        return filtered;
+      }
     },
     methods: {
       async fetchFoodDetails() {
