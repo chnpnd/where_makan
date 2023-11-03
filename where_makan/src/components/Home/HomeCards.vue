@@ -1,84 +1,8 @@
 <template>
   <div>
-<<<<<<< HEAD
-    <h1 class="homeH1 text-center">RECENTLY FEATURED!</h1>
-    <v-divider></v-divider>
-    <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-
-    <div class='container-fluid'>
-           <div class='row d-flex flex-wrap justify-between'>
-                  <v-card v-for="(item, idx) in featured" :key="item.shopname"
-                class="mx-auto"
-                max-width="430"
-                >
-                <v-img
-                max-height="500">
-                  <BCarousel controls indicators>
-                          <BCarouselSlide :img-src="item.image"  class="card-img-top img-featured " />
-                          <BCarouselSlide :img-src="item.anotherImage"  class="card-img-top img-featured " />
-                  </BCarousel>
-                </v-img>
-                <v-card-title>
-                 <div>{{ item.shopname }}<span class="float-right"> 
-                    <v-card-actions>
-                    <v-btn
-                  class="custom-button"
-                  :icon="item.heart ? 'mdi:heart-outline' : 'mdi:heart'" @click="toggleHeart(idx)"
-                  >
-                  <Icon :icon="item.heart ? 'mdi:heart-outline' : 'mdi:heart'" />
-                  </v-btn>
-                </v-card-actions>
-                </span>
-                </div>   
-                </v-card-title>
-
-                <v-card-subtitle>
-                  {{ item.featuredtitle }}
-                </v-card-subtitle>
-
-                <v-card-actions>
-                  <router-link to="/explore">
-                  <v-btn
-                    color="orange-lighten-1"
-                    variant="text"
-                  >
-                    Explore
-                  </v-btn>
-                </router-link>
-                
-                  <v-spacer></v-spacer>
-
-                  <v-btn
-                  class="custom-button"
-                  :icon="item.show ? 'bxs:down-arrow' : 'bx:down-arrow'" @click="toggleShow(idx)"
-                  >
-                  <Icon :icon="item.show ? 'bxs:down-arrow' : 'bx:down-arrow'" />
-                  </v-btn>
-                </v-card-actions>
-                <v-expand-transition>
-                  <div v-show="item.show">
-                    <v-divider></v-divider>
-                    <v-card-text>
-                      {{ item.description }}
-                    </v-card-text>
-                  </div>
-                </v-expand-transition>
-
-                
-              </v-card>
-      </div>
-      </div>
-      <v-divider></v-divider>
-      <h1 class="homeH1 text-center">TOP PICKS</h1>
-      <v-divider></v-divider>
-        <div class="d-flex flex-wrap justify-between">
-        <v-card
-        v-for="(duck, index) in images" :key="index"
-=======
         <div class="d-flex flex-wrap justify-between">
         <v-card
         v-for="(pick, index) in images" :key="index"
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
         :loading="loading"
         class="mx-auto my-12"
         max-width="374"
@@ -94,20 +18,12 @@
 
         <v-img>
           <BCarousel controls indicators>
-<<<<<<< HEAD
-                  <BCarouselSlide :img-src="duck.image"  class="card-img-top img-featured" />
-                  <BCarouselSlide :img-src="duck.anotherImage" class="card-img-top img-featured" />
-=======
                   <BCarouselSlide :img-src="pick.image"  class="card-img-top img-featured" />
                   <BCarouselSlide :img-src="pick.anotherImage" class="card-img-top img-featured" />
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
           </BCarousel>
         </v-img>
 
     <v-card-item>
-<<<<<<< HEAD
-      <v-card-title class="shop-title">{{ duck.shopname }}
-=======
       <v-card-title class="shop-title">{{ pick.shopname }}<span class="float-right">
         <v-btn
             class="custom-button"
@@ -116,16 +32,11 @@
             <Icon :icon="pick.heart ? 'mdi:heart-outline' : 'mdi:heart'" />
           </v-btn>
         </span>
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
       </v-card-title>
 
       <v-card-subtitle>
         <div class="me-1">Local Favorite<span><Icon icon="bi:fire" /></span></div>
-<<<<<<< HEAD
-        <div class="me-1" v-if="duck.healthy">Voted by healthier choice</div>
-=======
         <div class="me-1" v-if="pick.healthy">Voted by healthier choice</div>
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
 
         <v-rating
           hover
@@ -157,11 +68,7 @@
       </v-row>
       
 
-<<<<<<< HEAD
-      <div>{{ duck.description }}</div>
-=======
       <div>{{ pick.description }}</div>
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
     </v-card-text>
 
     <!-- <v-divider class="mx-4 mb-1"></v-divider> -->
@@ -206,15 +113,9 @@ export default{
     data(){
       return{
         images: [
-<<<<<<< HEAD
-        { image: '../../../img/homecardimg/duckshop.jpg', anotherImage: '../../../img/homecardimg/duckfood.jpg', shopname: 'Jin Ji Teochew Braised Duck & Kway Chap 金记潮州卤鸭', description: 'Must try duck rice!', healthy: false, reviewRating: 4.5, },
-        { image: '../../../img/homecardimg/fishsoupshop.jpg',anotherImage: '../../../img/homecardimg/fishsoupfood.jpg',  shopname: 'Hong Sheng Fish Soup 鸿升鱼汤' , description: 'Must try fish soup',healthy: true, reviewRating: 4.8,},
-        { image: '../../../img/homecardimg/wantonshop.jpg', anotherImage: '../../../img/homecardimg/wantonfood.jpg', shopname: '杜佛路佳纪云吞面 Dover Road Kai Kee Wanton Noodles' , description: 'Must try wanton noodles! slurp to your heart\'s content',healthy: true, reviewRating: 4.7,},
-=======
         { image: '../../../img/homecardimg/duckshop.jpg', anotherImage: '../../../img/homecardimg/duckfood.jpg', shopname: 'Jin Ji Teochew Braised Duck & Kway Chap 金记潮州卤鸭', description: 'Must try duck rice!', healthy: false, reviewRating: 4.5, heart : false,},
         { image: '../../../img/homecardimg/fishsoupshop.jpg',anotherImage: '../../../img/homecardimg/fishsoupfood.jpg',  shopname: 'Hong Sheng Fish Soup 鸿升鱼汤' , description: 'Must try fish soup',healthy: true, reviewRating: 4.8,heart : false,},
         { image: '../../../img/homecardimg/wantonshop.jpg', anotherImage: '../../../img/homecardimg/wantonfood.jpg', shopname: '杜佛路佳纪云吞面 Dover Road Kai Kee Wanton Noodles' , description: 'Must try wanton noodles! slurp to your heart\'s content',healthy: true, reviewRating: 4.7,heart : false,},
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
       ],
         featured: [
           {image: '../../../img/homecardimg/prawn.jpg',anotherImage: '../../../img/homecardimg/prawnfood.jpg', shopname: 'Prawn & Mee', address: 'Pasar 216 Bedok Central', description: "Two young hawker running a prawn food business like never before!",featuredtitle: 'Homemade Prawn & Pork rib noodles run by young hawkers',healthy: true, show : false,heart : false, },
@@ -233,14 +134,7 @@ export default{
         setTimeout(() => (this.loading = false), 2000)
       },
       toggleHeart(idx) {
-<<<<<<< HEAD
-      this.featured[idx].heart = !this.featured[idx].heart;
-      },
-      toggleShow(idx) {
-        this.featured[idx].show = !this.featured[idx].show;
-=======
           this.images[idx].heart = !this.images[idx].heart;
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
       },
     },
     
@@ -249,21 +143,6 @@ export default{
 
 </script>
 <style scoped>
-<<<<<<< HEAD
-.img-featured{
-    width:100%; 
-    height:100%; 
-    border-radius: 30px;
-    object-fit: cover;
-}
-.custom-button:hover{
-  background-color: transparent !important;
-}
-
-.shop-title {
-  white-space: normal; /* Allow text to wrap */
-  max-width: 100%; /* Optionally, set a maximum width for the title */
-=======
 .custom-button {
   background-color: transparent !important;
   box-shadow: none; /* Remove the shadow */
@@ -283,6 +162,5 @@ export default{
 .shop-title {
   white-space: normal;
   max-width: 100%;
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
 }
 </style>

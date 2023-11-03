@@ -20,6 +20,7 @@
     data() {
       return {
         food: null,
+        nutrition: null,
       };
     },
     created() {
@@ -29,12 +30,13 @@
     methods: {
       async fetchFoodDetails() {
         try {
-            console.log(this.foodId);
-            const res = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/food/${this.foodId}`);
-            if (res.ok) {
-                const data = await res.json();
-                console.log(data);
-                this.food = data;
+          console.log(this.foodId);
+          const res = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/food/${this.foodId}`);
+          if (res.ok) {
+              const data = await res.json();
+              console.log(data);
+              this.food = data;
+              this.fetchFoodNutritionDetails();
             }
             else
             {
@@ -44,6 +46,31 @@
           console.error('Failed to fetch food details:', error);
         }
       },
+      async fetchFoodNutritionDetails() {
+        const headers = {
+          'Content-Type': 'application/json',
+          'X-Api-Key': 'rFgPJXwcrqxrYU54929ELQ==QcM4jP0kt1QUnd9D',
+        };
+
+        try {
+          // Encode the query parameter to handle special characters
+          var query = encodeURIComponent(this.food.name);
+          const response = await fetch('https://api.calorieninjas.com/v1/nutrition?query=' + query, {
+            method: 'GET', // Specify the method
+            headers: headers, // Include headers in the fetch options
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            this.nutrition = data; // Or however you need to structure it based on your component's data.
+          } else {
+            // Log or handle HTTP error responses
+            console.error('Nutrition not found, status:', response.status);
+          }
+        } catch (error) {
+          console.error('Failed to fetch food nutrition:', error);
+        }
+      }
     },
   };
 </script>

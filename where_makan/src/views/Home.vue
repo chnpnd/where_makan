@@ -1,25 +1,56 @@
 <template>
-
-    <div class="home">
-      <img alt="Vue logo" class="logo" src="../assets/logo.svg" width="125" height="125" />
-      <HelloWorld msg="You did it!" />
+  <Introduction />
+  <!-- <v-divider></v-divider> -->
+  
+  <div class="home-container">
+    <div class="action-section">
+      <button class="recommend-button" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
+      <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
     </div>
-
+    
+    <v-divider></v-divider>
+    
+    <h1 class="homeH1 text-center">Food Nearby You:</h1>
+    <v-divider></v-divider>
+    
+    <div class="map-section">
+      <HawkerCard />
+    </div>
+    
+    <v-divider></v-divider>
+    <Video />
+    <Homecards />
+  </div>
 </template>
 
 
 <script>
-  import HelloWorld from '@/components/Home/HelloWorld.vue';
-  export default {
-    name: 'Home',
-    components:{
-      HelloWorld
+import Introduction from '@/components/Home/Introduction.vue';
+import HawkerCard from '@/components/Home/HawkerCentreCards.vue'; // Moved to Home directory
+import Homecards from '@/components/Home/HomeCards.vue';
+import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
+import Video from '@/components/Video.vue';
+
+export default {
+  name: 'Home',
+  components: {
+    Introduction,
+    HawkerCard,
+    Homecards,
+    Questionnaire,
+    Video
+  },
+  data() {
+    return {
+      showQuestionnaire: false
+    };
+  },
+  methods: {
+    toggleQuestionnaire() {
+      this.showQuestionnaire = !this.showQuestionnaire;
     }
   }
-
-
-
-
+}
 </script>
 
 <style scoped>

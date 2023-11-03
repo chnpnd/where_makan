@@ -7,12 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    GeolocationTracker: typeof import('./src/components/GeolocationTracker.vue')['default']
-    HelloWorld: typeof import('./src/components/Home/HelloWorld.vue')['default']
-
     BCarousel: typeof import('bootstrap-vue-next')['BCarousel']
     BCarouselSlide: typeof import('bootstrap-vue-next')['BCarouselSlide']
-    EditReview: typeof import('./src/components/EditReview.vue')['default']
     EditReviewModal: typeof import('./src/components/EditReviewModal.vue')['default']
     ExploreCards: typeof import('./src/components/Explore/ExploreCards.vue')['default']
     FoodOrder: typeof import('./src/components/FoodOrder.vue')['default']
@@ -20,7 +16,6 @@ declare module 'vue' {
     GoogleMap: typeof import('./src/components/Home/GoogleMap.vue')['default']
     HawkerCentreCards: typeof import('./src/components/Home/HawkerCentreCards.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-
     HomeCards: typeof import('./src/components/Home/HomeCards.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
@@ -36,14 +31,8 @@ declare module 'vue' {
     RecommendedCards: typeof import('./src/components/Home/recommendedCards.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-<<<<<<< HEAD
-
-
-=======
     Searchbar: typeof import('./src/components/Searchbar.vue')['default']
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
     Test: typeof import('./src/components/test.vue')['default']
-
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     Video: typeof import('./src/components/Video.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']

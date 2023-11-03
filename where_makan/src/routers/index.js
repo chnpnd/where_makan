@@ -11,18 +11,15 @@ import StallDetails from '../views/HawkerStalls/StallDetails.vue';
 import FoodDetails from '../views/Food/FoodDetails.vue';
 import Review from '../components/LeaveReview.vue';
 import Order from '../components/FoodOrder.vue';
-import Profile from '../views/Profile/ProfileNew.vue';
+import Profile from '../views/Profile/Profile.vue';
 import EditProfile from '../views/Profile/EditProfile.vue';
 import MyRewards from '../views/Rewards/MyRewards.vue';
 import ExchangeRewards from '../views/Rewards/ExchangeRewards.vue';
 
-
-
 const routes = [
     { path: '/', component: Home, name: "Home" },
     { path: '/login', component: Login, name: "Login" },
-    { path: '/restaurant', component: Restaurant, name: "Restaurant" },
-    { path: '/store/:storeId', name: 'store-details', component: StoreDetails, props: true }, // Dynamic route for store details
+    { path: '/search', component: Search, name: "Search" },
     { path: '/explore', component: Explore, name: "Explore" },
     { path: '/analytics', component: Analytics, name: "Analytics" },
     { path: '/GeolocationTracker', component: GeolocationTracker},
@@ -38,7 +35,6 @@ const routes = [
     { path: '/editprofile', component: EditProfile, name: "EditProfile" },    
     { path: '/myrewards', component: MyRewards, name: "MyRewards" },    
     { path: '/exchangerewards', component: ExchangeRewards, name: "ExchangeRewards" },    
-
 ];
 
 const router = createRouter({

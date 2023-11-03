@@ -3,6 +3,6 @@
      
 </template>
 
-<sccript>
-
 <script>
+
+</script>

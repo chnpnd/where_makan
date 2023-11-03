@@ -56,13 +56,7 @@
   };
   </script>
   
-<<<<<<< HEAD
-
-
-  <style scoped>
-=======
 <style scoped>
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
   .container-fluid {
     height: 100vh;
     background-color: #f8f9fa;
@@ -81,3 +75,4 @@
   .btn-custom:hover {
     background-color: #2980b9; /* Change color on hover */
   }
+</style>

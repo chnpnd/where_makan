@@ -1,15 +1,4 @@
 <template>
-<<<<<<< HEAD
- <div class="bg-color">
-    <div>
-      <Navbar />
-      <div>
-        <GeolocationTracker />
-      </div>
-    </div>
-  </div>
-  <router-view/>
-=======
   <div class="bg-color">
     <Navbar />
   <!-- <div id="nav">
@@ -19,7 +8,6 @@
   <router-view/>  
 </div>
  
->>>>>>> 74c29fe8739427965edcd043a998de04afe5214b
 </template>
 
 <script setup>
