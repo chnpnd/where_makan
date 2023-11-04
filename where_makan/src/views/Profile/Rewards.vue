@@ -4,7 +4,7 @@
 <!--Ideally is to look at data set and use a for function to then show the rewards that users receive-->
 
     <div class = "container-fluid rewards">
-        <div class = "row">
+        <div class = "row" v-for="reward in rewardOwn">
         
             <div class = "col-2"></div>
 
@@ -12,14 +12,13 @@
 
                 <div class = "row border border-primary rounded bg-light">
 
-                    <div class = "col-3 rewardImage ">
-                        <img src="" class="img-fluid" alt="Reward Image">
+                    <div class = "col-1 rewardDesc">
+
                     </div>
                     
-                    <div class = "col-6 rewardDesc">
-                        <h3>Rewards Name</h3>
-                        <p>Reward Description ........................</p>
-                        <p>Terms and Condition</p>
+                    <div class = "col-8 rewardDesc">
+                        <h3>{{ reward.item_id }}</h3>
+                        <p>Terms and Condition Apply</p>
                         <p class="text-muted">Valid till 31 Dec 2023 </p>
                     </div>
 
@@ -42,23 +41,21 @@
     <!--Rewards should populate itself base on the rewards database-->
 
     <div class = "container-fluid rewards">
-        <div class = "row">
-        
+        <div class = "row" v-for="item in rewardExchange">
             <div class = "col-2"></div>
 
             <div class = "col-8">
 
                 <div class = "row border border-primary rounded bg-light">
+                    
+                    <div class = "col-1 rewardDesc">
 
-                    <div class = "col-3 rewardImage ">
-                        <img src="" class="img-fluid" alt="Reward Image">
                     </div>
                     
-                    <div class = "col-6 rewardDesc">
-                        <h3>Rewards Name</h3>
-                        <p>Reward Description ........................</p>
-                        <p>Terms and Condition</p>
-                        <p class="text-warning">300 (Points required to redeem)</p>
+                    <div class = "col-8 rewardDesc">
+                        <h3>{{ item.name }}</h3>
+                        <p>Terms and Condition Apply</p>
+                        <p class="text-warning">50 (Points required to redeem)</p>
                     </div>
 
                     <div class = "col-3 exchangeButton text-center">
@@ -77,42 +74,21 @@
 
 <script>
 export default {
-    props: ['centerId'], // This prop is automatically passed by Vue Router
     data() {
       return {
         accId: 10,
-        center: null, // Initialize center as null
-        favFoodStall: [],
-        foodStalls: [],
-        filteredFoodStall: [],
+        rewardOwn: [], //consumer_id, item_id, date
+        rewardExchange: [], //name and quantity
         
       };
     },
     created() {
       // Fetch center details based on the centerId prop
-      this.fetchfav();
-      this.getAllData();
-      this.filterFav();
+      this.getRewardOwn();
+      this.getRewardExchange();
     },
     methods: {
-        async fetchfav() {
-            console.log("here")
-            try {
-            const response = await fetch(
-                `https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/get/favourite/${this.accId}`
-            );
-            if (response.ok) {
-                this.favFoodStall = await response.json();
-                console.log(this.foodStall);
-            } else {
-                console.error('Failed to fetch all stall details:', response.statusText);
-            }
-            } catch (error) {
-            console.error('An error occurred while fetching all stall details:', error);
-            }
-        },
-
-        async getAllData() {
+        async getRewardOwn() {
             const fetchFromAPI = async (url) => {
                 try {
                     const response = await fetch(url);
@@ -123,18 +99,23 @@ export default {
                 }
             };
 
-            this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
+            this.rewardOwn = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Reward/api/get/rewards`);
         },
 
-        filterFav() {
-            for (let i =0; i<this.foodStalls.length; i++){
-                var stall = this.foodStalls[i];
-                for (let x = 0; x<this.favFoodStall.length; x++)
-                    if (stall.id === this.favFoodStall[x].hawker_stall_id){
-                        this.filteredFoodStall.push(this.foodStalls[i])
-            }
-        }
-     }
+        async getRewardExchange() {
+            const fetchFromAPI = async (url) => {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error("Failed to fetch data");
+                    return await response.json();
+                } catch (error) {
+                    console.error("An error occurred while fetching data:", error);
+                }
+            };
+
+            this.rewardExchange = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Reward/api/get/item`);
+        },
+
     }
   };
 
