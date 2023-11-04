@@ -1,4 +1,7 @@
 <template>
+        <button @click="filterStall" class="btn btn-custom">
+        check average price
+    </button>
     <div class="card-container">
         <Carousel class="carousel" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
             <Slide v-for="hawkerCenter in hawkerCenters" :key="hawkerCenter.id">
@@ -7,11 +10,17 @@
                         <v-img :src="hawkerCenter.photo_url" cover></v-img>
                         <v-card-title>{{ hawkerCenter.name }}</v-card-title>
                         <v-card-text>{{ hawkerCenter.address }}</v-card-text>
+                        <p>
+                            ${{ filteredPrice[hawkerCenter.id]}}
+                        </p>
+
                     </router-link>
                 </v-card>
             </Slide>
         </Carousel>
+  
     </div>
+
 </template>
 
 <script>
@@ -36,6 +45,8 @@ export default {
             foods: [],
             foodStalls: [],
             hawkerCenters: [],
+            filteredPrice: {}, //center.id: price
+            filteredReviews: {},
         };
     },
     created() {
@@ -56,7 +67,33 @@ export default {
             this.foods = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/all/food`);
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
             this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
+        },
+
+        filterStall() {
+            for (let y = 0; y<this.hawkerCenters.length; y++){
+                var center = this.hawkerCenters[y];
+                var total_price = 0;
+                var total_food = 0;
+                var avg_price = 0;
+                var num_of_$ = 0;
+                var price_sign = "$";
+                for (let i =0; i<this.foodStalls.length; i++){
+                    var stall = this.foodStalls[i];
+
+                    for (let x=0;x<this.foods.length; x++){
+                        var food = this.foods[x];
+                        if (food.hawker_stall_id === stall.id && center.id === stall.hawker_id){
+                            total_food += 1;
+                            total_price += food.price;}
+                        }
+                avg_price = total_price / total_food;
+                this.filteredPrice[center.id] = Math.ceil(avg_price * 100) / 100;
+                
+    
         }
+     }
+    }
+    
     },
     computed: {
         filteredResults() {
@@ -67,7 +104,7 @@ export default {
                 foodStalls: this.foodStalls.filter(filterBySearchValue),
                 hawkerCenters: this.hawkerCenters.filter(center => 
                     filterBySearchValue(center) || center.address.toLowerCase().includes(this.searchValue.toLowerCase())
-                )
+                ),
             };
         }
     },
