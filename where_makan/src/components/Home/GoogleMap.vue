@@ -20,6 +20,11 @@
             </GMapCluster>
         </GMapMap>
         <v-divider></v-divider>
+
+        <GeolocationTracker />
+
+        <v-divider></v-divider>
+
         <h1 class="text-center">All hawker centres:</h1>
         <div class="card-container">
         <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
