@@ -4,10 +4,6 @@
             <div class="col-4">
                 <div class="container">
                     <div class="row">
-                        <button class="btn btn-outline-primary btn-lg" data-toggle="button">View Profile</button>
-                    </div>
-
-                    <div class="row">
                         <router-link to="/analytics" class="btn btn-outline-primary btn-lg">View Online Sales Analytics</router-link>                    </div>
                     </div>
 
@@ -40,10 +36,6 @@
         <div class="row">
             <div class="col-4">
                 <div class="container">
-                    <div class="row">
-                        <button class="btn btn-outline-primary btn-lg" data-toggle="button">View Profile</button>
-                    </div>
-
                     <div class="row">
                         <router-link to="/myrewards" class="btn btn-outline-primary btn-lg">My Rewards</router-link>
                     </div>
