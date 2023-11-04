@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-<template>
-    <div>
-=======
     <template>
         <div>
->>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner" style="width: calc(300px * 5 - 100px);">
             <div class="carousel-item" style="object-fit: cover;" v-for="(group, groupIndex) in groupedHawkerCenters" :key="groupIndex" :class="{ active: groupIndex === 0 }">
@@ -43,14 +38,10 @@
         <div class="font-weight-light text-center more"><router-link :to="{name: 'Explore'}" class="nav-link"><h5>View More Hawkers</h5></router-link></div>
 
 
-<<<<<<< HEAD
-    </div>
-=======
         </div>
     </template>
   
 
->>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
 
 
 <script>
@@ -90,7 +81,6 @@ export default {
             this.foods = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/all/food`);
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
             this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
-<<<<<<< HEAD
             this.filterStall;
         },
 
@@ -113,11 +103,10 @@ export default {
                         }
                 avg_price = total_price / total_food;
                 this.filteredPrice[center.id] = Math.ceil(avg_price * 100) / 100;
-                
-    
-=======
->>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
-        }
+                    }
+            }
+    }
+            
     },
     computed: {
         filteredResults() {
