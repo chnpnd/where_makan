@@ -1,6 +1,7 @@
 <template>
     <div class="container mt-4 bg-white">
         <div class="container mt-4">
+            <backButton />
             <!-- Food Stall Information -->
             <div v-if="foodStall" class="stall-container d-flex mb-5">
                 <div class="row">
@@ -105,12 +106,16 @@
 import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
+import backButton from '@/components/BackButton/backButton.vue';
 import FoodOrder from '@/components/FoodOrder.vue';
 
 export default {
     component:{
         LeaveReview,
         EditReviewModal,
+        FoodOrder,
+        backButton,
+        Icon,
         FoodOrder
     },
     data() {
@@ -295,6 +300,7 @@ export default {
 </script>
 
 <style scoped>
+@import 'stall.css';
 
 body {
     font-family: 'Arial', sans-serif;
