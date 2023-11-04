@@ -1,0 +1,19 @@
+.hawker-card {
+    width: 250px;
+    height: 380px;
+    margin: 0.5rem; 
+    overflow: hidden;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 0;
+}
+  
+.hawker-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-title:hover{
+    color: red;
+}   
+  

@@ -1,102 +1,33 @@
 <template>
   <div>
-        <div class="d-flex flex-wrap justify-between">
-        <v-card
-        v-for="(pick, index) in images" :key="index"
-        :loading="loading"
-        class="mx-auto my-12"
-        max-width="374"
-        >
-        <template v-slot:loader="{ isActive }">
-          <v-progress-linear
-            :active="isActive"
-            color="deep-purple"
-            height="4"
-            indeterminate
-          ></v-progress-linear>
-        </template>
-
-        <v-img>
-          <BCarousel controls indicators>
+    <div class="card-container">
+      <div class="card border-0 shadow-3 my-3" v-for="(pick, index) in images" :key="index">
+        <!-- <img class="card-img-top" :src="pick.image" alt="Card image cap"> -->
+        <BCarousel controls>
                   <BCarouselSlide :img-src="pick.image"  class="card-img-top img-featured" />
                   <BCarouselSlide :img-src="pick.anotherImage" class="card-img-top img-featured" />
-          </BCarousel>
-        </v-img>
-
-    <v-card-item>
-      <v-card-title class="shop-title">{{ pick.shopname }}<span class="float-right">
-        <v-btn
-            class="custom-button"
-            :icon="pick.heart ? 'mdi:heart-outline' : 'mdi:heart'" @click="toggleHeart(index, 'images')"
-          >
-            <Icon :icon="pick.heart ? 'mdi:heart-outline' : 'mdi:heart'" />
-          </v-btn>
+          </BCarousel> 
+        <h4 class="card-title my-4">{{ pick.shopname }}
+          <span>
+            <Icon :icon="pick.heart ? 'mdi:heart-outline' : 'mdi:heart'" @click="toggleHeart(index)" :class="{ 'red-heart': !pick.heart }"/>
         </span>
-      </v-card-title>
+      </h4>
+        <div class="card-body ">
+          <p class="me-1">Local Favorite
+            <span>
+              <Icon icon="bi:fire" style="color: orange;"/>
+            </span>
+          </p>
+          <div class="me-1" v-if="pick.healthy">Voted by healthier choice</div>
+          <p class="card-text opacity-100">{{ pick.description }}
+            
+          </p>
+        </div>
+      </div> 
+    </div> 
 
-      <v-card-subtitle>
-        <div class="me-1">Local Favorite<span><Icon icon="bi:fire" /></span></div>
-        <div class="me-1" v-if="pick.healthy">Voted by healthier choice</div>
+ 
 
-        <v-rating
-          hover
-          readonly
-          :length="5"
-          :size="32"
-          :model-value="3"
-          active-color="primary"
-        />
-      </v-card-subtitle>
-    
-    </v-card-item>
-
-    <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
-        <!-- rating insert here -->
-        <v-rating
-        v-model="rating"
-        class="ma-2"
-        density="compact"
-      ></v-rating>
-
-        <!-- <div class="text-grey ms-4">
-          {{ duck.reviewRating }}
-        </div> -->
-      </v-row>
-      
-
-      <div>{{ pick.description }}</div>
-    </v-card-text>
-
-    <!-- <v-divider class="mx-4 mb-1"></v-divider> -->
-
-    <!-- <v-card-title>Tonight's availability</v-card-title>
-
-    <div class="px-4">
-      <v-chip-group v-model="selection">
-        <v-chip>5:30PM</v-chip>
-        <v-chip>7:30PM</v-chip>
-        <v-chip>8:00PM</v-chip>
-        <v-chip>9:00PM</v-chip>
-      </v-chip-group>
-    </div> -->
-
-    <v-card-actions>
-      <v-btn
-        color="orange-lighten-1"
-        variant="text"
-        @click="reserve"
-      >
-        Book to Order Now
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</div>
-
-        
 </div>
 </template>
 
@@ -138,19 +69,12 @@ export default{
       },
     },
     
+    
 
 }
 
 </script>
 <style scoped>
-.custom-button {
-  background-color: transparent !important;
-  box-shadow: none; /* Remove the shadow */
-  border: none; /* Remove any borders */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
-}
-
 
 .img-featured {
   width: 100%;
@@ -163,4 +87,23 @@ export default{
   white-space: normal;
   max-width: 100%;
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping to the next row */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+}
+
+.card {
+  max-width: 30rem;
+  margin-right: 10px;
+  border-radius: 0;
+  text-align: center;
+}
+
+
+.red-heart {
+  color: red; /* Add your desired red color here */
+}
+
 </style>

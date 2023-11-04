@@ -7,8 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BackButton: typeof import('./src/components/BackButton/backButton.vue')['default']
     BCarousel: typeof import('bootstrap-vue-next')['BCarousel']
     BCarouselSlide: typeof import('bootstrap-vue-next')['BCarouselSlide']
+    BTab: typeof import('bootstrap-vue-next')['BTab']
+    BTabs: typeof import('bootstrap-vue-next')['BTabs']
     EditReviewModal: typeof import('./src/components/EditReviewModal.vue')['default']
     ExploreCards: typeof import('./src/components/Explore/ExploreCards.vue')['default']
     FoodOrder: typeof import('./src/components/FoodOrder.vue')['default']
@@ -25,13 +28,14 @@ declare module 'vue' {
     Introduction: typeof import('./src/components/Home/Introduction.vue')['default']
     LeaveReview: typeof import('./src/components/LeaveReview.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
-    Modal: typeof import('./src/components/Modal.vue')['default']
+    Modal: typeof import('./src/components/Login/Modal.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     Questionnaire: typeof import('./src/components/Home/Questionnaire.vue')['default']
     RecommendedCards: typeof import('./src/components/Home/recommendedCards.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Searchbar: typeof import('./src/components/Searchbar.vue')['default']
+    SignUpModal: typeof import('./src/components/Login/SignUpModal.vue')['default']
     Test: typeof import('./src/components/test.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     Video: typeof import('./src/components/Video.vue')['default']
