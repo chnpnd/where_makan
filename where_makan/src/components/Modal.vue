@@ -1,26 +1,16 @@
-<script setup>
-const props = defineProps({
-  show: Boolean
-})
-</script>
-
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+      <div v-if="show" class="modal-mask">
         <!--Login Page-->
         <div class="modal-container" id = "loginAccount">
           <div class="modal-header">
-            <slot name="header">Enter your email and password</slot>
-            <h3 class="text-center">Log in to your Where Makan account</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-          
+            <h5 class="modal-title">{{ activeForm === 'login' ? 'Login' : 'Register' }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
           </div>
 
           <div class="modal-body">
             <slot name="body">
-              <form> 
+              <form v-if="activeForm === 'login'" @submit.prevent="login">
                 <div class="container"> 
                   <label for="emailLogin">Email address</label>
                   <input id="emailLogin" class="form-control" type="email" placeholder="" v-model="name"/>
@@ -34,37 +24,16 @@ const props = defineProps({
 
                   <button type="button" class="btn btn-success " >Login</button>
                 </div>
-              </form> 
-            </slot>
-          </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-              <div class="texxt-center">
-                <p>No Where Makan Account Yet?</p>
-                <button type="button" data-bs-target = "#registerAccount" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-outline-primary">
-                  Click here to Register
-                </button>
-              </div>
-            </slot>
-          </div>
-        </div>
-
-        <!--Register Page-->
-
-        <div class="modal-container" id = "registerAccount">
-          <div class="modal-header">
-            <slot name="header">Sign Up for your Where Makan Account</slot>
-            <h3 class="text-center">Sign Up for your Where Makan Account</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-          
-          </div>
-
-          <div class="modal-body">
-            <slot name="body">
-              <form> 
+                <div class="modal-footer">
+                    <slot name="footer">
+                      <div class="texxt-center">
+                        <p>No Where Makan Account Yet?</p>
+                        <button type="button" @click="switchForm('register')">Switch to Register</button>
+                      </div>
+                    </slot>
+                </div>
+              </form>
+              <form v-else @submit.prevent="register">
                 <div class="container"> 
                   <label for="f_name">First Name</label>
                   <input id="f_name" class="form-control" type="text" placeholder="">
@@ -87,31 +56,59 @@ const props = defineProps({
                   <button type="button" class="btn btn-success " >Sign Up</button>
 
                   <br>
-
-                  </div>
-   
+                </div>
+                <div class="modal-footer">
+                  <slot name="footer">
+                    <div class="text-center">
+                      <p>Already have a Where Makan account?</p>
+                      <button type="button" @click="switchForm('login')">Switch to Login</button>
+                    </div>
+                  </slot>
+                </div>
               </form> 
             </slot>
           </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-              <div class="text-center">
-                <p>Already have a Where Makan account?</p>
-                <button type="button" data-bs-target = "#loginAccount" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-outline-primary">
-                  Click here to Login
-                </button>
-              </div>
-            </slot>
-          </div>
-        </div>
+        </div>    
       </div>
+
   </Transition>
- 
 </template>
 
-<style>
+<script>
+export default {
+  data() {
+    return {
+      activeForm: 'login',
+    };
+  },
+  props: {
+        show: {
+            type: Boolean,
+            required: true
+        },
+        stallId: Number,
+        consumerId: Number,
+    },
+  methods: {
+    switchForm(form) {
+      this.activeForm = form;
+    },
+    login() {
+      // Handle login logic
+    },
+    register() {
+      // Handle registration logic
+    },
+    closeModal() {
+        this.$emit('close');
+    },
+  },
+};
 
+</script>
+
+
+<style>
 .modal-mask {
   position: fixed;
   z-index: 9998;

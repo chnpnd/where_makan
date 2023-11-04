@@ -61,6 +61,13 @@ export default {
     },
     methods: {
       async submitReview() {
+
+        if(!this.image)
+        {
+          alert('Please select an image.');
+          return;
+        }
+
         alert('Thank you for your feedback!');
         // Create a JSON object with the review data
         const reviewData = {
