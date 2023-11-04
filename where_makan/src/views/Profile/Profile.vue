@@ -15,7 +15,7 @@
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <img class="img-thumbnail w-100 h-100" src="src/assets/profile_img.jpeg">
+                        <img class="img-thumbnail w-100 h-100" src="@/assets/profile_img.jpeg">
                     </div>
 
                     <div class="col text-center pt-10">
@@ -56,7 +56,7 @@
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <img class="img-thumbnail w-100 h-100" src="src/assets/profile_img.jpeg">
+                        <img class="img-thumbnail w-100 h-100" src="@/assets/profile_img.jpeg">
                     </div>
 
                     <div class="col text-center pt-10">
