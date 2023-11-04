@@ -76,6 +76,67 @@
 </template>
 
 <script>
+export default {
+    props: ['centerId'], // This prop is automatically passed by Vue Router
+    data() {
+      return {
+        accId: 10,
+        center: null, // Initialize center as null
+        favFoodStall: [],
+        foodStalls: [],
+        filteredFoodStall: [],
+        
+      };
+    },
+    created() {
+      // Fetch center details based on the centerId prop
+      this.fetchfav();
+      this.getAllData();
+      this.filterFav();
+    },
+    methods: {
+        async fetchfav() {
+            console.log("here")
+            try {
+            const response = await fetch(
+                `https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/get/favourite/${this.accId}`
+            );
+            if (response.ok) {
+                this.favFoodStall = await response.json();
+                console.log(this.foodStall);
+            } else {
+                console.error('Failed to fetch all stall details:', response.statusText);
+            }
+            } catch (error) {
+            console.error('An error occurred while fetching all stall details:', error);
+            }
+        },
+
+        async getAllData() {
+            const fetchFromAPI = async (url) => {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error("Failed to fetch data");
+                    return await response.json();
+                } catch (error) {
+                    console.error("An error occurred while fetching data:", error);
+                }
+            };
+
+            this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
+        },
+
+        filterFav() {
+            for (let i =0; i<this.foodStalls.length; i++){
+                var stall = this.foodStalls[i];
+                for (let x = 0; x<this.favFoodStall.length; x++)
+                    if (stall.id === this.favFoodStall[x].hawker_stall_id){
+                        this.filteredFoodStall.push(this.foodStalls[i])
+            }
+        }
+     }
+    }
+  };
 
 </script>
 
