@@ -1,5 +1,13 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
 <template>
     <div>
+=======
+    <template>
+        <div>
+>>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner" style="width: calc(300px * 5 - 100px);">
             <div class="carousel-item" style="object-fit: cover;" v-for="(group, groupIndex) in groupedHawkerCenters" :key="groupIndex" :class="{ active: groupIndex === 0 }">
@@ -38,23 +46,36 @@
         <div class="font-weight-light text-center more"><router-link :to="{name: 'Explore'}" class="nav-link"><h5>View More Hawkers</h5></router-link></div>
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
     </div>
+=======
+        </div>
+    </template>
+  
 
-</template>
+>>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
+
 
 <script>
 
+// import { Carousel, Slide } from 'vue3-carousel';
+// import 'vue-carousel3/dist/carousel.css';
+
 export default {
     components: {
+        // Carousel,
+        // Slide
     },
     data() {
         return {
+
             searchValue: '',
             foods: [],
             foodStalls: [],
             hawkerCenters: [],
-            filteredPrice: {}, //center.id: price
-            filteredReviews: {},
         };
     },
     created() {
@@ -75,6 +96,8 @@ export default {
             this.foods = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/all/food`);
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
             this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
+<<<<<<< HEAD
+            this.filterStall;
         },
 
         filterStall() {
@@ -98,10 +121,9 @@ export default {
                 this.filteredPrice[center.id] = Math.ceil(avg_price * 100) / 100;
                 
     
+=======
+>>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
         }
-     }
-    }
-    
     },
     computed: {
         filteredResults() {
@@ -112,17 +134,17 @@ export default {
                 foodStalls: this.foodStalls.filter(filterBySearchValue),
                 hawkerCenters: this.hawkerCenters.filter(center => 
                     filterBySearchValue(center) || center.address.toLowerCase().includes(this.searchValue.toLowerCase())
-                ),
+                )
             };
         },
-        groupedHawkerCenters() {
-            const groupSize = 5; // Number of cards to display in each group
-            const grouped = [];
-            for (let i = 0; i < this.hawkerCenters.length; i += groupSize) {
-                grouped.push(this.hawkerCenters.slice(i, i + groupSize));
-            }
-            return grouped;
-        },
+    groupedHawkerCenters() {
+      const groupSize = 5; // Number of cards to display in each group
+      const grouped = [];
+      for (let i = 0; i < this.hawkerCenters.length; i += groupSize) {
+        grouped.push(this.hawkerCenters.slice(i, i + groupSize));
+      }
+      return grouped;
+    },
     },
 };
 </script>
@@ -147,3 +169,4 @@ export default {
 
 
 </style>
+

@@ -87,6 +87,7 @@ export default {
         };
         try {
             const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Review/api/create/review`, requestOptions);
+            console.log(reviewData);
             if (response.ok) {
               alert('Review submitted successfully!');
               this.reviews = await response.json();
@@ -187,6 +188,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
   }
 
   .selected {
