@@ -75,6 +75,7 @@ export default {
             };
 
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
+            this.filterFav();
         },
 
         filterFav() {

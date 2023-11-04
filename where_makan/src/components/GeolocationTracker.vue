@@ -67,6 +67,7 @@ export default {
           (position) => {
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;
+            this.filteredDistance();
           },
           (error) => {
             switch (error.code) {
@@ -124,7 +125,7 @@ export default {
 
           let result = (c * r);
 
-          if (result <= 8){
+          if (result <= 3){
             this.filteredCenters.push(this.hawkerCenters[i])
           }
         }

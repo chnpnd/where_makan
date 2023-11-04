@@ -1,32 +1,13 @@
 <template>
-<<<<<<< HEAD
-        <button @click="filterStall" class="btn btn-custom">
-        check average price
-    </button>
-    <div class="card-container">
-        <Carousel class="carousel" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
-            <Slide v-for="hawkerCenter in hawkerCenters" :key="hawkerCenter.id">
-                <v-card class="hawker-card">
-                    <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
-                        <v-img :src="hawkerCenter.photo_url" cover></v-img>
-                        <v-card-title>{{ hawkerCenter.name }}</v-card-title>
-                        <v-card-text>{{ hawkerCenter.address }}</v-card-text>
-                        <p>
-                            ${{ filteredPrice[hawkerCenter.id]}}
-                        </p>
-
-                    </router-link>
-                </v-card>
-            </Slide>
-        </Carousel>
-  
-=======
     <div>
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner" style="width: calc(300px * 5 - 100px);">
             <div class="carousel-item" style="object-fit: cover;" v-for="(group, groupIndex) in groupedHawkerCenters" :key="groupIndex" :class="{ active: groupIndex === 0 }">
                 <div class="row ml-6">
-                <div class="card col-md-2 hawker-card p-0" v-for="hawkerCenter in group" :key="hawkerCenter.id">
+                    <button @click="filterStall" class="btn btn-custom">
+                        Check Avg Price
+                    </button>
+                    <div class="card col-md-2 hawker-card p-0" v-for="hawkerCenter in group" :key="hawkerCenter.id">
                     <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none" >
                         <div class="image-container">
                             <img :src="hawkerCenter.photo_url" class="d-block w-100 h-50 "  alt="hawker images" >
@@ -34,6 +15,8 @@
                     <div class="card-body">
                     <h5 class="card-title">{{ hawkerCenter.name }}</h5>
                     <p class="card-text">{{ hawkerCenter.address }}</p>
+                    
+                    <p>${{ filteredPrice[hawkerCenter.id]}}</p>
                     </div>
                 </router-link>
                 </div>
@@ -55,7 +38,6 @@
         <div class="font-weight-light text-center more"><router-link :to="{name: 'Explore'}" class="nav-link"><h5>View More Hawkers</h5></router-link></div>
 
 
->>>>>>> 65efb8da2ca56c09f44b32d993021e4a75ab3648
     </div>
 
 </template>
@@ -93,6 +75,7 @@ export default {
             this.foods = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/all/food`);
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
             this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
+            this.filterStall;
         },
 
         filterStall() {
