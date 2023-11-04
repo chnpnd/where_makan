@@ -1,35 +1,16 @@
 <template>
-  <div class="container-fluid h-100">
-    <div class="row h-100 justify-content-center align-items-center">
-      <div class="col-12 text-center">
-        <p v-if="errorMessage">{{ errorMessage }}</p>
-        <p v-if="longitude">{{ longitude }}</p>
-        <p v-if="latitude">{{ latitude }}</p>
-         <!--NEW EDITS - the whole file-->
-        <button @click="getLocation" class="btn btn-custom"> <!-- Use a custom class -->
-          Allow Location Access
-        </button>
-        <button @click="filteredDistance" class="btn btn-custom">
-          Recommend Hawker Stalls Near Me
-        </button>
-
-        <div>
-          <Carousel class="carousel" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
-          <Slide v-for="hawkerCenter in filteredCenters" :key="hawkerCenter.id">
-              <v-card class="hawker-card">
-                  <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
-                      <v-img :src="hawkerCenter.photo_url" cover></v-img>
-                      <v-card-title>{{ hawkerCenter.name }}</v-card-title>
-                      <v-card-text>{{ hawkerCenter.address }}</v-card-text>
-
-                  </router-link>
-              </v-card>
-          </Slide>
-      </Carousel>
+    <div class="container-fluid h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-12 text-center">
+          <p v-if="errorMessage">{{ errorMessage }}</p>
+          <p v-else-if="location">{{ location }}</p>
+          <button @click="getLocation" class="btn btn-custom"> <!-- Use a custom class -->
+            Recommend Hawker Stalls Near Me
+          </button>
         </div>
-       
       </div>
     </div>
+<<<<<<< HEAD
   </div>
 </template>
 
@@ -91,16 +72,45 @@ export default {
       } else {
         this.errorMessage = "Geolocation is not supported by this browser.";
       }
+=======
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        errorMessage: null,
+        location: null,
+      };
+>>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
     },
-    async getAllData() {
-          const fetchFromAPI = async (url) => {
-              try {
-                  const response = await fetch(url);
-                  if (!response.ok) throw new Error("Failed to fetch data");
-                  return await response.json();
-              } catch (error) {
-                  console.error("An error occurred while fetching data:", error);
+    methods: {
+      getLocation() {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+              this.location = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            },
+            (error) => {
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  this.errorMessage = "User denied the request for geolocation.";
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  this.errorMessage = "Location information is unavailable.";
+                  break;
+                case error.TIMEOUT:
+                  this.errorMessage = "The request to get user location timed out.";
+                  break;
+                case error.UNKNOWN_ERROR:
+                  this.errorMessage = "An unknown error occurred.";
+                  break;
+                default:
+                  this.errorMessage = "An error occurred while getting location.";
               }
+<<<<<<< HEAD
           };
 
           this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
@@ -128,42 +138,35 @@ export default {
           if (result <= 3){
             this.filteredCenters.push(this.hawkerCenters[i])
           }
+=======
+            }
+          );
+        } else {
+          this.errorMessage = "Geolocation is not supported by this browser.";
+>>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
         }
-    }
-    
-
-  },
-  computed: {
-        filteredResults() {
-            const filterBySearchValue = (item) => item.name.toLowerCase().includes(this.searchValue.toLowerCase());
-            
-            return {
-                hawkerCenters: this.hawkerCenters.filter(center => 
-                    filterBySearchValue(center) || center.address.toLowerCase().includes(this.searchValue.toLowerCase())
-                )
-            };
-        },
+      },
     },
-};
-</script>
-
+  };
+  </script>
+  
 <style scoped>
-.container-fluid {
-  height: 100vh;
-  background-color: #f8f9fa;
-}
+  .container-fluid {
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
 
-.btn-custom {
-  font-size: 20px;
-  padding: 10px 20px; /* Adjust padding as needed */
-  border-radius: 5px; /* Rounded corners */
-  background-color: #3498db; /* Custom background color */
-  color: #fff; /* Text color */
-  border: none; /* Remove border */
-  transition: background-color 0.3s; /* Smooth transition */
-}
+  .btn-custom {
+    font-size: 20px;
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #3498db; /* Custom background color */
+    color: #fff; /* Text color */
+    border: none; /* Remove border */
+    transition: background-color 0.3s; /* Smooth transition */
+  }
 
-.btn-custom:hover {
-  background-color: #2980b9; /* Change color on hover */
-}
+  .btn-custom:hover {
+    background-color: #2980b9; /* Change color on hover */
+  }
 </style>

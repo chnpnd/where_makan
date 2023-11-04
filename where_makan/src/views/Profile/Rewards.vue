@@ -1,10 +1,10 @@
 <template>
-
+    <div>
 <h1>My Rewards</h1>
 <!--Ideally is to look at data set and use a for function to then show the rewards that users receive-->
 
     <div class = "container-fluid rewards">
-        <div class = "row" v-for="reward in rewardOwn">
+        <div class = "row" v-for="reward in rewardOwn" :key="reward.id">
         
             <div class = "col-2"></div>
 
@@ -41,7 +41,7 @@
     <!--Rewards should populate itself base on the rewards database-->
 
     <div class = "container-fluid rewards">
-        <div class = "row" v-for="item in rewardExchange">
+        <div class = "row" v-for="item in rewardExchange" :key="item.id">
             <div class = "col-2"></div>
 
             <div class = "col-8">
@@ -70,6 +70,7 @@
 
         </div>
     </div>
+</div>
 </template>
 
 <script>
