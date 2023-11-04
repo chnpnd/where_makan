@@ -1,6 +1,10 @@
 <template>
-    <div v-if="center" class="container mt-6 bg-white w-10">
-        <div class="row">
+
+    <div v-if="center" class="container mt-6 bg-white w-10" style="height: 100vh;">
+        <div>
+            <backButton/>
+        </div>
+            <div class="row">
             <div class = "col-8">
                 <div class = "mb-4">
                     <h1 class="display-4 text-left fw-bold">{{ center.name }}</h1>
@@ -18,54 +22,64 @@
                     <img :src="center.photo_url" alt="Center Photo" class="img-fluid" />
                 </div>
             </div>
-
-            <hr>
         </div>
-
-        <div class = "row">
-
-              <!-- stalls that this centre has -->
-            <h4 class="display-5 f">Available Stalls </h4>
-            <div class="card-container">
-            <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-                <div v-if="foodStall" class='row justify-content-left'>
-                        <v-card v-for="stall in foodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px;">
-                            <router-link class= "text-decoration-none text-black" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
-                                <v-img :src="stall.store_url" cover max-height="100"></v-img>
-                                <v-card-title>{{ stall.name }} {{ stall.address }}</v-card-title>
-                                <v-card-text> No reviews yet</v-card-text>
-                                    <!--    NEED HELP ON WHY IT NEEDS TO CLICK ON 2 CARDS BEFORE SWITCHING(duplicated function)--> 
-                            </router-link>
-                        </v-card>
-                </div> 
-                <div v-else><h1>No food is available</h1></div>
-            </div>
-        </div>
-
-        <!-- Display Google Map -->
-        <div class="mb-4">
-            <h4>How to Get There</h4>
-            <GMapMap :center="centerPosition(center)" :zoom="17" map-type-id="terrain" style="height: 300px;">
-                <GMapCluster>
-                <GMapMarker
-                    :key="index"
-                    :position="centerPosition(center)"
-                    :clickable="true"
-                    :draggable="true"
-                    @click="center = centerPosition(center)"
-                />
-                </GMapCluster>
-            </GMapMap>
-        </div>
-
-
-
+        <b-tabs content-class="mt-3">
+            <b-tab title="Hawker Stalls" active>  
+                <h4 class="text-center">Available Stalls: </h4>
+                <div class="card-container">
+                <div v-if="foodStall" class="row justify-content-center">
+                    <div class="card mb-3 p-0 mx-4 stallCard" v-for="stall in foodStall" :key="stall.id" style="max-width: 540px; border-radius: 0; box-shadow:0px 3px 15px rgba(0, 0, 0, 0.1);">
+                        <router-link class="text-decoration-none text-black" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
+                        <div class="row g-0 p-0" >
+                        <div class="col-md-4 ml-0">
+                            <img :src="stall.store_url" class="card-img-top img-fluid rounded-start" alt="..." style="height: 150px; width: 100%; object-fit: cover;border-radius: 0;">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title">{{ stall.name }}</h5>
+                            <p class="card-text">{{ stall.address }}</p>
+                            <!-- replace for review -->
+                            <p class="card-text">{{ stall.review }}</p>
+                            </div>
+                        </div>
+                        </div>
+                    </router-link>
+                    </div>
+                </div>
+                <div v-else>
+                    <h1>No food is available</h1>
+                </div>
+                </div>
+            </b-tab>
+            <b-tab title="Directions">
+                <!-- Display Google Map -->
+                <div class="mb-4">
+                    <h4>How to Get There</h4>
+                    <GMapMap :center="centerPosition(center)" :zoom="17" map-type-id="terrain" style="height: 300px;">
+                        <GMapCluster>
+                        <GMapMarker
+                            :key="index"
+                            :position="centerPosition(center)"
+                            :clickable="true"
+                            :draggable="true"
+                            @click="center = centerPosition(center)"
+                        />
+                        </GMapCluster>
+                    </GMapMap>
+                </div>
+            </b-tab>
+        </b-tabs>        
     </div>
   </template>
   
   <script>
+    import backButton from '@/components/BackButton/backButton.vue';
+
   export default {
     props: ['centerId'], // This prop is automatically passed by Vue Router
+    components: {
+    backButton,
+    },
     data() {
       return {
         center: null, // Initialize center as null
@@ -75,6 +89,7 @@
     created() {
       // Fetch center details based on the centerId prop
       this.fetchCenterDetails();
+
     },
     methods: {
         async fetchStallsInCenterDetails() {
@@ -127,37 +142,20 @@
   </script>
 
   <style>
-
-.card-container .v-card {
-  background-color: #f5e8d7;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Add any other desired styling here */
-}
-
-.card-container .v-card-title {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 2px solid #5a4134;
-    padding-bottom: 10px;
+    .card-img-wrapper {
+    position: relative;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.card-container .v-card-text {
-    font-size: 10px;
-    margin-bottom: 15px;
-    letter-spacing: 2px;
-    border-bottom: 2px solid #5a4134;
-    padding-bottom: 10px;
-    white-space: normal;
-}
+  }
 
-.card-container .v-card-title:hover {
-    white-space: normal;
-    text-overflow: unset;
-}
+  .card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stallCard:hover{
+    transform: translateY(-10px);
+  }
 
 
 </style>
