@@ -37,12 +37,9 @@
             <div class="col-4">
                 <div class="container">
                     <div class="row">
-                        <router-link to="/myrewards" class="btn btn-outline-primary btn-lg">My Rewards</router-link>
+                        <router-link to="/rewards" class="btn btn-outline-primary btn-lg">Rewards</router-link>
                     </div>
 
-                    <div class="row">
-                        <router-link to="/exchangerewards" class="btn btn-outline-primary btn-lg">Exchange Points for Rewards</router-link>
-                    </div>
 
                     <div class="row">
                         <router-link to="/favouritedstalls" class="btn btn-outline-primary btn-lg">My Favourite Stalls</router-link>
