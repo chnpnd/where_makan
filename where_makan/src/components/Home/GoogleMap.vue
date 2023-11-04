@@ -21,72 +21,25 @@
         </GMapMap>
         <v-divider></v-divider>
         <h1 class="text-center">All hawker centres:</h1>
-        <div class="card-container">
-        <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-            <HawkerCentres />
+        <div class="card-container mx-4 ">
+            <div class="row ml-6 justify-content-center">
+                <div class="card col-md-2 hawker-card p-0 mx-2 my-2" v-for="hawkerCenter in hawkerCenters" :key="hawkerCenter.id" style="border-radius:0;">
+                    <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none" >
+                        <div class="image-container">
+                            <img :src="hawkerCenter.photo_url" class="d-block w-100 h-50"  alt="hawker images" >
+                        </div>
+                    <div class="card-body">
+                    <h5 class="card-title">{{ hawkerCenter.name }}</h5>
+                    <p class="card-text">{{ hawkerCenter.address }}</p>
+                    </div>
+                </router-link>
+                </div> 
+            </div>
         </div>
     </div>
 </template>
 
-<style scoped>
-.map-container {
-    padding: 20px; /* Add some space around the map */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow around the map */
-    border-radius: 8px; /* Optional: Rounded edges for a cleaner look */
-}
-
-.google-map {
-    width: 100%;
-    height: 500px; /* Adjust height as needed */
-}
-
-.card-container  {
-    max-width: 1500px;
-    margin: 30px auto;
-    background-color: #D2B48C;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    font-family: 'Georgia', serif;
-}
-
-.card-container .v-card {
-  background-color: #f5e8d7;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Add any other desired styling here */
-}
-
-.card-container .v-card-title {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 2px solid #5a4134;
-    padding-bottom: 10px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.card-container .v-card-text {
-    font-size: 10px;
-    margin-bottom: 15px;
-    letter-spacing: 2px;
-    border-bottom: 2px solid #5a4134;
-    padding-bottom: 10px;
-    white-space: normal;
-}
-
-.card-container .v-card-title:hover {
-    white-space: normal;
-    text-overflow: unset;
-}
-
-
-</style>
-
-
-<script>
-import HawkerCentres from './HawkerCentreCards.vue';  
+<script>  
 
     export default {
         name: 'App',
@@ -111,7 +64,7 @@ import HawkerCentres from './HawkerCentreCards.vue';
             }
         },
         components: {
-            HawkerCentres
+            
         },
         created() {
         // Use the created lifecycle hook to fetch data when the component is created
@@ -168,6 +121,22 @@ import HawkerCentres from './HawkerCentreCards.vue';
   };
 </script>
 
+<style scoped>
+.map-container {
+    padding: 20px; /* Add some space around the map */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow around the map */
+    border-radius: 8px; /* Optional: Rounded edges for a cleaner look */
+}
+
+.google-map {
+    width: 100%;
+    height: 500px; /* Adjust height as needed */
+}
+
+
+
+
+</style>
 
 
 

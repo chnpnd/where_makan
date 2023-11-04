@@ -1,18 +1,41 @@
-<template>
-    <div class="card-container">
-        <Carousel class="carousel" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
-            <Slide v-for="hawkerCenter in hawkerCenters" :key="hawkerCenter.id">
-                <v-card class="hawker-card">
-                    <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
-                        <v-img :src="hawkerCenter.photo_url" cover></v-img>
-                        <v-card-title>{{ hawkerCenter.name }}</v-card-title>
-                        <v-card-text>{{ hawkerCenter.address }}</v-card-text>
-                    </router-link>
-                </v-card>
-            </Slide>
-        </Carousel>
-    </div>
-</template>
+    <template>
+        <div>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" style="width: calc(300px * 5 - 100px);">
+            <div class="carousel-item" style="object-fit: cover;" v-for="(group, groupIndex) in groupedHawkerCenters" :key="groupIndex" :class="{ active: groupIndex === 0 }">
+                <div class="row ml-6">
+                <div class="card col-md-2 hawker-card p-0" v-for="hawkerCenter in group" :key="hawkerCenter.id">
+                    <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none" >
+                        <div class="image-container">
+                            <img :src="hawkerCenter.photo_url" class="d-block w-100 h-50 "  alt="hawker images" >
+                        </div>
+                    <div class="card-body">
+                    <h5 class="card-title">{{ hawkerCenter.name }}</h5>
+                    <p class="card-text">{{ hawkerCenter.address }}</p>
+                    </div>
+                </router-link>
+                </div>
+                
+                </div>
+            </div>
+            </div>
+            <div class="d-flex justify-content-between">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+        </div>
+        <div class="font-weight-light text-center more"><router-link :to="{name: 'Explore'}" class="nav-link"><h5>View More Hawkers</h5></router-link></div>
+
+
+        </div>
+    </template>
+  
 
 
 
@@ -28,12 +51,7 @@ export default {
     },
     data() {
         return {
-            currentSlide: 0,  // Track the current slide index
-            slickOptions: 
-            {
-                slidesToShow: 4,
-                arrows: true
-            },
+
             searchValue: '',
             foods: [],
             foodStalls: [],
@@ -71,73 +89,37 @@ export default {
                     filterBySearchValue(center) || center.address.toLowerCase().includes(this.searchValue.toLowerCase())
                 )
             };
-        }
+        },
+    groupedHawkerCenters() {
+      const groupSize = 5; // Number of cards to display in each group
+      const grouped = [];
+      for (let i = 0; i < this.hawkerCenters.length; i += groupSize) {
+        grouped.push(this.hawkerCenters.slice(i, i + groupSize));
+      }
+      return grouped;
+    },
     },
 };
 </script>
 
 <style scoped>
-.card-container {
-    width: 100%;
-    padding: 2rem 0; /* Add padding to top and bottom of container */
-    display: flex;
-    justify-content: center;
+@import './HawkerCards.css';
+
+.carousel-control-prev,
+  .carousel-control-next {
+    top: 50%; 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    color: #000; 
+  }
+
+  .more:hover{
+  text-decoration: underline;
+  text-decoration-color: #8a6d5b;
+  color: red;
 }
 
-.carousel {
-    display: flex;
-    overflow: hidden;
-    width: 80%; /* Set max-width for better alignment and spacing */
-    margin: 0 auto; 
-}
 
-.hawker-card {
-    width: 280px; 
-    height: 380px;
-    margin: 1rem auto;
-    border-radius: 12px; /* Rounded corners for card */
-    overflow: hidden; /* Ensures the image and any overflowing content is clipped */
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1); /* Default shadow for cards */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smoother transition */
-}
-
-.hawker-card:hover {
-    transform: translateY(-10px); /* More pronounced hover effect */
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
-}
-
-/* Image styling */
-.v-img {
-    transition: transform 0.3s ease; /* Smooth transition for image hover effect */
-}
-
-.v-img:hover {
-    transform: scale(1.05); /* Slightly enlarge the image on hover */
-}
-
-/* Button styling */
-v-btn {
-    background-color: #f44336; /* Button color */
-    color: #fff; /* Text color */
-    transition: background-color 0.3s ease; /* Smooth transition for button hover effect */
-    border-radius: 8px; /* Rounded corners for the button */
-}
-
-v-btn:hover {
-    background-color: #d32f2f; /* Darken the button color on hover */
-}
-
-/* Title styling */
-.v-card-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-top: 0.5rem; /* Add some space to the top */
-}
-
-/* Text styling */
-.v-card-text {
-    color: #555; /* Make the text a bit darker for better readability */
-    margin-bottom: 1rem; /* Add some space to the bottom */
-}
 </style>
 

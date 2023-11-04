@@ -1,120 +1,129 @@
 <template>
     <div class="container mt-4 bg-white">
-        <div class="container mt-4">
-            <!-- Food Stall Information -->
-            <div v-if="foodStall" class="stall-container d-flex mb-5">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="stall-details">
-                            <h1 class="display-4 text-left fw-bold">{{ foodStall.name }}</h1>
-                            <ul class="list-unstyled pl-1">
-                                <li><strong>Phone Number:</strong> {{ foodStall.phone_number }}</li>
-                                <li><strong>Address:</strong> {{ foodStall.address }}</li>
-                                <li><strong>Opening Hours:</strong> {{ foodStall.opening_hours }}</li>
-                                <li><strong>Rest Day:</strong> {{ foodStall.rest_day }}</li>
-                                <li><strong>Signature Item:</strong> {{ foodStall.signature_item }}</li>
-                                <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
-                            </ul>
-                            <a :href="foodStall.source_url" target="_blank" class="btn btn-primary stall-link">Read More</a>
-                            <button v-if="showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button">Review</button>
-                        </div>
-                    </div>
-
-                    <div class="col-6 stall-image-container">
-                        <img :src="foodStall.store_url" alt="Stall Image" class="stall-image img-thumbnail" />
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    
-                </div>
-                
-            </div>
-
-                <!-- Food Menu -->
-                <div class="container">
-                    <h1 class="display-4 text-left mb-4 pl-2">Menu </h1>
-                    <div v-if="foodList && foodList.length > 0" class='row justify-content-left'>
-                        <div v-for="food in foodList" :key="food.id" class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                            <div class="card h-100 w-500">
-                                <router-link :to="{ name: 'food-details', params: { foodId: food.id } }" class="text-black text-decoration-none">
-                                    <div class="row">
-                                        <div class = "col-4">
-                                            <img :src="food.url" class="card-img-top" alt="Food Image">
-                                        </div>
-
-                                        <div class = "col-8">
-                                            <h4 class="card-title">{{ food.name }}</h4>
-                                            <h5 class="card-title">${{ food.price }}</h5>
-
-                                        </div>
-                                    </div>
-                                </router-link>
-
-                                <div class="card-footer d-flex justify-content-between">
-                                    <router-link :to="{ name: 'order'}" class="btn btn-success btn-sm">Add to cart <i class="bi bi-cart"></i></router-link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <h1 class="display-4 text-center text-muted">No food is available </h1>
-                    </div>
-            </div>
-    </div>        
-
-
-        <!-- Review Form Modal -->
-        <!-- Consumer ID is HARDCODED -->
-        <LeaveReview :showModal="showReview" :consumerId = "10" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted"/>
-        <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted"/>
-
-        <!-- Reviews Section -->
-        <h1 class="display-4 mt-5 text-center">Reviews </h1>
-        <div v-if="reviews && reviews.length > 0">
-            <div class="review-grid mt-4">
-                <div v-for="review in reviews" :key="review.id" class="review-card card mb-4 p-3" :class="{ 'user-own-review': review.consumer_name === loggedInUsername }">
-                    <div class="card-body d-flex">
-                        <!-- Left side with image and consumer name -->
-                        <div class="left-side mr-4">
-                            <img v-bind:src="review.imageBase64" alt="Consumer Image" class="consumer-image"/>
-                            <div class="mt-2">
-                                <strong class="highlighted-name">{{ review.consumer_name }}</strong>
-                            </div>
-                            <div v-if="review.consumer_name === loggedInUsername" class="mt-2">
-                                <button @click="editReview(review)" class="btn btn-outline-primary btn-sm">Edit</button>
-                                <button @click="deleteReview(review)" class="btn btn-outline-danger btn-sm ml-2">Remove</button>
-                                    
-                            </div>
-                        </div>
-                        <!-- Right side with ratings and comment -->
-                        <div class="right-side flex-grow-1">
-                            <div class="star-rating static-star mb-2">{{ displayStars(review.rating) }}</div>
-                            <p class="mb-2">{{ formatDate(review.date) }}</p>
-                            <p class="mb-2">{{ truncatedComments[reviews.indexOf(review)] }}</p>
-                            <span v-if="review.comment.length > maxCommentLength" class="text-primary" @click="toggleCommentExpand(review)">
-                                {{ review.expanded ? 'Show Less' : 'Read More' }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
+      <div class="container mt-4">
+        <div>
+            <backButton />
         </div>
-        <p v-else class="text-muted text-center mt-5">No reviews yet</p>
+        <!-- Food Stall Information -->
+        <div v-if="foodStall" class="stall-container d-flex mb-5">
+          <div class="row">
+            <div class="col-6">
+              <div class="stall-details">
+                <h1 class="display-4 text-left fw-bold">{{ foodStall.name }}</h1>
+                <ul class="list-unstyled pl-1">
+                  <li><strong>Phone Number:</strong> {{ foodStall.phone_number }}</li>
+                  <li><strong>Address:</strong> {{ foodStall.address }}</li>
+                  <li><strong>Opening Hours:</strong> {{ foodStall.opening_hours }}</li>
+                  <li><strong>Rest Day:</strong> {{ foodStall.rest_day }}</li>
+                  <li><strong>Signature Item:</strong> {{ foodStall.signature_item }}</li>
+                  <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
+                </ul>
+                <a :href="foodStall.source_url" target="_blank" class="btn btn-danger stall-link">Visit My Website</a>
+                <button v-if="showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
+              </div>
+            </div>
+  
+            <div class="col-6 stall-image-container">
+              <img :src="foodStall.store_url" alt="Stall Image" class="stall-image img-thumbnail" />
+            </div>
+          </div>
+        </div>
+        <b-tabs content-class="mt-3">
+          <b-tab title="Food Menu" active>
+            <!-- Food Menu -->
+            <div class="container">
+              <h1 class="display-4 text-center mb-4 pl-2">Menu</h1>
+              <div v-if="foodList && foodList.length > 0" class="row justify-content-center">
+                <div v-for="food in foodList" :key="food.id" class="col-lg-6 col-md-4 col-sm-6 mb-4">
+                  <div class="card mb-3 p-0 justify-content-between mx-11" style="width: 500px; border-radius: 0; box-shadow:0px 3px 15px rgba(0, 0, 0, 0.1);">
+                        <div class="row g-0 p-0" >
+                        <div class="col-md-4 ml-0">
+                          <img :src="food.url" class="card-img-top img-fluid" alt="Food Image" style="height: 200px; width: 100%; object-fit: cover;border-radius: 0;">
+                        </div>
+                        <div class="col-md-8" >
+                            <div class="card-body w-10">
+                            <h4 class="card-title mb-6">{{ food.name }}</h4>
+                            <h5 class="card-text">${{ food.price }}</h5>
+                            <div class="position-absolute bottom-0 end-0 p-3" >
+                                <router-link :to="{ name: 'order' }" class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%;background-color: rgb(124, 0, 0) ;">
+                                <Icon icon="iconamoon:sign-plus-bold" style="font-size: 24px;color: white;"></Icon>
+                                </router-link>
+                            </div>
+                            <div class="position-absolute bottom-0 end-0 " style="background-color: rgba(255, 255, 255, 0.8); margin-right: 80px;">
+                                <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleHealthInfo">
+                                    <!-- <HealthInfo :showModal="showModal" /> -->
+                                <Icon icon="openmoji:green-salad" style="font-size: 24px;"></Icon>
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <h1 class="display-4 text-center text-muted">No food is available</h1>
+              </div>
+            </div>
+          </b-tab>
+          <b-tab title="Reviews">
+            <!-- Review Form Modal -->
+            <!-- Consumer ID is HARDCODED -->
+            <LeaveReview :showModal="showReview" :consumerId="10" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
+            <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
+            <!-- Reviews Section -->
+            <h1 class="display-4 mt-5 text-center">Reviews</h1>
+            <div v-if="reviews && reviews.length > 0">
+              <div class="review-grid mt-4">
+                <div v-for="review in reviews" :key="review.id" class="review-card card mb-4 p-3" :class="{ 'user-own-review': review.consumer_name === loggedInUsername }">
+                  <div class="card-body d-flex">
+                    <!-- Left side with image and consumer name -->
+                    <div class="left-side mr-4">
+                      <img :src="review.imageBase64" alt="Consumer Image" class="consumer-image" />
+                      <div class="mt-2">
+                        <strong class="highlighted-name">{{ review.consumer_name }}</strong>
+                      </div>
+                      <div v-if="review.consumer_name === loggedInUsername" class="mt-2">
+                        <button @click="editReview(review)" class="btn btn-outline-primary btn-sm">Edit</button>
+                        <button @click="deleteReview(review)" class="btn btn-outline-danger btn-sm ml-2">Remove</button>
+                      </div>
+                    </div>
+                    <!-- Right side with ratings and comment -->
+                    <div class="right-side flex-grow-1">
+                      <div class="star-rating static-star mb-2">{{ displayStars(review.rating) }}</div>
+                      <p class="mb-2">{{ formatDate(review.date) }}</p>
+                      <p class="mb-2">{{ truncatedComments[reviews.indexOf(review)] }}</p>
+                      <span v-if="review.comment.length > maxCommentLength" class="text-primary" @click="toggleCommentExpand(review)">
+                        {{ review.expanded ? 'Show Less' : 'Read More' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p v-else class="text-muted text-center mt-5">No reviews yet</p>
+          </b-tab>
+        </b-tabs>
+      </div>
     </div>
-</template>
-
+  </template>
+  
 <script>
-
 import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
+import backButton from '@/components/BackButton/backButton.vue';
+// import HealthInfo from '@/views/Food/FoodDetail.vue'; 
 
 export default {
     component:{
         LeaveReview,
-        EditReviewModal
+        EditReviewModal,
+        backButton,
+        Icon,
+        // HealthInfo,
+
     },
     data() {
         return {
@@ -130,6 +139,7 @@ export default {
             showEditModal: false,
             selectedReview: {},
             showDeleteConfirmation: false,
+            // showModal: false
         }
     },
     props: ['stallId'],
@@ -274,7 +284,10 @@ export default {
                 // User canceled the deletion
                 this.showDeleteConfirmation = false;
             }
-        }
+        },
+        toggleHealthInfo() {
+        this.showModal = true;
+    }
     },
     computed: {
         truncatedComments() {
@@ -294,104 +307,5 @@ export default {
 </script>
 
 <style scoped>
-/* Basic Styling for Page and Elements */
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f7f7f7;
-}
-
-.container {
-    max-width: 1300px;
-}
-
-.stall-container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.food-container {
-    background-color: #ffffff;
-    width: auto;
-    height: auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-}
-
-
-
-.stall-image {
-    width: auto;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    
-}
-
-.stall-details ul {
-    padding-left: 0;
-    margin-bottom: 20px;
-}
-
-.stall-details li {
-    margin-bottom: 10px;
-}
-
-.stall-link,
-.review-button {
-    margin-top: 15px;
-}
-
-.card {
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.review-card {
-    border: 1px solid #e7e7e7;
-}
-
-.consumer-image {
-    object-fit: cover;
-}
-
-.static-star {
-    color: #ffcc00; /* golden color for stars */
-    font-size: 36px;
-}
-
-/* Hover effects */
-
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.stall-link:hover,
-.review-button:hover {
-    text-decoration: none;
-}
-
-/* User's own review special styling */
-
-.user-own-review {
-    border: 2px solid #007BFF; /* using bootstrap's primary color */
-}
-
-/* Responsive adjustments */
-
-@media (max-width: 768px) {
-    .stall-container {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-@media (max-width: 576px) {
-    .stall-details ul {
-        text-align: center;
-    }
-}
+@import 'stall.css';
 </style>

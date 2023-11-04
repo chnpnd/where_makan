@@ -1,18 +1,23 @@
 <template>
+  <!-- <div v-if="showModal" class="modal-overlay"> -->
     <div v-if="food" class="food-container d-flex">
+      <!-- <div class="modal-content"> -->
+        <!-- <button class="close-btn text-danger mx-2" @click="closeModal">×</button> -->
         <div class="food-image-container mr-4">
-            <img :src="food.url" alt="Food Image" class="food-image"/>
+          <img :src="food.url" alt="Food Image" class="food-image" />
         </div>
         <div class="food-details">
-            <h1>{{ food.name }}</h1>
-            <p><strong>Price:</strong> ${{ food.price }}</p>
-            <p><strong>Calories:</strong> {{ food.calories }} kcal</p>
-            <p><strong>Sodium:</strong> {{ food.sodium }} mg</p>
-            <p><strong>Allergens:</strong> {{ food.allergens }}</p>
-            <p><strong>Spiciness:</strong> {{ Array(food.spiciness + 1).join('🌶') }}</p>
+          <h1>{{ food.name }}</h1>
+          <p><strong>Calories:</strong> {{ food.calories }} kcal</p>
+          <p><strong>Sodium:</strong> {{ food.sodium }} mg</p>
+          <p><strong>Allergens:</strong> {{ food.allergens }}</p>
+          <p><strong>Spiciness:</strong> {{ Array(food.spiciness + 1).join('🌶') }}</p>
         </div>
-    </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
 </template>
+
   
 <script>
   export default {
@@ -44,6 +49,9 @@
           console.error('Failed to fetch food details:', error);
         }
       },
+      closeModal() {
+      this.$emit('close'); // Emit a custom event to notify the parent component to close the modal
+    },
     },
   };
 </script>
@@ -82,5 +90,18 @@
     border-bottom: 2px solid #5a4134;
     padding-bottom: 10px;
 }
+
+/* .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+} */
 
 </style>

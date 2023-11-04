@@ -15,6 +15,7 @@ import Profile from '../views/Profile/Profile.vue';
 import EditProfile from '../views/Profile/EditProfile.vue';
 import MyRewards from '../views/Rewards/MyRewards.vue';
 import ExchangeRewards from '../views/Rewards/ExchangeRewards.vue';
+import SignUp from '../components/Login/Modal.vue';
 
 
 
@@ -36,7 +37,9 @@ const routes = [
     { path: '/profile', component: Profile, name: "Profile" },    
     { path: '/editprofile', component: EditProfile, name: "EditProfile" },    
     { path: '/myrewards', component: MyRewards, name: "MyRewards" },    
-    { path: '/exchangerewards', component: ExchangeRewards, name: "ExchangeRewards" },    
+    { path: '/exchangerewards', component: ExchangeRewards, name: "ExchangeRewards" },   
+    { path: '/signup', component: SignUp, name: "SignUp" },   
+
 
 ];
 

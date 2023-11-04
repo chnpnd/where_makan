@@ -48,6 +48,11 @@
 
 </template>
 
+
+
+
+
+
 <style lang="scss" scoped>
   .navbar-nav .nav-item .nav-link:hover {
     color: #D40000; 
@@ -59,10 +64,9 @@
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap'); // Vintage Fonts
 
 .navbar {
-    background-color: #f3e0d2; // Soft pastel color inspired by shophouses
+    background-color: #f8f8f8; // Soft pastel color inspired by shophouses
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
     font-family: 'Source Sans Pro', sans-serif;
-    border-bottom: 3px solid #d4af37; // A touch of gold
 }
 
 .navbar-toggler {
