@@ -1,13 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
 <template>
     <div>
 =======
+=======
+>>>>>>> 79c89a87822581028acd83cfa17596c110b41569
     <template>
         <div>
->>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner" style="width: calc(300px * 5 - 100px);">
             <div class="carousel-item" style="object-fit: cover;" v-for="(group, groupIndex) in groupedHawkerCenters" :key="groupIndex" :class="{ active: groupIndex === 0 }">
@@ -47,16 +49,18 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
     </div>
 =======
+=======
+>>>>>>> 79c89a87822581028acd83cfa17596c110b41569
         </div>
     </template>
   
 
->>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
 
 
 <script>
@@ -76,6 +80,7 @@ export default {
             foods: [],
             foodStalls: [],
             hawkerCenters: [],
+            filteredPrice: {}
         };
     },
     created() {
@@ -96,7 +101,6 @@ export default {
             this.foods = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/all/food`);
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
             this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
-<<<<<<< HEAD
             this.filterStall;
         },
 
@@ -118,12 +122,11 @@ export default {
                             total_price += food.price;}
                         }
                 avg_price = total_price / total_food;
-                this.filteredPrice[center.id] = Math.ceil(avg_price * 100) / 100;
-                
-    
-=======
->>>>>>> bd20821f5fca645148d214ebeb1cc067a148d797
-        }
+                this.$set(this.filteredPrice, center.id, Math.ceil(avg_price * 100) / 100);
+                    }
+            }
+    }
+            
     },
     computed: {
         filteredResults() {
