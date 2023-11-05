@@ -1,11 +1,7 @@
 <template>
     <div class = "row">
         <!-- stalls that this centre has -->
-        <h4 class="display-5 f">Your Favourited Stalls</h4>
         <div class="card-container">
-            <button @click="filterFav" class="btn btn-custom">
-                check my fav stalls
-            </button>
 
                 <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
             <div v-if="filteredFoodStall" class='row justify-content-left'>
@@ -78,7 +74,7 @@ export default {
             this.filterFav();
         },
 
-        filterFav() {
+        async filterFav() {
             for (let i =0; i<this.foodStalls.length; i++){
                 var stall = this.foodStalls[i];
                 for (let x = 0; x<this.favFoodStall.length; x++)

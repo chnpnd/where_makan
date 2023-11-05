@@ -99,6 +99,7 @@
               <div class="card-body">
                 <h4 class="text-center">Favourited Stalls</h4>
                 <div class="my-6 text-center " style="height:200px; background-color: #dad6d6;">
+                  <FavouritedStalls />
                     <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;" >No favourited stalls</h5>
                 </div>
               </div>
@@ -124,9 +125,13 @@
 </template>
   
   <script>
+  import FavouritedStalls from './FavouritedStalls.vue';
   export default {
 
     props: ['accId'], // This prop is automatically passed by Vue Router
+    components: {
+      FavouritedStalls
+    },
     data() {
       return {
         center: null, // Initialize center as null
