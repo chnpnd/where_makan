@@ -17,6 +17,8 @@ import * as directives from 'vuetify/directives'
 import {MotionPlugin} from '@vueuse/motion'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import VueChartkick from 'vue-chartkick'
+import 'chartkick/chart.js'
 
 const app = createApp(App)
 app.use(router);
@@ -41,4 +43,5 @@ const vuetify = createVuetify({
   
 app.use(vuetify)
 app.use(MotionPlugin)
+app.use(VueChartkick);
 
