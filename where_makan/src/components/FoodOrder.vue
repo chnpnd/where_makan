@@ -115,7 +115,7 @@ export default {
       }catch{
         alert("cannot update sales");
       }
-    }
+    },
     onPaymentSuccess() {
       this.createOrder();
       this.showSuccessModal = true;
