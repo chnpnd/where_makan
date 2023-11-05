@@ -25,7 +25,7 @@ export default {
 props: ['consumerId'], // This prop is automatically passed by Vue Router
 data() {
   return {
-    consumerID: null,
+    consumerID: 10,
     center: null, // Initialize center as null
     favFoodStall: [],
     foodStalls: [],
@@ -42,7 +42,7 @@ methods: {
     async fetchfav() {
         try {
         const response = await fetch(
-            `https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/get/favourite/${this.consumerId}`
+            `https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/get/favourite/${this.consumerID}`
         );
         console.log("User: "+ this.consumerId)
         if (response.ok) {
