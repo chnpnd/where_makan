@@ -20,7 +20,7 @@
                   <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
                 </ul>
                 <a :href="foodStall.source_url" target="_blank" class="btn btn-danger stall-link">Visit My Website</a>
-                <button v-if="userData && howReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
+                <button v-if="userData && showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
               </div>
             </div>
   
@@ -29,6 +29,11 @@
             </div>
           </div>
         </div>
+        <!-- Review Form Modal -->
+        <LeaveReview v-if="userData" :showModal="showReview" :consumerId="userData.id" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
+        <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
+        <FoodDetails :food="selectedFood" :showModal="showFoodDetails" @close="toggleFoodDetails(this.food)" />
+
         <b-tabs content-class="mt-3">
           <b-tab title="Food Menu" active>
             <!-- Food Menu -->
@@ -51,7 +56,7 @@
                                 </router-link>
                             </div>
                             <div class="position-absolute bottom-0 end-0 " style="background-color: rgba(255, 255, 255, 0.8); margin-right: 80px;">
-                                <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleHealthInfo">
+                                <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleFoodDetails(food)">
                                     <!-- <HealthInfo :showModal="showModal" /> -->
                                 <Icon icon="openmoji:green-salad" style="font-size: 24px;"></Icon>
                                 </button>
@@ -68,9 +73,6 @@
             </div>
           </b-tab>
           <b-tab title="Reviews">
-            <!-- Review Form Modal -->
-            <LeaveReview v-if="userData" :showModal="showReview" :consumerId="userData.id" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
-            <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
             <!-- Reviews Section -->
             <h1 class="display-4 mt-5 text-center">Reviews</h1>
             <div v-if="reviews && reviews.length > 0">
@@ -109,31 +111,29 @@
   </template>
   
 <script>
-import { ref } from 'vue';
 import auth from '../../auth';
 import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
 import backButton from '@/components/BackButton/backButton.vue';
+import FoodDetails from '@/views/Food/FoodDetails.vue'; 
 // import HealthInfo from '@/views/Food/FoodDetail.vue'; 
 
 export default {
-    setup() {
-      const userData = ref(auth.getUser());
-      return {
-        userData
-      };
-    },
-    component:{
+    
+    components:{
         LeaveReview,
         EditReviewModal,
         backButton,
         Icon,
+        FoodDetails,
         // HealthInfo,
 
     },
     data() {
         return {
+            loggedInUsername: "",
+            userData: null,
             foodStall: {},
             foodList: {},
             cuisine: {},
@@ -144,37 +144,51 @@ export default {
             showEditModal: false,
             selectedReview: {},
             showDeleteConfirmation: false,
-            // showModal: false
+            showFoodDetails: false,
+            selectedFood: null,
         }
     },
     props: ['stallId'],
-    computed:{
-        loggedInUsername() {
-          return this.userData?.username || '';
-        }
-    },
     async created() {
-        const stallRes = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/stall/${this.stallId}`);
-        if (stallRes.ok) {
-            this.foodStall = await stallRes.json();
-            const cuisineRes = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Cuisine/api/get/cuisine/${this.foodStall.cuisine_type}`);
-            if (cuisineRes.ok) {
-                this.cuisine = await cuisineRes.text();
-            }
-            this.fetchFoodsInStallDetails();
-            this.fetchReviews();
+
+        try{
+          const userInfo = await this.fetchUserData();
+          this.userData = userInfo;
+          if (userInfo) {
+              this.loggedInUsername = userInfo.username;
+          } else {
+              this.loggedInUsername = '';
+          }
+          const stallRes = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/stall/${this.stallId}`);
+          if (stallRes.ok) {
+              this.foodStall = await stallRes.json();
+              const cuisineRes = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Cuisine/api/get/cuisine/${this.foodStall.cuisine_type}`);
+              if (cuisineRes.ok) {
+                  this.cuisine = await cuisineRes.text();
+              }
+              this.fetchFoodsInStallDetails();
+              this.fetchReviews();
+          }
+        }catch(error){
+          console.error('An error occurred:', error)
         }
+        
     },
     methods: {
+          async fetchUserData() {
+            try {
+              return await auth.getUser(); // Assuming this returns a Promise with the user data
+            } catch (error) {
+              console.error('Error fetching user data:', error);
+            }
+        },
         async fetchFoodsInStallDetails() {
-            console.log(this.foodStall.id);
             try {
             const response = await fetch(            
                `https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/hawkerstall/${this.foodStall.id}/food`
             );
             if (response.ok) {
                 this.foodList = await response.json();
-                console.log(this.foodList);
             } else {
                 console.error('Failed to fetch all stall details:', response.statusText);
             }
@@ -197,9 +211,6 @@ export default {
                         );
                         if (response.ok) {
                             this.reviews[i].consumer_name = await response.text();
-                            // Check if logged in user has responded
-                            console.log(loggedInUsername)
-                            console.log(this.reviews[i].consumer_name)
                             if(this.loggedInUsername == this.reviews[i].consumer_name)
                             {
                                 this.showReviewBtn = false;
@@ -210,7 +221,6 @@ export default {
                     } catch (error) {
                         console.error('An error occurred while fetching consumer:', error);
                     }
-                    console.log(this.reviews[i].consumer_name);
                 }
             } else {
                 console.error('Failed to fetch reviews:', response.statusText);
@@ -297,9 +307,10 @@ export default {
                 this.showDeleteConfirmation = false;
             }
         },
-        toggleHealthInfo() {
-        this.showModal = true;
-    }
+        toggleFoodDetails(food){
+          this.selectedFood = food;
+          this.showFoodDetails = !this.showFoodDetails;
+        }
     },
     computed: {
         truncatedComments() {

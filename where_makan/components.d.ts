@@ -35,7 +35,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Searchbar: typeof import('./src/components/Searchbar.vue')['default']
     SignUpModal: typeof import('./src/components/Login/SignUpModal.vue')['default']
-    Test: typeof import('./src/components/test.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     Video: typeof import('./src/components/Video.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']

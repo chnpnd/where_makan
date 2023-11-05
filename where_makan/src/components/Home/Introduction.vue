@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="carousel-container">
     <header class="carousel-container">
       <div id="carouselExampleCaptions" class="carousel slide h-100">
         <!-- Carousel Indicators -->
@@ -10,6 +10,7 @@
         </div>
         
         <!-- Carousel Items -->
+        
         <div class="carousel-inner">
           <div class="carousel-item image-overlay active">
             <img src="../../../img/homebkgimg/hawker1.webp" class="d-block w-100 carousel-img overlay-dark" alt="...">
@@ -26,12 +27,15 @@
         <div class="carousel-caption d-flex flex-column justify-content-center align-items-center">
           <h1 class="intro-text my-3" ref="introText">Hawker Heaven</h1>
           <div class="action-buttons mb-3">
-            <router-link :to="{name: 'Home'}" class="btn custom-button btn-outline-light text-light btn-sm mx-2">Surprise Me!</router-link>
+            <router-link :to="{name: 'Home'}" class="btn custom-button btn-outline-light text-light btn-sm mx-2">Explore Me!</router-link>
+              <button class="btn custom-button btn-outline-light text-light btn-sm mx-2n" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
+              <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
           </div>
           <Searchbar />
         </div>
         
         <!-- Carousel Controls -->
+
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
@@ -48,13 +52,26 @@
 <script>
   import animationJS from '@/components/Home/homeAnimation.js';
   import Searchbar from '@/components/Searchbar.vue';
+  import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 
   export default {
     mounted() {
       animationJS.scrollTrigger('.intro-text');
     },
     components:{
-      Searchbar
+      Searchbar,
+      Questionnaire,
+    },
+    data(){
+      return{
+        showQuestionnaire: false,
+      }
+      
+    },
+    methods:{
+      toggleQuestionnaire() {
+      this.showQuestionnaire = !this.showQuestionnaire;
+    }
     }
   };
 </script>
@@ -76,6 +93,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 1;
   }
 
   .carousel-inner {
@@ -96,17 +114,17 @@
 
   .carousel-img {
     object-fit: cover;
-    height: 45%;
+    height: 100%;
   }
 
-  .carousel-control-prev, .carousel-control-next {
+  /* .carousel-control-prev, .carousel-control-next {
     transition: 0.3s;
     width: 5%;
-  }
+  } */
 
-  .carousel-control-prev:hover, .carousel-control-next:hover {
+  /* .carousel-control-prev:hover, .carousel-control-next:hover {
     background-color: rgba(0, 0, 0, 0.1);
-  }
+  } */
 
   h1.intro-text {
     font-family: var(--font-poppins);
@@ -126,4 +144,45 @@
   .btn.custom-button:hover {
     transform: scale(1.05);
   }
+
+  .action-section {
+    margin: 20px 0; /* Provide space above and below the button */
+    width: 100%;
+    max-width: 500px; /* Adjust as necessary */
+    display: flex;
+    justify-content: center; /* Center the button */
+}
+
+.recommend-button {
+    background-color: grey; 
+    color: #fff; /* White text */
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-family: 'Playfair Display', serif; 
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transition for smooth color change */
+    text-transform: uppercase; /* Uppercase to make it look more bold */
+    letter-spacing: 1px; /* Space between letters for vintage look */
+}
+
+.recommend-button:hover, .recommend-button:focus {
+    background-color: #8a6d5b; /* Darker shade on hover/focus */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(176, 142, 110, 0.5); /* Vintage-inspired focus shadow */
+}
+
+.home-container {
+  height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+}
+
+
+
+
+
 </style>

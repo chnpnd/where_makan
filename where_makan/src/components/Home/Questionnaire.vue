@@ -230,7 +230,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999; /* Increase the z-index value */
 }
 
 .dropdowns {
@@ -247,12 +247,14 @@ export default {
 
 
 .modal-content {
-  background-color: #f8f8f8; /* Same background color as home-container */
+  background-color: #f8f8f8;
   padding: 20px;
   border-radius: 10px;
-  height: 250px;
   max-width: 1000px;
   position: relative;
+  color: black;
+  z-index: 7000; /* Increase the z-index value */
+   
 }
 
 label {

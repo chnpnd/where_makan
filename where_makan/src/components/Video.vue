@@ -55,18 +55,18 @@
   <style scoped>
 /* Typography */
 .video-title {
-  font-family: 'Playfair Display', serif;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2rem;
   color: #333;
   text-align: center;
   margin-bottom: 20px;
-  border-bottom: 2px solid #d4af37;
+  border-bottom: 2px solid black;
   padding-bottom: 10px;
 }
 
 /* Video Wrapper */
 .video-wrapper {
-  background-color: #faf5e6; /* A soft, vintage background color */
+  background-color: #d89f9f; /* A soft, vintage background color */
   border: 1px solid #e5e0d3;
   border-radius: 10px;
   padding: 20px;
@@ -82,7 +82,7 @@
   padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
   overflow: hidden;
   border-radius: 10px;
-  border: 3px solid #d4af37; /* A vintage gold border */
+  border: 3px solid grey; /* A vintage gold border */
 }
 
 .video-container iframe {

@@ -28,7 +28,7 @@
       <li class="nav-item" v-if="isBusinessUser">
         <router-link :to="{name: 'Analytics'}" class="nav-link">Analytics</router-link>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="isLoggedIn">
         <router-link :to="{name: 'Profile'}" class="nav-link">Profile</router-link>
       </li>
     </ul>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <div class="card-container">
       <div class="card border-0 shadow-3 my-3" v-for="(pick, index) in images" :key="index">
         <!-- <img class="card-img-top" :src="pick.image" alt="Card image cap"> -->
@@ -32,13 +32,12 @@
 </template>
 
 <script>
-import { Carousel, Slide } from "vue-carousel";
+
 import { Icon } from '@iconify/vue';
 // ask about rating
 export default{
   components: {
-    Carousel,
-    Slide,
+
     Icon,
   },
     data(){

@@ -1,8 +1,6 @@
 <template>
-  <!-- <div v-if="showModal" class="modal-overlay"> -->
-    <div v-if="food" class="food-container d-flex">
-      <!-- <div class="modal-content"> -->
-        <!-- <button class="close-btn text-danger mx-2" @click="closeModal">×</button> -->
+  <div v-if="showModal && food" class="food-container d-flex">
+      <div class="food-container d-flex">
         <div class="food-image-container mr-4">
           <img :src="food.url" alt="Food Image" class="food-image" />
         </div>
@@ -14,19 +12,20 @@
           <p><strong>Spiciness:</strong> {{ Array(food.spiciness + 1).join('🌶') }}</p>
         </div>
       </div>
-    <!-- </div> -->
-  <!-- </div> -->
+    </div>
 </template>
 
   
 <script>
   export default {
-    props: ['foodId'],
+    props: ['foodId','showModal', ],
     data() {
       return {
-        food: null,
+        food: {},
+      
       };
     },
+
     created() {
       // Fetch food details based on the foodId prop
       this.fetchFoodDetails();
@@ -90,4 +89,18 @@
     border-bottom: 2px solid #5a4134;
     padding-bottom: 10px;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 </style>
