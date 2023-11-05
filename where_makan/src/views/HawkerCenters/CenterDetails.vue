@@ -54,7 +54,6 @@
             <b-tab title="Directions">
                 <!-- Display Google Map -->
                 <div class="mb-4">
-                    <h4>How to Get There</h4>
                     <GMapMap :center="centerPosition(center)" :zoom="17" map-type-id="terrain" style="height: 300px;">
                         <GMapCluster>
                         <GMapMarker
