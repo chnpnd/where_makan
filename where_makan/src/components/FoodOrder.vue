@@ -33,22 +33,34 @@
 
 import VueMask from 'v-mask';
 import { StripeCheckout } from '@vue-stripe/vue-stripe';
+import auth from '@/auth.js';
 
  
 export default {
   components: {
-    StripeCheckout
+    StripeCheckout,
   },
    directives: {
      mask: VueMask.VueMaskDirective,
    },
+   props: {
     showOrder: {
-       type: Boolean,
-       required: true
-    },
+      type: Boolean,
+      required: true
+    }
+  },
+  mounted() {
+    // Example: Check the URL or session state to see if the payment was successful
+    const queryParams = new URLSearchParams(window.location.search);
+    const paymentStatus = queryParams.get('payment_status');
+    if (paymentStatus === 'success') {
+      this.onPaymentSuccess();
+    }
+  },
    data() {
      return {
-      loading: false,
+      showSuccessModal: false,
+      isLoading: false,
       publishableKey: "pk_test_51MrLT6LBkZwSamzsNhao318a2xHlKl5jVLkcOSnXKKPCMSVBjOKJGaNmLZ96ons6fAD3psuHFSagxw842GBgQUAC00iQmwuOSA",
       lineItems: [
         {
@@ -68,6 +80,50 @@ export default {
       // You will be redirected to Stripe's secure checkout page
       this.$refs.checkoutRef.redirectToCheckout();
     },
+    async createOrder(){
+      try{
+        const orderDetails = {
+          consumer_id: auth.getUserID(),
+          hawker_stall_id: this.selectedFood.hawker_stall_id, 
+          food_id: this.selectedFood.id, 
+          order_date: new Date().toISOString(), 
+          total_amount: this.selectedFood.price,
+          status: "pending" 
+        };
+  
+        const response = await this.$http.post(`https://stingray-app-4wa63.ondigitalocean.app/Order/api/create/order`, orderDetails);
+  
+        if(response.data.success){
+          
+        }else{
+  
+        }
+      }catch{
+        alert("order cannot be created");
+        console.log("order cannot be created");
+      }
+    },
+    async UpdateSales(){
+      try{
+        const response = await this.$http.post(`https://stingray-app-4wa63.ondigitalocean.app/Sales/api/update/sales/${this.selectedFood.hawker_stall_id}/food/${this.selectedFood.id}`);
+
+        if(response.data.success){
+          aler("sales updated");
+        }else{
+  
+        }
+      }catch{
+        alert("cannot update sales");
+      }
+    }
+    onPaymentSuccess() {
+      this.createOrder();
+      this.showSuccessModal = true;
+    },
+    closeSuccessModal() {
+      this.showSuccessModal = false;
+    },
    }
  };
+
  </script>

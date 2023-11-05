@@ -63,6 +63,10 @@ export default {
     return user.value;
   },
 
+  getUserID(){
+    return user.id;
+  },
+
   getType(){
     return user.type;
   }

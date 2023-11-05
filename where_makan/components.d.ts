@@ -29,6 +29,7 @@ declare module 'vue' {
     LeaveReview: typeof import('./src/components/LeaveReview.vue')['default']
     Modal: typeof import('./src/components/Login/Modal.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
+    Qrcode: typeof import('./src/components/qrcode.vue')['default']
     Questionnaire: typeof import('./src/components/Home/Questionnaire.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
