@@ -23,10 +23,10 @@
             <h5 class="my-3">John Smith</h5>
             <p class="text-muted mb-1">Full Stack Developer</p>
             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
-            <div class="d-flex justify-content-center mb-2">
+            <!--<div class="d-flex justify-content-center mb-2">
               <button type="button" class="btn btn-danger">Follow</button>
               <button type="button" class="btn btn-outline-danger ms-1">Message</button>
-            </div>
+            </div>-->
           </div>
         </div>
         <div class="card mb-4 mb-lg-0">
@@ -125,6 +125,7 @@
   
   <script>
   export default {
+
     props: ['accId'], // This prop is automatically passed by Vue Router
     data() {
       return {

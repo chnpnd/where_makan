@@ -28,6 +28,8 @@
         <Video />
         </div>
       </section>
+
+      <Rewards />
   </div>
 
 </template>
@@ -42,6 +44,7 @@ import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';
 import Geolocation from '@/components/GeolocationTracker.vue';
+import Rewards from "@/views/Profile/Rewards.vue"
 
 export default {
   name: 'Home',
@@ -51,7 +54,8 @@ export default {
     Homecards,
     Questionnaire,
     Video,
-    Geolocation
+    Geolocation,
+    Rewards
   },
   data() {
     return {
