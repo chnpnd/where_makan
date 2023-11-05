@@ -6,8 +6,9 @@
 
       <section id="section-2">
         <div class="home-container mt-10">
-          <h1 class="homeH1 text-center">Food Recommended For You:</h1>
-        <Homecards />
+          <h1 class="homeH1 text-center">Hawker Centers Near You:</h1>
+        <!-- <Homecards /> -->
+        <Geolocation />
         </div>
       </section>
 
@@ -40,6 +41,7 @@ import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';
 import { VDivider } from 'vuetify/components/VDivider';
+import Geolocation from '@/components/GeolocationTracker.vue'
 
 
 export default {
@@ -51,6 +53,7 @@ export default {
     Questionnaire,
     Video,
     VDivider,
+    Geolocation,
   },
   data() {
     return {

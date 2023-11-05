@@ -1,75 +1,38 @@
 <template>
     <div>
-<!--<h1>My Rewards</h1>
-
-    <div class = "container-fluid rewards">
-        <div class = "row" v-for="reward in rewardOwn" :key="reward.id">
-        
-            <div class = "col-2"></div>
-
-            <div class = "col-8">
-
-                <div class = "row border border-primary rounded bg-light">
-
-                    <div class = "col-1 rewardDesc">
-
-                    </div>
-                    
-                    <div class = "col-8 rewardDesc">
-                        <h3>{{ reward.item_id }}</h3>
-                        <p>Terms and Condition Apply</p>
-                        <p class="text-muted">Valid till 31 Dec 2023 </p>
-                    </div>
-
-                    <div class = "col-3 exchangeButton text-center">
-                        <button type="button" @click="useReward()" class="btn btn-outline-primary btn-block text-center span">Use Now</button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class = "col-2"></div>
-
-
-        </div>
-    </div>
--->
-    <h1>Exchange Points for Rewards here!</h1>
-
-    <!--Rewards should populate itself base on the rewards database-->
-
-    <div class="container-fluid rewards">
-        <div class="row" v-for="(item, index) in rewardExchange" :key="item.name">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="row border border-primary rounded bg-light">
-                    <div class="col-1 rewardDesc"></div>
-                    <div class="col-8 rewardDesc">
-                        <h3>{{ item.name }}</h3>
-                        <p>Terms and Condition Apply</p>
-                        <p class="text-warning">{{ item.cost }} (Points required to redeem)</p>
-                    </div>
-                    <div class="col-3 exchangeButton text-center">
-                        <button type="button" @click="editRewards(item)" :disabled="isButtonDisabled[index]" class="btn btn-outline-primary btn-block text-center span">
-                            <p>{{ rewardStatus[index] }}</p>
-                        </button>
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <div class="card reward-card mx-2 my-2" v-for="(item, index) in rewardExchange" :key="index">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.name }}</h5>
+                                <p class="card-text">Terms and conditions apply.</p>
+                                <p class="card-text text-warning">{{ item.cost }} Points required to redeem</p>
+                                <button type="button" 
+                                        @click="editRewards(item)" 
+                                        :disabled="isButtonDisabled[index]" 
+                                        class="btn btn-primary btn-block">
+                                    {{ rewardStatus[index] }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-2"></div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
-import auth from '../../auth';
 
 export default {
+    props: ['consumerId'],
     data() {
       return {
-        consumer_id: -1,
+        consumerID: -1,
         points: [],
+        rewards: [],
         rewardOwn: [],
         rewardExchange: [],
         // points: [],
@@ -85,24 +48,11 @@ export default {
       //this.getPoints();
       //this.getRewardOwn();
       //this.getRewardExchange();
-      await this.fetchUserData();
+      this.consumerID = this.consumerId;
+      await this.fetchInitialData();
     },
     methods: {
-        async fetchUserData() {
-            try {
-                const userInfo = await auth.getUser();
-                if (userInfo && userInfo.id) {
-                    this.consumer_id = userInfo.id;
-                    await this.fetchInitialData();
-                } else {
-                // Handle the scenario where there is no logged-in user
-                console.error('User is not logged in');
-                // Redirect the user to the login page or display a message
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        },
+        
         async fetchInitialData() {
             // Fetch points and rewards data after consumer_id is available
             await Promise.all([
@@ -125,6 +75,7 @@ export default {
             this.points = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Point/api/get/${this.consumer_id}/point`);
         },
         async getRewardOwn() {
+            console.log(this.consumerID)
             const fetchFromAPI = async (url) => {
                 try {
                     const response = await fetch(url);
@@ -148,6 +99,7 @@ export default {
                 }
             };
             this.rewardExchange = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Reward/api/get/item`);
+            console.log(this.rewardExchange);
         },
 
         checkRewardStatus(){

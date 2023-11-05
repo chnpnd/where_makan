@@ -8,7 +8,7 @@
           Recommend Hawker Stalls Near Me
         </button>
 
-        <h1 class="homeH1 text-center">Hawkers Nearby You: </h1>
+        <div class = "row"></div>
 
         <div>
           <Carousel class="carousel hawker-card" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">

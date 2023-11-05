@@ -92,7 +92,6 @@ export default {
             this.foods = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/all/food`);
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
             this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
-            this.filterStall;
         },
 
         filterStall() {
@@ -101,8 +100,6 @@ export default {
                 var total_price = 0;
                 var total_food = 0;
                 var avg_price = 0;
-                var num_of_$ = 0;
-                var price_sign = "$";
                 for (let i =0; i<this.foodStalls.length; i++){
                     var stall = this.foodStalls[i];
 
