@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    '(2)': typeof import('./src/components/FoodOrder (2).vue')['default']
     BackButton: typeof import('./src/components/BackButton/backButton.vue')['default']
     BCarousel: typeof import('bootstrap-vue-next')['BCarousel']
     BCarouselSlide: typeof import('bootstrap-vue-next')['BCarouselSlide']
