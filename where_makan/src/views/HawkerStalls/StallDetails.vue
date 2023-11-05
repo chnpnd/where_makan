@@ -1,6 +1,7 @@
 <template>
-    <div class="container mt-4 bg-white">
-        
+  <div class="container mt-4 bg-white">
+    
+      <FoodOrder :showOrder="showFoodOrderModal" :selectedFood="selectedFoodItem" @close-modal="showFoodOrderModal = false"/>
       <div class="container mt-4">
         <div>
             <backButton />
@@ -51,9 +52,9 @@
                             <h4 class="card-title mb-6">{{ food.name }}</h4>
                             <h5 class="card-text">${{ food.price }}</h5>
                             <div class="position-absolute bottom-0 end-0 p-3" >
-                                <router-link :to="{ name: 'order' }" class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%;background-color: rgb(124, 0, 0) ;">
+                                <button @click="openFoodOrderModal(food)" class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%;background-color: rgb(124, 0, 0) ;">
                                 <Icon icon="iconamoon:sign-plus-bold" style="font-size: 24px;color: white;"></Icon>
-                                </router-link>
+                                </button>
                             </div>
                             <div class="position-absolute bottom-0 end-0 " style="background-color: rgba(255, 255, 255, 0.8); margin-right: 80px;">
                                 <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleFoodDetails(food)">
@@ -117,6 +118,7 @@ import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
 import backButton from '@/components/BackButton/backButton.vue';
 import FoodDetails from '@/views/Food/FoodDetails.vue'; 
+import FoodOrder from '@/components/FoodOrder.vue';
 // import HealthInfo from '@/views/Food/FoodDetail.vue'; 
 
 export default {
@@ -127,8 +129,8 @@ export default {
         backButton,
         Icon,
         FoodDetails,
+        FoodOrder
         // HealthInfo,
-
     },
     data() {
         return {
@@ -146,6 +148,8 @@ export default {
             showDeleteConfirmation: false,
             showFoodDetails: false,
             selectedFood: null,
+            showFoodOrderModal: false,
+            selectedFoodItem: null
         }
     },
     props: ['stallId'],
@@ -175,6 +179,11 @@ export default {
         
     },
     methods: {
+      openFoodOrderModal(foodItem) {
+        this.selectedFoodItem = foodItem;
+        this.showFoodOrderModal = true;
+        console.log(this.showFoodOrderModal);
+        },
           async fetchUserData() {
             try {
               return await auth.getUser(); // Assuming this returns a Promise with the user data
