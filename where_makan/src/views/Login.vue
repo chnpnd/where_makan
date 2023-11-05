@@ -58,14 +58,13 @@
 
               
               <div class="card-body px-4 py-5 px-md-5">
-
-              <div class="d-flex align-items-center justify-content-center pb-4">
-                      <h4 class="mb-0 me-2">Don't have an account?</h4>
-                      <span><button class="btn btn-outline-danger sign-up" @click="() => TogglePopup('buttonTrigger')">Create New</button></span>
-                      <Popup v-if="popupTriggers.buttonTrigger">
-                        <h2>testing</h2>
-                      </Popup>
-              </div>
+                <div class="d-flex align-items-center justify-content-center pb-4">
+                        <h4 class="mb-0 me-2">Don't have an account?</h4>
+                        <span>
+                          <button class="btn btn-outline-danger sign-up" @click="initiateSignUp">Create New</button>
+                          <SignUpModal :showModal="showModal" @close="showModal = false" />
+                        </span>
+                </div>
 
               <div class="text-center">
               <div class="d-flex align-items-center">
@@ -139,34 +138,19 @@
 
 <script>
 import { ref } from 'vue';
-import Popup from './../components/Login/SignUpModal.vue';
+import SignUpModal from './../components/Login/SignUpModal.vue';
 import auth from '../auth';
 import { useRouter } from 'vue-router';
 
 export default {
-  // data(){
-  //     username = '',
-  //     password = ''
-  // },
-  // methods:{
-  //     submitForm()
-  //     {
-  //         console.log(`Form submitted! Username is ${this.username}`)
-  //         console.log(`Form submitted! Password is ${pthis.password}`)
-  //     }
-  // }
     setup(){
       const router = useRouter();
       const username = ref('');
       const password = ref('');
-      const popupTriggers = ref({
-        buttonTrigger: true,
-
-      });
-
-      const TogglePopup = (trigger) => {
-        popupTriggers.value[trigger] = !popupTriggers.value
-        [trigger]
+      const showModal = ref(false);
+      
+      const initiateSignUp = () => {
+        showModal.value = true;
       }
 
       const handleLogin = async (userType) => {
@@ -185,11 +169,10 @@ export default {
       }
 
       return{
-        Popup,
+        showModal,
         username,
         password,
-        popupTriggers,
-        TogglePopup,
+        initiateSignUp,
         handleLogin
       }
     }
