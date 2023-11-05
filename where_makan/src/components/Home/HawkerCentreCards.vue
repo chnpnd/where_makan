@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
@@ -8,6 +9,8 @@
 =======
 =======
 >>>>>>> 79c89a87822581028acd83cfa17596c110b41569
+=======
+>>>>>>> main
     <template>
         <div>
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -50,6 +53,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
@@ -57,6 +61,8 @@
 =======
 =======
 >>>>>>> 79c89a87822581028acd83cfa17596c110b41569
+=======
+>>>>>>> main
         </div>
     </template>
   
