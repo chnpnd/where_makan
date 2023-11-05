@@ -3,8 +3,8 @@
                 <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
             <div v-if="filteredFoodStall">
                     <div v-for="stall in filteredFoodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px; background-color: #ffffff;">
-                        <router-link class= "text-decoration-none text-black row" style= "background-color: white;" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
-                            <div class = "col-4">
+                        <router-link class= "text-decoration-none text-black row " style= "background-color: white;" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
+                            <div class = "col-4 custom-div justify-center">
                                 <img class="img-fluid" :src="stall.store_url">
                             </div>
                             <div class="col">
@@ -130,6 +130,10 @@ export default {
 
 .custom-container {
     padding: 0;
+}
+
+.custom-div{
+    padding:0px;
 }
 
 </style>
