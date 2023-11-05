@@ -158,7 +158,14 @@ export default {
         if (success) {
           if (auth.getType() === userType) {
             alert('Successful log in!');
-            router.push({ name: 'Home' });
+            if(userType === 1)
+            {
+              router.push({ name: 'Home' });
+            }
+            else if (userType === 0)
+            {
+              router.push({ name: 'stall-details', params: { stallId: auth.getStallId() } });
+            }
           } else {
             alert(`Incorrect user type. Expected type ${userType}.`);
           }

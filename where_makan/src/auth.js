@@ -28,10 +28,16 @@ export default {
         if(response.ok)
         {
             const userData = await response.json();
-            console.log(userData)
+            
             if(userData && userData.type !== undefined)
             {
                 user.value = userData;
+                const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/stall/${userData.id}`);
+                if (!response.ok) {
+                  throw new Error('Failed to fetch stall details');
+                }
+                const stallData = await response.json();
+                user.value.stall_id = stallData.hawker_id;
                 return true;
             }
             else {
@@ -74,6 +80,10 @@ export default {
 
   getType(){
     return user.value ? user.value.type : null;
+  },
+  
+  getStallId() {
+    // Assuming stall_id is stored at the top level of user.value
+    return user.value ? user.value.stall_id : null;
   }
-
 };
