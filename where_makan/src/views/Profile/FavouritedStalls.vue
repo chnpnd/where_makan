@@ -1,21 +1,22 @@
 <template>
-    <div class = "row">
-        <!-- stalls that this centre has -->
-        <div class="card-container">
-
+        <div class="container">
                 <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-            <div v-if="filteredFoodStall" class='row justify-content-left'>
-                    <v-card v-for="stall in filteredFoodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px;">
-                        <router-link class= "text-decoration-none text-black" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
-                            <v-img :src="stall.store_url" cover max-height="100"></v-img>
-                            <v-card-title>{{ stall.name }} {{ stall.address }}</v-card-title>
-                            <v-card-text> No reviews yet</v-card-text>
-                                <!--    NEED HELP ON WHY IT NEEDS TO CLICK ON 2 CARDS BEFORE SWITCHING(duplicated function)--> 
+            <div v-if="filteredFoodStall">
+                    <div class= "row">
+
+                    </div>
+                    <div v-for="stall in filteredFoodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px; background-color: #ffffff;">
+                        <router-link class= "text-decoration-none text-black row" style= "background-color: white;" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
+                            <div class = "col-4">
+                                <img class="img-fluid" :src="stall.store_url">
+                            </div>
+                            <div class="col">
+                                {{ stall.name }} {{ stall.address }}
+                            </div>
                         </router-link>
-                    </v-card>
+                    </div>
             </div> 
             <div v-else><h1>No food is available</h1></div>
-        </div>
     </div>
 
 
@@ -119,6 +120,11 @@ export default {
 .card-container .v-card-title:hover {
     white-space: normal;
     text-overflow: unset;
+}
+
+.img {
+ height: 10px;
+ width: 10px;   
 }
 
 

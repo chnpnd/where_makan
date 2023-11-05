@@ -98,10 +98,18 @@
             <div class="card mb-4 mb-md-0" style="height:300px;">
               <div class="card-body">
                 <h4 class="text-center">Favourited Stalls</h4>
-                <div class="my-6 text-center " style="height:200px; background-color: #dad6d6;">
-                  <FavouritedStalls />
+                <div class="my-6 text-center" style="height:200px; background-color: #dad6d6;">
+                  <div v-if="!FavouritedStalls">
+                      <div class="container h-200">
+                        <div class = "scrollable-container">
+                          <FavouritedStalls />
+                        </div>
+                      </div>
+                  </div> 
+                  <div v-else>
                     <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;" >No favourited stalls</h5>
-                </div>
+                  </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -180,6 +188,11 @@
 
 h1 {
     text-align: center;
+}
+
+.scrollable-container {
+  height: 200px;
+  overflow: auto;
 }
 
 </style>
