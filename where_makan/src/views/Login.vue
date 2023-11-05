@@ -79,13 +79,13 @@
                     <!-- login options -->
                   <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
-                      <form @submit.prevent="handleLogin">
+                      <form @submit.prevent="handleLogin(1)">
                         <!-- 2 column grid layout with text inputs for the first and last names -->
   
                         <!-- Email input -->
                         <div class="form-outline mb-4">
                           <input type="text" class="form-control" v-model="username"/>
-                          <label class="form-label" for="form3Example3">Username/Email address</label>
+                          <label class="form-label" for="form3Example3">Username</label>
                         </div>
   
                         <!-- Password input -->
@@ -104,23 +104,23 @@
                     </div>
   
                     <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
-                        <form>
+                        <form @submit.prevent="handleLogin(0)">
                         <!-- 2 column grid layout with text inputs for the first and last names -->
   
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                          <input type="email" class="form-control" />
-                          <label class="form-label" for="form3Example3">Business Name/Email address</label>
+                          <input type="text" class="form-control" v-model="username"/>
+                          <label class="form-label" for="form3Example3">Business Username</label>
                         </div>
   
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                          <input type="password" class="form-control" />
+                          <input type="password" class="form-control" v-model="password" />
                           <label class="form-label" for="form3Example4">Password</label>
                         </div>
 
                         <!-- Login button -->
-                        <button type="button" class="btn btn-danger btn-block my-10" @click.prevent="handleLogin">
+                        <button type="submit" class="btn btn-danger btn-block my-10">
                           Login
                         </button>
                       </form>
@@ -169,12 +169,17 @@ export default {
           [trigger]
         }
 
-        const handleLogin = async () => {
+        const handleLogin = async (userType) => {
           const success = await auth.login(username.value, password.value);
           if (success) {
-            alert('Successful log in!');
-            router.push({ name: 'Home' });
-          } else {
+            if (auth.getType() === userType) {
+              alert('Successful log in!');
+              router.push({ name: 'Home' });
+            } else {
+              alert(`Incorrect user type. Expected type ${userType}.`);
+            }
+          } 
+          else {
             alert('Incorrect login credentials, please try again.');
           }
         }
