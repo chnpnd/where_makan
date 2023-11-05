@@ -12,13 +12,14 @@
         </div>
       </section>
 
-      <section>
+    <!--  <section>
         <v-divider></v-divider>
         <div class="home-container">
           <h1 class="homeH1 text-center">Hawkers Nearby You: </h1>
             <HawkerCard />
         </div>
       </section>
+      -->
 
       <section>
         <v-divider></v-divider>
