@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+<transition name="fade">
     <div v-if="showOrder" class="modal-overlay">
       <div class="modal fade show" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -13,22 +13,23 @@
             <div class="modal-body">
               <p><strong>Food Item:</strong> {{ selectedFood.name }}</p>
               <p><strong>Price:</strong> ${{ selectedFood.price.toFixed(2) }}</p>
-              <!-- vue-stripe-checkout component -->
-              <stripe-checkout
-                ref="checkoutRef"
-                mode="payment"
-                :pk="publishableKey"
-                :line-items="lineItems"
-                :success-url="successURL"
-                :cancel-url="cancelURL"
-                @loading="v => loading = v"
-              />
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" :disabled="isLoading" @click="submit">
-                <span v-if="isLoading">Processing... <i class="fa fa-spinner fa-spin"></i></span>
-                <span v-else>Place Order</span>
-              </button>
+              <form @submit.prevent="submitOrder">
+                <div class="form-group">
+                  <label for="cardNumber">Card Number</label>
+                  <input type="text" class="form-control input-card" id="cardNumber" v-model="cardDetails.number" v-mask="'#### #### #### ####'" placeholder="•••• •••• •••• ••••" required>
+                </div>
+                <div class="form-group">
+                  <label for="expiryDate">Expiry Date</label>
+                  <input type="text" class="form-control input-expiry" id="expiryDate" v-model="cardDetails.expiry" v-mask="'##/##'" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVC</label>
+                  <input type="text" class="form-control input-cvc" id="cvv" v-model="cardDetails.cvc" v-mask="'###'" placeholder="CVC" required>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Place Order</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -37,16 +38,10 @@
   </transition>
 </template>
 
-<script >
-
+<script>
 import VueMask from 'v-mask';
-import { StripeCheckout } from '@vue-stripe/vue-stripe';
-
 
 export default {
-  components: {
-    StripeCheckout
-  },
   directives: {
     mask: VueMask.VueMaskDirective,
   },
@@ -58,30 +53,29 @@ export default {
     showOrder: {
       type: Boolean,
       required: true
-    },
+    }
   },
   data() {
     return {
-      loading: false,
-      publishableKey: "pk_test_51MrLT6LBkZwSamzsNhao318a2xHlKl5jVLkcOSnXKKPCMSVBjOKJGaNmLZ96ons6fAD3psuHFSagxw842GBgQUAC00iQmwuOSA",
-      lineItems: [
-        {
-          price: 'price_1O8hhTLBkZwSamzsGGHTjCrR', // The id of the one-time price you created in your Stripe dashboard
-          quantity: 1,
-        },
-      ],
-      successURL: 'https://vuestripe.com/stripe-checkout/sessions-generator?state=success',
-      cancelURL: 'https://vuestripe.com/stripe-checkout/sessions-generator?state=cancel',
+      cardDetails: {
+        number: '',
+        expiry: '',
+        cvc: ''
+      }
     };
   },
   methods: {
     closeOrderModal() {
       this.$emit('close-modal');
     },
-    submit () {
-      // You will be redirected to Stripe's secure checkout page
-      this.$refs.checkoutRef.redirectToCheckout();
-    },
+    submitOrder() {
+      console.log("Order has been placed for: ", this.selectedFood, this.cardDetails);
+      this.closeOrderModal(); // Close the modal after submitting the order
+      // Here you'd normally handle the order processing, like sending data to an API
+      this.number = '';
+      this.expiry = '';
+      this.cvc = '';
+    }
   }
 };
 </script>

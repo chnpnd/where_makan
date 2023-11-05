@@ -1,35 +1,47 @@
 <template>
-  <Introduction />
-  <!-- <v-divider></v-divider> -->
-  
-  <div class="home-container">
-    <div class="action-section">
-      <button class="recommend-button" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
-      <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
-    </div>
-    
-    <v-divider></v-divider>
-    
-    <h1 class="homeH1 text-center">Food Nearby You:</h1>
-    <v-divider></v-divider>
-    
-    <div class="map-section">
-      <HawkerCard />
-    </div>
-    
-    <v-divider></v-divider>
-    <Video />
-    <Homecards />
+  <div>
+      <section>
+          <Introduction />
+      </section>
+
+      <section id="section-2">
+        <div class="home-container">
+        <div class="action-section">
+          <button class="recommend-button" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
+          <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
+        </div>
+          <!--<<h1 class="homeH1 text-center">Food Recommended For You:</h1>
+        <Homecards />-->
+        </div>
+      </section>
+
+      <section>
+        <div class="home-container">
+          <v-divider></v-divider>
+          <v-divider></v-divider>
+          <Geolocation />
+          
+        </div>
+      </section>
+      <section>
+        <div class="home-container">
+        <Video />
+        </div>
+      </section>
   </div>
+
 </template>
 
 
 <script>
+
+import Map from '@/components/Home/GoogleMap.vue'; // Moved to Home directory
 import Introduction from '@/components/Home/Introduction.vue';
 import HawkerCard from '@/components/Home/HawkerCentreCards.vue'; // Moved to Home directory
 import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';
+import Geolocation from '@/components/GeolocationTracker.vue';
 
 export default {
   name: 'Home',
@@ -38,7 +50,8 @@ export default {
     HawkerCard,
     Homecards,
     Questionnaire,
-    Video
+    Video,
+    Geolocation
   },
   data() {
     return {
@@ -57,13 +70,14 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap');
 
 .home-container {
-    background-color: #f3e0d2; /* Soft pastel color inspired by shophouses */
-    padding: 20px 30px; /*Some padding to space out content*/
+    background-color: #f8f8f8; 
+    padding: 20px 30px; 
     display: flex;
     width:100%;
     flex-direction: column;
-    align-items: center; /* This will center the immediate child elements */
+    align-items: center; 
     font-family: 'Source Sans Pro', sans-serif;
+    min-height: 100vh;
 }
 
 .action-section {
@@ -75,7 +89,7 @@ export default {
 }
 
 .recommend-button {
-    background-color: #b08e6e; /* Vintage-inspired color */
+    background-color: grey; 
     color: #fff; /* White text */
     padding: 15px 30px;
     border: none;
@@ -115,11 +129,13 @@ export default {
 
 v-divider {
     height: 2px;
-    background-color: #d4af37; /* Vintage gold color */
+    background-color: black; /* Vintage gold color */
     margin: 20px 0;
     width: 80%;
     align-self: center; /* Centering the divider */
 }
+
+
 
 
 /* Add other styles as required */

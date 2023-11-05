@@ -13,13 +13,14 @@
   <div class="collapse navbar-collapse" id="navbarcoll">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <button
+        <!-- <button
             id="show-modal"
             class="nav-link"
-            @click="showModal = true"
+            @click="login = true"
           >
             Login/Sign Up
-        </button>
+        </button> -->
+        <router-link :to="{name: 'Login'}" class="nav-link">Login</router-link>
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'Explore'}" class="nav-link">Explore</router-link>
@@ -34,18 +35,23 @@
     </div>
   </nav>
   </div>
-  <Teleport to="body">
+  <!-- <Teleport to="body"> -->
         <!-- use the modal component, pass in the prop -->
-        <modal :show="showModal" @close="showModal = false">
-          <template #header>
-            <h3>&nbsp</h3>
-          </template>
-        </modal>
-    </Teleport>
+        <!-- <modal :show="showModal" @close="showModal = false"> -->
+          <!-- <template #header> -->
+            <!-- <h3>&nbsp</h3> -->
+          <!-- </template> -->
+        <!-- </modal> -->
+    <!-- </Teleport> -->
 </div>
 </div>
 
 </template>
+
+
+
+
+
 
 <style lang="scss" scoped>
   .navbar-nav .nav-item .nav-link:hover {
@@ -58,10 +64,9 @@
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap'); // Vintage Fonts
 
 .navbar {
-    background-color: #f3e0d2; // Soft pastel color inspired by shophouses
+    background-color: #f8f8f8; // Soft pastel color inspired by shophouses
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
     font-family: 'Source Sans Pro', sans-serif;
-    border-bottom: 3px solid #d4af37; // A touch of gold
 }
 
 .navbar-toggler {

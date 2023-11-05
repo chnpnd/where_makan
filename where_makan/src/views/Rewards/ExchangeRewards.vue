@@ -1,4 +1,5 @@
 <template>
+    <div>
     <h1>Exchange Points for Rewards here!</h1>
 
     <!--Rewards should populate itself base on the rewards database-->
@@ -35,6 +36,7 @@
 
         </div>
     </div>
+</div>
 </template>
 
 <script>

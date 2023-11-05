@@ -1,4 +1,5 @@
     <template>
+        <div>
         <h1>My Rewards</h1>
     <!--Ideally is to look at data set and use a for function to then show the rewards that users receive-->
     
@@ -35,6 +36,7 @@
     
             </div>
         </div>
+    </div>
     </template>
     
     <script>
