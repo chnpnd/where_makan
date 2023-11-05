@@ -38,69 +38,80 @@
 
     <!--Rewards should populate itself base on the rewards database-->
 
-    <div class = "container-fluid rewards">
-        <div class = "row" v-for="(item, index) in rewardExchange" :key="item.name">
-            <div class = "col-2"></div>
-
-            <div class = "col-8">
-
-                <div class = "row border border-primary rounded bg-light">
-                    
-                    <div class = "col-1 rewardDesc">
-
-                    </div>
-                    
-                    <div class = "col-8 rewardDesc">
-                        <h3 v-bind="updatedName">{{ item.name }}</h3>
+    <div class="container-fluid rewards">
+        <div class="row" v-for="(item, index) in rewardExchange" :key="item.name">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="row border border-primary rounded bg-light">
+                    <div class="col-1 rewardDesc"></div>
+                    <div class="col-8 rewardDesc">
+                        <h3>{{ item.name }}</h3>
                         <p>Terms and Condition Apply</p>
-                        <p class="text-warning">{{item.cost}} (Points required to redeem)</p>
+                        <p class="text-warning">{{ item.cost }} (Points required to redeem)</p>
                     </div>
-
-                    <div class = "col-3 exchangeButton text-center">
-                        <button type="button" @click="editRewards(); extractId() " :disabled="isButtonDisabled[index]" class="btn btn-outline-primary btn-block text-center span">
+                    <div class="col-3 exchangeButton text-center">
+                        <button type="button" @click="editRewards(item)" :disabled="isButtonDisabled[index]" class="btn btn-outline-primary btn-block text-center span">
                             <p>{{ rewardStatus[index] }}</p>
                         </button>
                     </div>
-
-                    {{ updatedName }}
-
                 </div>
             </div>
-
-            <div class = "col-2"></div>
-
-
+            <div class="col-2"></div>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import auth from '../../auth';
+
 export default {
     data() {
       return {
-        accId: 10,
-        points: [{"consumer_id":10, "point":120}],
-        rewardOwn: [{"consumer_id": 10, "item_id": 0, "reward_name": "$5 OFF Koi Tea", "date":"04/10/2023"}], //consumer_id, item_id, date
-        rewardExchange: [{"name": "$5 OFF Koi Tea", "quantity": 3, "cost": 50}, {"name": "$5 OFF Mr Bean", "quantity": 3, "cost": 50}, {"name": "$20 OFF Haidilao", "quantity": 2, "cost": 150}],
+        consumer_id: -1,
+        points: [],
+        rewardOwn: [],
+        rewardExchange: [],
         // points: [],
         // rewardOwn: [], //consumer_id, item_id, date
         // rewardExchange: [],
         // claimed, can claim, not enough points to claim
         rewardStatus: [],
         isButtonDisabled: [],
-        message: null,
-        updatedName: null, //buttonId
       };
     },
-    created() {
+    async created() {
       // Fetch center details based on the centerId prop
       //this.getPoints();
       //this.getRewardOwn();
       //this.getRewardExchange();
-      this.checkRewardStatus();
+      await this.fetchUserData();
     },
     methods: {
+        async fetchUserData() {
+            try {
+                const userInfo = await auth.getUser();
+                if (userInfo && userInfo.id) {
+                    this.consumer_id = userInfo.id;
+                    await this.fetchInitialData();
+                } else {
+                // Handle the scenario where there is no logged-in user
+                console.error('User is not logged in');
+                // Redirect the user to the login page or display a message
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        },
+        async fetchInitialData() {
+            // Fetch points and rewards data after consumer_id is available
+            await Promise.all([
+                this.getPoints(),
+                this.getRewardOwn(),
+                this.getRewardExchange(),
+            ]);
+            this.checkRewardStatus();
+            },
         async getPoints() {
             const fetchFromAPI = async (url) => {
                 try {
@@ -111,8 +122,7 @@ export default {
                     console.error("An error occurred while fetching data:", error);
                 }
             };
-
-            this.points = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Point/api/get/${this.accId}/point`);
+            this.points = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Point/api/get/${this.consumer_id}/point`);
         },
         async getRewardOwn() {
             const fetchFromAPI = async (url) => {
@@ -124,7 +134,6 @@ export default {
                     console.error("An error occurred while fetching data:", error);
                 }
             };
-
             this.rewardOwn = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Reward/api/get/rewards`);
         },
 
@@ -138,7 +147,6 @@ export default {
                     console.error("An error occurred while fetching data:", error);
                 }
             };
-
             this.rewardExchange = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Reward/api/get/item`);
         },
 
@@ -173,7 +181,7 @@ export default {
     async editRewards()
         {
             const reviewReward = {
-                consumer_id: this.accId, // Replace with the actual consumer_id
+                consumer_id: this.consumer_id, // Replace with the actual consumer_id
                 item_id: 0, // Replace with the item id
                 reward_name: "$10 OFF KOI",
                 date: new Date().toISOString(), // Get the current date and time in ISO format
@@ -205,14 +213,14 @@ export default {
             const button = document.getElementsByTagName("h3");
             this.updatedName = button.id;
         }
-}
+    }
   };
 
 </script>
 
 <style>
 
-rewards.row {
+.rewards.row {
     border: 1px solid;
     border-radius: 10px;
 }

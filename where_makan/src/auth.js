@@ -64,6 +64,10 @@ export default {
     return user.value;
   },
 
+  getName() {
+    return user.value.username;
+  },
+
   getType(){
     return user.value ? user.value.type : null;
   }
