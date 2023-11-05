@@ -67,6 +67,10 @@ export default {
   getUserID(){
     return user.value.id;
   },
+  
+  getName() {
+    return user.value.username;
+  },
 
   getType(){
     return user.value ? user.value.type : null;

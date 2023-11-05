@@ -32,7 +32,8 @@
         <!-- Review Form Modal -->
         <LeaveReview v-if="userData" :showModal="showReview" :consumerId="userData.id" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
         <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
-            
+        <FoodDetails :food="selectedFood" :showModal="showFoodDetails" @close="toggleFoodDetails(this.food)" />
+
         <b-tabs content-class="mt-3">
           <b-tab title="Food Menu" active>
             <!-- Food Menu -->
@@ -55,7 +56,7 @@
                                 </router-link>
                             </div>
                             <div class="position-absolute bottom-0 end-0 " style="background-color: rgba(255, 255, 255, 0.8); margin-right: 80px;">
-                                <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleHealthInfo">
+                                <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleFoodDetails(food)">
                                     <!-- <HealthInfo :showModal="showModal" /> -->
                                 <Icon icon="openmoji:green-salad" style="font-size: 24px;"></Icon>
                                 </button>
@@ -115,6 +116,7 @@ import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
 import backButton from '@/components/BackButton/backButton.vue';
+import FoodDetails from '@/views/Food/FoodDetails.vue'; 
 // import HealthInfo from '@/views/Food/FoodDetail.vue'; 
 
 export default {
@@ -124,6 +126,7 @@ export default {
         EditReviewModal,
         backButton,
         Icon,
+        FoodDetails,
         // HealthInfo,
 
     },
@@ -141,6 +144,8 @@ export default {
             showEditModal: false,
             selectedReview: {},
             showDeleteConfirmation: false,
+            showFoodDetails: false,
+            selectedFood: null,
         }
     },
     props: ['stallId'],
@@ -302,9 +307,10 @@ export default {
                 this.showDeleteConfirmation = false;
             }
         },
-        toggleHealthInfo() {
-        this.showModal = true;
-    }
+        toggleFoodDetails(food){
+          this.selectedFood = food;
+          this.showFoodDetails = !this.showFoodDetails;
+        }
     },
     computed: {
         truncatedComments() {
