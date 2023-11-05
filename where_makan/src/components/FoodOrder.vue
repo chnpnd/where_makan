@@ -79,7 +79,9 @@ export default {
       this.$emit('close');
     },
     async submit () {
+      await this.AddSale();
       await this.generateQRCode();
+      await this.AddPoint();
       await this.createOrder();
     },
     async generateQRCode(){
@@ -94,6 +96,43 @@ export default {
         this.base64QRCode = qrCodeDataUri;
       } catch (error) {
         console.error('Error generating QR code:', error);
+      }
+    },
+    async AddPoint(){
+      const userId = auth.getUserID(); 
+      const point = parseInt(this.selectedFood.price);
+      const baseUrl = 'https://stingray-app-4wa63.ondigitalocean.app/Point/api/add';
+      const responseUrl = `${baseUrl}/${userId}/point/${point}`;
+
+      const requestOptions = {
+          method: 'POST',
+        };
+
+      try{
+        const response = await fetch(responseUrl, requestOptions);
+          if(response.ok){
+            console.log("ok")
+          }
+      }catch(e){
+        console.log("error");
+      }
+    },
+    async AddSale(){
+      const hawkerID = this.selectedFood.hawker_stall_id; 
+      const foodID = this.selectedFood.id; 
+      const baseUrl = 'https://stingray-app-4wa63.ondigitalocean.app/Sales/api/update/sales';
+      const responseUrl = `${baseUrl}/${hawkerID}/food/${foodID}`;
+
+      const requestOptions = {
+          method: 'PUT',
+        };
+      try{
+        const response = await fetch(responseUrl, requestOptions);
+          if(response.ok){
+            console.log("ok")
+          }
+      }catch(e){
+        console.log("error");
       }
     },
     async createOrder() {

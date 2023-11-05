@@ -16,11 +16,9 @@
 
     const userInput = ref([])
     export default {
-    name: 'About',
-    components:{
-        Login
+        name: 'About',
+        components:{
+            Login
+        }
     }
-    }
-
-
 </script>
