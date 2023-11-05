@@ -26,6 +26,7 @@
             </div>
   
             <div class="col-6 stall-image-container">
+              <span v-if="userData" class="favorite-icon" @click="toggleFavorite">{{ isFavorite ? '♥' : '♡' }}</span>
               <img :src="foodStall.store_url" alt="Stall Image" class="stall-image img-thumbnail" />
             </div>
           </div>
@@ -149,7 +150,8 @@ export default {
             showFoodDetails: false,
             selectedFood: null,
             showFoodOrderModal: false,
-            selectedFoodItem: null
+            selectedFoodItem: null,
+            isFavorite: false,
         }
     },
     props: ['stallId'],
@@ -172,6 +174,7 @@ export default {
               }
               this.fetchFoodsInStallDetails();
               this.fetchReviews();
+              this.fetchFavoriteStatus();
           }
         }catch(error){
           console.error('An error occurred:', error)
@@ -229,6 +232,28 @@ export default {
                         }
                     } catch (error) {
                         console.error('An error occurred while fetching consumer:', error);
+                    }
+                }
+            } else {
+                console.error('Failed to fetch reviews:', response.statusText);
+            }
+            } catch (error) {
+            console.error('An error occurred while fetching reviews:', error);
+            }
+        },
+        async fetchFavoriteStatus(){
+          try {
+            const response = await fetch(
+                `https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/get/favourite/${this.userData.id}`
+            );
+            if (response.ok) {
+              this.favoriteStalls = await response.json();
+              console.log(this.favoriteStalls)
+                for(let i = 0; i < this.favoriteStalls.length; ++i)
+                {
+                    if(this.favoriteStalls[i].hawker_stall_id == this.foodStall.id)
+                    {
+                      this.isFavorite = true;
                     }
                 }
             } else {
@@ -319,7 +344,59 @@ export default {
         toggleFoodDetails(food){
           this.selectedFood = food;
           this.showFoodDetails = !this.showFoodDetails;
-        }
+        },
+        async toggleFavorite() {
+          if(this.isFavorite){
+              const reviewData = {
+                id: this.userData.id,
+                hawkerId: this.foodStall, 
+              };
+              const requestOptions = {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reviewData),
+              };
+              
+              try {
+                const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/delete/favourite/${this.userData.id}/stall/${this.foodStall.id}`, requestOptions);
+                if (response.ok) {
+                  this.isFavorite = false;
+                } else {
+                  console.error('Failed to submit the review:', response.statusText);
+                }
+              } 
+              catch (error) {
+                console.error('An error occurred while submitting the review:', error);
+              }
+          }
+          else{
+            const reviewData = {
+                consumer_id: this.userData.id,
+                hawker_stall_id: this.foodStall.id, 
+              };
+              const requestOptions = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reviewData),
+              };
+              try {
+                const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/create/favourite`, requestOptions);
+                if (response.ok) {
+                  this.isFavorite = true;
+                } else {
+                  console.error('Failed to submit the review:', response.statusText);
+                }
+              } 
+              catch (error) {
+                console.error('An error occurred while submitting the review:', error);
+              }
+              
+          }
+       }
     },
     computed: {
         truncatedComments() {
