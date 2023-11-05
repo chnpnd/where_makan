@@ -12,20 +12,20 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarcoll">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <!-- <button
-            id="show-modal"
-            class="nav-link"
-            @click="login = true"
-          >
-            Login/Sign Up
-        </button> -->
+      <!-- <li class="nav-item active">
         <router-link :to="{name: 'Login'}" class="nav-link">Login</router-link>
+      </li> -->
+
+      <li class="nav-item active" v-if="!isLoggedIn">
+        <router-link :to="{name: 'Login'}" class="nav-link">Login</router-link>
+      </li>
+      <li class="nav-item active" v-if="isLoggedIn">
+        <a class="nav-link" href="#" @click="confirmLogout">Logout</a>
       </li>
       <li class="nav-item">
         <router-link :to="{name: 'Explore'}" class="nav-link">Explore</router-link>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="isBusinessUser">
         <router-link :to="{name: 'Analytics'}" class="nav-link">Analytics</router-link>
       </li>
       <li class="nav-item">
@@ -35,14 +35,6 @@
     </div>
   </nav>
   </div>
-  <!-- <Teleport to="body"> -->
-        <!-- use the modal component, pass in the prop -->
-        <!-- <modal :show="showModal" @close="showModal = false"> -->
-          <!-- <template #header> -->
-            <!-- <h3>&nbsp</h3> -->
-          <!-- </template> -->
-        <!-- </modal> -->
-    <!-- </Teleport> -->
 </div>
 </div>
 
@@ -126,7 +118,33 @@
 
 </style>
 
-<script setup>
-  import { ref } from 'vue'
-  const showModal = ref(false)
+<script>
+  import { computed } from 'vue';
+  import auth from '../auth';
+  import { useRouter } from 'vue-router';
+
+  export default{
+    setup() {
+      const router = useRouter();
+      const isLoggedIn = computed(() => auth.isLoggedIn());
+
+      const confirmLogout = () => {
+        if (window.confirm("Are you sure you want to log out?")) {
+          auth.logout();
+          router.push({ name: 'Login' });
+        }
+      };
+
+      return {
+        isLoggedIn,
+        confirmLogout
+      };
+    },
+    computed: {
+      isBusinessUser() {
+          const user = auth.getUser();
+          return user && user.type === 0;
+      },
+    }
+  };
 </script>

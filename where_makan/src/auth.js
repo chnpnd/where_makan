@@ -28,7 +28,8 @@ export default {
         if(response.ok)
         {
             const userData = await response.json();
-            if(userData)
+            console.log(userData)
+            if(userData && userData.type !== undefined)
             {
                 user.value = userData;
                 return true;
@@ -63,8 +64,12 @@ export default {
     return user.value;
   },
 
+  getUserID(){
+    return user.id;
+  },
+
   getType(){
-    return user.type;
+    return user.value ? user.value.type : null;
   }
 
 };
