@@ -46,6 +46,21 @@ body {
     margin-top: 15px;
 }
 
+.stall-image-container {
+    position: relative;
+    
+}
+
+.favorite-icon {
+    position: absolute;
+    top: -100px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    font-size: 3em; /* Makes the heart icon larger */
+    color: #ff3860; /* Gives the heart icon a color, change as you like */
+    cursor: pointer; /* Changes the cursor to indicate it's clickable */
+    z-index: 10; /* Ensures the icon is above other elements */
+}
+
 .card {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -68,7 +83,6 @@ body {
 .card:hover .to-order {
   display: block;
 }
-
 
 .review-card {
     border: 1px solid #e7e7e7;
