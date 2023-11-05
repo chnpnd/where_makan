@@ -98,12 +98,10 @@
             <div class="card mb-4 mb-md-0" style="height:300px;">
               <div class="card-body">
                 <h4 class="text-center">Favourited Stalls</h4>
-                <div class="my-6 text-center" style="height:200px; background-color: #dad6d6;">
+                <div class="my-6 text-center" style="height:200px; background-color: #eeeeee;">
                   <div v-if="!FavouritedStalls">
-                      <div class="container h-200">
-                        <div class = "scrollable-container">
+                      <div class="container-fluid h-200 scrollable-container">
                           <FavouritedStalls />
-                        </div>
                       </div>
                   </div> 
                   <div v-else>
@@ -193,6 +191,28 @@ h1 {
 .scrollable-container {
   height: 200px;
   overflow: auto;
+  padding-top:1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  scrollbar-width: thin; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.scrollable-container::-webkit-scrollbar {
+  width: 0rem; /* Set the width of the scrollbar (change as needed) */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* Set the color of the scrollbar thumb (change as needed) */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Set the color of the scrollbar track (change as needed) */
+}
+
+/* Hide the scrollbar track for webkit browsers */
+.scrollable-container::-webkit-scrollbar-track {
+  display: none;
 }
 
 </style>

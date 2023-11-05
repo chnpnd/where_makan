@@ -1,10 +1,7 @@
 <template>
-        <div class="container">
+        <div class="container custom-container">
                 <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
             <div v-if="filteredFoodStall">
-                    <div class= "row">
-
-                    </div>
                     <div v-for="stall in filteredFoodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px; background-color: #ffffff;">
                         <router-link class= "text-decoration-none text-black row" style= "background-color: white;" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
                             <div class = "col-4">
@@ -23,6 +20,7 @@
 </template>
 
 <script>
+import user from "@/auth.js";
 
 export default {
     props: ['centerId'], // This prop is automatically passed by Vue Router
@@ -51,6 +49,7 @@ export default {
             );
             if (response.ok) {
                 this.favFoodStall = await response.json();
+                this.favFoodStall = this.removeDuplicates(this.favFoodStall, hawker_stall_id);
                 console.log(this.foodStall);
             } else {
                 console.error('Failed to fetch all stall details:', response.statusText);
@@ -83,8 +82,10 @@ export default {
                         this.filteredFoodStall.push(this.foodStalls[i])
             }
         }
-     }
-    }
+     },
+}
+
+    
   };
 
 </script>
@@ -127,5 +128,8 @@ export default {
  width: 10px;   
 }
 
+.custom-container {
+    padding: 0;
+}
 
 </style>
