@@ -79,18 +79,18 @@
                     <!-- login options -->
                   <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
-                      <form>
+                      <form @submit.prevent="handleLogin">
                         <!-- 2 column grid layout with text inputs for the first and last names -->
   
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                          <input type="text" class="form-control" />
+                          <input type="text" class="form-control" v-model="username"/>
                           <label class="form-label" for="form3Example3">Username/Email address</label>
                         </div>
   
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                          <input type="password" class="form-control" />
+                          <input type="password" class="form-control" v-model="password"/>
                           <label class="form-label" for="form3Example4">Password</label>
                         </div>
 
@@ -120,7 +120,7 @@
                         </div>
 
                         <!-- Login button -->
-                        <button type="submit" class="btn btn-danger btn-block mb-4 my-10">
+                        <button type="button" class="btn btn-danger btn-block my-10" @click.prevent="handleLogin">
                           Login
                         </button>
                       </form>
@@ -140,6 +140,8 @@
 <script>
 import { ref } from 'vue';
 import Popup from './../components/Login/SignUpModal.vue';
+import auth from '../auth';
+import { useRouter } from 'vue-router';
 
 export default {
     // data(){
@@ -154,6 +156,9 @@ export default {
     //     }
     // }
       setup(){
+        const router = useRouter();
+        const username = ref('');
+        const password = ref('');
         const popupTriggers = ref({
           buttonTrigger: true,
 
@@ -164,10 +169,23 @@ export default {
           [trigger]
         }
 
+        const handleLogin = async () => {
+          const success = await auth.login(username.value, password.value);
+          if (success) {
+            alert('Successful log in!');
+            router.push({ name: 'Home' });
+          } else {
+            alert('Incorrect login credentials, please try again.');
+          }
+        }
+
         return{
           Popup,
+          username,
+          password,
           popupTriggers,
           TogglePopup,
+          handleLogin
         }
       }
 

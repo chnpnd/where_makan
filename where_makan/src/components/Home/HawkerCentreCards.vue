@@ -61,6 +61,7 @@ export default {
             foods: [],
             foodStalls: [],
             hawkerCenters: [],
+            filteredPrice: {}
         };
     },
     created() {
@@ -102,7 +103,7 @@ export default {
                             total_price += food.price;}
                         }
                 avg_price = total_price / total_food;
-                this.filteredPrice[center.id] = Math.ceil(avg_price * 100) / 100;
+                this.$set(this.filteredPrice, center.id, Math.ceil(avg_price * 100) / 100);
                     }
             }
     }

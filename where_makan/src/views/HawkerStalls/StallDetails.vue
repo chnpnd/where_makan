@@ -20,7 +20,7 @@
                   <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
                 </ul>
                 <a :href="foodStall.source_url" target="_blank" class="btn btn-danger stall-link">Visit My Website</a>
-                <button v-if="showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
+                <button v-if="userData && howReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
               </div>
             </div>
   
@@ -69,8 +69,7 @@
           </b-tab>
           <b-tab title="Reviews">
             <!-- Review Form Modal -->
-            <!-- Consumer ID is HARDCODED -->
-            <LeaveReview :showModal="showReview" :consumerId="10" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
+            <LeaveReview v-if="userData" :showModal="showReview" :consumerId="userData.id" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
             <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
             <!-- Reviews Section -->
             <h1 class="display-4 mt-5 text-center">Reviews</h1>
@@ -110,6 +109,8 @@
   </template>
   
 <script>
+import { ref } from 'vue';
+import auth from '../../auth';
 import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
@@ -117,6 +118,12 @@ import backButton from '@/components/BackButton/backButton.vue';
 // import HealthInfo from '@/views/Food/FoodDetail.vue'; 
 
 export default {
+    setup() {
+      const userData = ref(auth.getUser());
+      return {
+        userData
+      };
+    },
     component:{
         LeaveReview,
         EditReviewModal,
@@ -127,8 +134,6 @@ export default {
     },
     data() {
         return {
-            // Username is HARDCODED
-            loggedInUsername: 'consumer1',
             foodStall: {},
             foodList: {},
             cuisine: {},
@@ -143,6 +148,11 @@ export default {
         }
     },
     props: ['stallId'],
+    computed:{
+        loggedInUsername() {
+          return this.userData?.username || '';
+        }
+    },
     async created() {
         const stallRes = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/stall/${this.stallId}`);
         if (stallRes.ok) {
@@ -188,6 +198,8 @@ export default {
                         if (response.ok) {
                             this.reviews[i].consumer_name = await response.text();
                             // Check if logged in user has responded
+                            console.log(loggedInUsername)
+                            console.log(this.reviews[i].consumer_name)
                             if(this.loggedInUsername == this.reviews[i].consumer_name)
                             {
                                 this.showReviewBtn = false;
