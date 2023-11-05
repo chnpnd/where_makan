@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <main>
       <!-- Section: Design Block -->
       <section class="background-radial-gradient overflow-hidden">
         <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5 mt-auto">
@@ -43,7 +43,7 @@
                 <img src="@/assets/where_makan_logo.png" alt="where_makan_logo" class="my-3"/>
                 </div>
 
-
+                
                 <div class="card-header border-bottom-0 bg-transparent">
                   <ul class="nav nav-tabs justify-content-center pt-4" id="pills-tab" role="tablist">
                     <li class="nav-item">
@@ -58,14 +58,16 @@
 
                 
                 <div class="card-body px-4 py-5 px-md-5">
-
                 <div class="d-flex align-items-center justify-content-center pb-4">
                         <h4 class="mb-0 me-2">Don't have an account?</h4>
-                        <span><button class="btn btn-outline-danger sign-up" @click="() => TogglePopup('buttonTrigger')">Create New</button></span>
-                        <Popup v-if="popupTriggers.buttonTrigger">
-                          <h2>testing</h2>
-                        </Popup>
+                        <span>
+                          <button class="btn btn-outline-danger sign-up" @click="initiateSignUp">Create New</button>
+                          <SignUpModal :showModal="showModal" @close="showModal = false" />
+                        </span>
                 </div>
+
+                
+                
 
                 <div class="text-center">
                 <div class="d-flex align-items-center">
@@ -75,6 +77,7 @@
                 </div>
               </div>
 
+              <h1 class="text-center my-3">Log in</h1>
 
                     <!-- login options -->
                   <div class="tab-content" id="pills-tabContent">
@@ -133,48 +136,34 @@
         </div>
       </section>
       <!-- Section: Design Block -->
-    </div>
+    </main>
   </template>
   
 
-<script>
-import { ref } from 'vue';
-import Popup from './../components/Login/SignUpModal.vue';
-
-export default {
-    // data(){
-    //     username = '',
-    //     password = ''
-    // },
-    // methods:{
-    //     submitForm()
-    //     {
-    //         console.log(`Form submitted! Username is ${this.username}`)
-    //         console.log(`Form submitted! Password is ${pthis.password}`)
-    //     }
-    // }
-      setup(){
-        const popupTriggers = ref({
-          buttonTrigger: true,
-
-        });
-
-        const TogglePopup = (trigger) => {
-          popupTriggers.value[trigger] = !popupTriggers.value
-          [trigger]
-        }
-
-        return{
-          Popup,
-          popupTriggers,
-          TogglePopup,
-        }
-      }
-
-}
-</script>
+  <script>
+  import { ref } from 'vue';
+  import SignUpModal from './../components/Login/SignUpModal.vue';
+  
+  export default {
+    setup() {
+      const showModal = ref(false);
+  
+      const initiateSignUp = () => {
+        showModal.value = true;
+      };
+  
+      return {
+        showModal,
+        initiateSignUp,
+      };
+    },
+  };
+  </script>
+  
 
 <style >
 @import '@/components/Login/loginPage.css';
+
+
 
 </style>

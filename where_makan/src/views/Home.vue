@@ -1,34 +1,32 @@
 <template>
-  <div>
+  <main class="snap-scroll-container">
       <section>
           <Introduction />
       </section>
 
       <section id="section-2">
-        <div class="home-container">
-        <div class="action-section">
-          <button class="recommend-button" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
-          <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
-        </div>
+        <div class="home-container mt-10">
           <h1 class="homeH1 text-center">Food Recommended For You:</h1>
         <Homecards />
         </div>
       </section>
 
       <section>
+        <v-divider></v-divider>
         <div class="home-container">
-          <v-divider></v-divider>
           <h1 class="homeH1 text-center">Hawkers Nearby You: </h1>
-          <v-divider></v-divider>
             <HawkerCard />
         </div>
       </section>
+
       <section>
+        <v-divider></v-divider>
         <div class="home-container">
         <Video />
         </div>
       </section>
-  </div>
+
+  </main>
 
 </template>
 
@@ -41,6 +39,8 @@ import HawkerCard from '@/components/Home/HawkerCentreCards.vue'; // Moved to Ho
 import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';
+import { VDivider } from 'vuetify/components/VDivider';
+
 
 export default {
   name: 'Home',
@@ -49,7 +49,8 @@ export default {
     HawkerCard,
     Homecards,
     Questionnaire,
-    Video
+    Video,
+    VDivider,
   },
   data() {
     return {
@@ -67,15 +68,27 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap');
 
-.home-container {
+
+/* .home-container {
     background-color: #f8f8f8; 
-    padding: 20px 30px; 
     display: flex;
     width:100%;
     flex-direction: column;
     align-items: center; 
     font-family: 'Source Sans Pro', sans-serif;
     min-height: 100vh;
+    z-index: 1;
+} */
+
+.home-container{
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center both horizontally and vertically */
+  min-height: 100vh;
+  font-family: 'Source Sans Pro', sans-serif;
+  z-index: 1;
 }
 
 .action-section {
@@ -84,30 +97,6 @@ export default {
     max-width: 500px; /* Adjust as necessary */
     display: flex;
     justify-content: center; /* Center the button */
-}
-
-.recommend-button {
-    background-color: grey; 
-    color: #fff; /* White text */
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-family: 'Playfair Display', serif; 
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Transition for smooth color change */
-    text-transform: uppercase; /* Uppercase to make it look more bold */
-    letter-spacing: 1px; /* Space between letters for vintage look */
-}
-
-.recommend-button:hover, .recommend-button:focus {
-    background-color: #8a6d5b; /* Darker shade on hover/focus */
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(176, 142, 110, 0.5); /* Vintage-inspired focus shadow */
-}
-
-.text-center {
-    text-align: center;
 }
 
 .homeH1 {
@@ -131,6 +120,7 @@ v-divider {
     margin: 20px 0;
     width: 80%;
     align-self: center; /* Centering the divider */
+    
 }
 
 

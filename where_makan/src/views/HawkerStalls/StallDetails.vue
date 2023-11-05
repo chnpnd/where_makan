@@ -29,6 +29,11 @@
             </div>
           </div>
         </div>
+        <LeaveReview :showModal="showReview" :consumerId="10" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
+        <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
+
+        <FoodDetails :food="selectedFood" :showModal="showFoodDetails" @close="toggleFoodDetails(this.food)" />
+
         <b-tabs content-class="mt-3">
           <b-tab title="Food Menu" active>
             <!-- Food Menu -->
@@ -51,10 +56,12 @@
                                 </router-link>
                             </div>
                             <div class="position-absolute bottom-0 end-0 " style="background-color: rgba(255, 255, 255, 0.8); margin-right: 80px;">
-                                <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleHealthInfo">
-                                    <!-- <HealthInfo :showModal="showModal" /> -->
+                              <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleFoodDetails(food)">
+                                
                                 <Icon icon="openmoji:green-salad" style="font-size: 24px;"></Icon>
-                                </button>
+                                
+                              </button>
+
                             </div>
                         </div>
                         </div>
@@ -67,12 +74,12 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="Reviews">
+          
             <!-- Review Form Modal -->
             <!-- Consumer ID is HARDCODED -->
-            <LeaveReview :showModal="showReview" :consumerId="10" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
-            <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
+            
             <!-- Reviews Section -->
+            <b-tab title="Reviews">
             <h1 class="display-4 mt-5 text-center">Reviews</h1>
             <div v-if="reviews && reviews.length > 0">
               <div class="review-grid mt-4">
@@ -114,15 +121,15 @@ import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
 import backButton from '@/components/BackButton/backButton.vue';
-// import HealthInfo from '@/views/Food/FoodDetail.vue'; 
+import FoodDetails from '@/views/Food/FoodDetails.vue'; 
 
 export default {
-    component:{
+    components:{
         LeaveReview,
         EditReviewModal,
         backButton,
         Icon,
-        // HealthInfo,
+        FoodDetails,
 
     },
     data() {
@@ -139,7 +146,8 @@ export default {
             showEditModal: false,
             selectedReview: {},
             showDeleteConfirmation: false,
-            // showModal: false
+            showFoodDetails: false,
+            selectedFood: null,
         }
     },
     props: ['stallId'],
@@ -285,9 +293,11 @@ export default {
                 this.showDeleteConfirmation = false;
             }
         },
-        toggleHealthInfo() {
-        this.showModal = true;
-    }
+        toggleFoodDetails(food){
+          this.selectedFood = food;
+          this.showFoodDetails = !this.showFoodDetails;
+        }
+       
     },
     computed: {
         truncatedComments() {
@@ -299,9 +309,7 @@ export default {
             });
         },
     },
-    components:{
-        Icon,
-    }
+    
 };  
 
 </script>
