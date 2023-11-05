@@ -28,7 +28,7 @@ export default {
         if(response.ok)
         {
             const userData = await response.json();
-            
+            console.log(userData);
             if(userData && userData.type !== undefined)
             {
                 user.value = userData;
@@ -55,6 +55,43 @@ export default {
       return false;
     }
   },
+
+  async signup(username, password, userType) {
+    const userInput = {
+      username: username,
+      password: password,
+      type: userType,
+      full_name: "",
+      doB: "",
+      address: "",
+      phone_number: 0,
+      profile_image: "",
+      user_reward: 0
+    }; // Replace this with your actual user data
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInput),
+    };
+    try {
+        const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/User/api/create/user`, requestOptions);
+        if(response.ok)
+        {
+          return true;
+        }
+        else {
+            console.error('Failed to signup', response.statusText);
+            return false;
+        }
+    }
+    catch (error) {
+      console.error('An error occurred while submitting the review:', error);
+      return false;
+    }
+  },
+
 
   logout() {
     user.value = null;
