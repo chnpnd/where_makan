@@ -38,12 +38,14 @@
                             <div class="card-body">
                             <h5 class="card-title">{{ stall.name }}</h5>
                             <p class="card-text">{{ stall.address }}</p>
+                            
                             <!-- replace for review -->
                             <p class="card-text">{{ stall.review }}</p>
                             </div>
                         </div>
                         </div>
                     </router-link>
+                    
                     </div>
                 </div>
                 <div v-else>
@@ -72,12 +74,14 @@
   </template>
   
   <script>
+     import { Icon } from '@iconify/vue';
     import backButton from '@/components/BackButton/backButton.vue';
 
   export default {
     props: ['centerId'], // This prop is automatically passed by Vue Router
     components: {
     backButton,
+    Icon,
     },
     data() {
       return {
@@ -136,6 +140,9 @@
         centerPosition(center) {
             return { lat: center.lat, lng: center.long };
         },
+        toggleHeart(stallId) {
+            this.foodStall[stallId].heart = !this.foodStall[stallId].heart;   
+      },
     },
   };
   </script>

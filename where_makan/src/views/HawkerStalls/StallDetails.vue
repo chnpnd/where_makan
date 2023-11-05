@@ -11,6 +11,7 @@
             <div class="col-6">
               <div class="stall-details">
                 <h1 class="display-4 text-left fw-bold">{{ foodStall.name }}</h1>
+               
                 <ul class="list-unstyled pl-1">
                   <li><strong>Phone Number:</strong> {{ foodStall.phone_number }}</li>
                   <li><strong>Address:</strong> {{ foodStall.address }}</li>
@@ -19,7 +20,12 @@
                   <li><strong>Signature Item:</strong> {{ foodStall.signature_item }}</li>
                   <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
                 </ul>
+                    <span class="mx-4 text-center heart" style="background-color: #f8f8f8; border-radius: 50%; padding: 10px;padding-bottom: 15px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);">
+                        <Icon :icon="foodStall.heart ? 'mdi:heart-outline' : 'mdi:heart'" @click="toggleHeart()" :class="{ 'red-heart': !foodStall.heart }" 
+                        style="font-size: 27px;"/>
+                    </span>
                 <a :href="foodStall.source_url" target="_blank" class="btn btn-danger stall-link">Visit My Website</a>
+                
                 <button v-if="userData && showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
               </div>
             </div>
@@ -310,7 +316,10 @@ export default {
         toggleFoodDetails(food){
           this.selectedFood = food;
           this.showFoodDetails = !this.showFoodDetails;
-        }
+        },
+        toggleHeart() {
+            this.foodStall.heart = !this.foodStall.heart;   
+        },
     },
     computed: {
         truncatedComments() {

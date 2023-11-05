@@ -1,44 +1,36 @@
 <template>
-  <div class="container py-5">
+  <div class="dashboard-container">
     <!-- Revenue and Quantity Cards -->
-    <h2 class="mb-3">Sales Overiew</h2>
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Total Revenue</h5>
-            <p class="card-text">${{ totalMoneyMade.toFixed(2) }}</p>
-          </div>
-        </div>
+    <div class="dashboard-section">
+      <h2 class="dashboard-section-title">Sales Overview</h2>
+      <hr>
+      <div class="dashboard-card">
+        <h5 class="dashboard-card-title">Total Revenue </h5>
+        <p class="dashboard-card-value">${{ totalMoneyMade.toFixed(2) }}</p>
       </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Total Quantity Sold</h5>
-            <p class="card-text">{{ totalQuantitySold }}</p>
-          </div>
+      <div class="dashboard-card">
+        <h5 class="dashboard-card-title">Total Quantity Sold</h5>
+        <p class="dashboard-card-value">{{ totalQuantitySold }}</p>
+      </div>
+    </div>
+
+    <!-- Food Item Sales -->
+    <div class="dashboard-section">
+      <h2 class="dashboard-section-title">Food Item Sales</h2>
+      <hr>
+      <div class="dashboard-food-cards">
+        <div v-for="(value, name) in foodSales" :key="name" class="dashboard-card">
+          <h5 class="dashboard-card-title">{{ name }}</h5>
+          <p class="dashboard-card-value">${{ value.toFixed(2) }}</p>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <h2 class="mb-3">Food Item Sales</h2>
-      </div>
-      <div class="col-md-4 mb-3" v-for="(value, name) in foodSales" :key="name">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{ name }}</h5>
-            <p class="card-text">${{ value.toFixed(2) }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <!-- Top Selling Food Items -->
-    <div class="row">
-      <div class="col-12">
-        <h2 class="mb-3">Top Selling Food Items</h2>
-        <bar-chart :data="topSellingFoodData" :download="topSellingFoodData"></bar-chart>
-      </div>
+    <div class="dashboard-section">
+      <h2 class="dashboard-section-title">Top Selling Food Items</h2>
+      <bar-chart :data="topSellingFoodData" :download="topSellingFoodData" style="height: 500px;"></bar-chart>
+      <button class="btn btn-outline-dark mt-6" @click="downloadTopSellingData">Download Top Selling Data</button>
     </div>
   </div>
 </template>
@@ -46,6 +38,7 @@
 
 <script>
 import auth from '../auth';
+
 
 export default {
   data() {
@@ -57,11 +50,13 @@ export default {
       totalSalesData: [],
       totalQuantitySold: 0,
       totalMoneyMade: 0,
+      
     };
   },
   async created() {
     await this.fetchHawkerStall();
   },
+
   computed: {
     // Computed property to calculate total sales for each food item
     foodSales() {
@@ -80,6 +75,7 @@ export default {
       return sales;
     }
   },
+
   methods: {
     async fetchHawkerStall() {
       const userID = auth.getUserID();
@@ -138,34 +134,68 @@ export default {
     calculateTotalQuantitySold(salesData) {
       return salesData.reduce((total, sale) => total + sale.amount, 0);
     },
+    downloadTopSellingData() {
+    const dataToDownload = this.topSellingFoodData; // Replace with your data
+    // Implement the download logic here, such as creating a download link and triggering the download
+    const blob = new Blob([JSON.stringify(dataToDownload)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'topSellingFoodData.json';
+    a.click();
+    URL.revokeObjectURL(url);
   },
+},
+
 };
 </script>
 
 
 
 <style>
-.card {
-  margin: 1rem;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 1rem;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  
+}
+
+.dashboard-section {
+  margin: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  border-radius: 5px; /* 5px rounded corners */
+  padding: 1rem;
+  text-align: center;
+  
 }
 
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+.dashboard-section-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
-.card-body {
-  padding: 2px 16px;
+.dashboard-card {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  transition: 0.3s;
+  text-align: center;
+  
+  
 }
 
-.card-title {
+.dashboard-card-title {
   font-size: 1.25rem;
 }
 
-.card-text {
+.dashboard-card-value {
   font-size: 1rem;
 }
 </style>

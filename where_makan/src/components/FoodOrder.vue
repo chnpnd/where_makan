@@ -20,6 +20,7 @@
                       <div class="card-body">
                         <div class="d-flex justify-content-between">
                           <h4 class="card-title font-weight-bold">{{ food.name }}</h4>
+                          <button class="btn text-muted mb-2" @click="removeItem(food.id)">Order</button>  
                           <div>
                             <span >Quantity:
                               <input type="text" v-model="userInput[food.id]" class="form-control text-center" placeholder="1" style="width: 50px;">
