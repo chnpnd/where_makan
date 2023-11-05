@@ -1,7 +1,5 @@
 <template>
-  <div v-if="showModal && food" class="modal-overlay">
-    <div class="modal-content">
-      <button class="close-btn text-danger mx-2" @click="closeModal">×</button>
+  <div v-if="showModal && food" class="food-container d-flex">
       <div class="food-container d-flex">
         <div class="food-image-container mr-4">
           <img :src="food.url" alt="Food Image" class="food-image" />
@@ -15,17 +13,16 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
   
 <script>
   export default {
-    props: ['foodId','showModal'],
+    props: ['foodId','showModal', ],
     data() {
       return {
-        
-        
+        food: {},
+      
       };
     },
 

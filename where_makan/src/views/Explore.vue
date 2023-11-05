@@ -8,7 +8,7 @@
   </template>
   
   <script>
-  import exploreCards from '@/componenets/Home/HawkerCentreCards.vue';
+  import exploreCards from '@/components/Home/HawkerCentreCards.vue';
   
     export default {
       name: 'ExplorePage',
