@@ -3,19 +3,16 @@
     <div class="row h-100 justify-content-center align-items-center">
       <div class="col-12 text-center">
         <p v-if="errorMessage">{{ errorMessage }}</p>
-        <p v-if="longitude">{{ longitude }}</p>
-        <p v-if="latitude">{{ latitude }}</p>
          <!--NEW EDITS - the whole file-->
-        <button @click="getLocation" class="btn btn-custom"> <!-- Use a custom class -->
-          Allow Location Access
-        </button>
-        <button @click="filteredDistance" class="btn btn-custom">
+        <button @click="getLocation" class="btn btn-outline-dark text-dark btn-sm mx-2"> <!-- Use a custom class -->
           Recommend Hawker Stalls Near Me
         </button>
 
+        <h1 class="homeH1 text-center">Hawkers Nearby You: </h1>
+
         <div>
-          <Carousel class="carousel" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
-          <Slide v-for="hawkerCenter in filteredCenters" :key="hawkerCenter.id">
+          <Carousel class="carousel hawker-card" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
+          <Slide  v-for="hawkerCenter in filteredCenters" :key="hawkerCenter.id">
               <v-card class="hawker-card">
                   <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
                       <v-img :src="hawkerCenter.photo_url" cover></v-img>
@@ -36,11 +33,13 @@
 <script>
 import { Carousel, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
+import HawkerCard from '@/components/Home/HawkerCentreCards.vue';
 
 export default {
   components: {
       Carousel,
-      Slide
+      Slide,
+      HawkerCard
   },
   data() {
     return {
@@ -67,6 +66,7 @@ export default {
           (position) => {
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;
+            this.filteredCenters = [];
             this.filteredDistance();
           },
           (error) => {
@@ -166,4 +166,5 @@ export default {
 .btn-custom:hover {
   background-color: #2980b9; /* Change color on hover */
 }
+@import './HawkerCards.css';
 </style>

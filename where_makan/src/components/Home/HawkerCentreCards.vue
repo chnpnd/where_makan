@@ -1,16 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
-<template>
-    <div>
-=======
-=======
->>>>>>> 79c89a87822581028acd83cfa17596c110b41569
-=======
->>>>>>> main
+<!--3a26719def2bf5ed8277362050b9862263fe05cf
+
+79c89a87822581028acd83cfa17596c110b41569-->
+
     <template>
         <div>
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -49,13 +40,10 @@
             </div>
         </div>
         <div class="font-weight-light text-center more"><router-link :to="{name: 'Explore'}" class="nav-link"><h5>View More Hawkers</h5></router-link></div>
+    </div>
+</template>
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
+<!--
 >>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
     </div>
 =======
@@ -63,9 +51,8 @@
 >>>>>>> 79c89a87822581028acd83cfa17596c110b41569
 =======
 >>>>>>> main
-        </div>
-    </template>
-  
+ 
+  -->
 
 
 

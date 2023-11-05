@@ -10,17 +10,17 @@
           <button class="recommend-button" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
           <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
         </div>
-          <h1 class="homeH1 text-center">Food Recommended For You:</h1>
-        <Homecards />
+          <!--<<h1 class="homeH1 text-center">Food Recommended For You:</h1>
+        <Homecards />-->
         </div>
       </section>
 
       <section>
         <div class="home-container">
           <v-divider></v-divider>
-          <h1 class="homeH1 text-center">Hawkers Nearby You: </h1>
           <v-divider></v-divider>
-            <HawkerCard />
+          <Geolocation />
+          
         </div>
       </section>
       <section>
@@ -41,6 +41,7 @@ import HawkerCard from '@/components/Home/HawkerCentreCards.vue'; // Moved to Ho
 import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';
+import Geolocation from '@/components/GeolocationTracker.vue';
 
 export default {
   name: 'Home',
@@ -49,7 +50,8 @@ export default {
     HawkerCard,
     Homecards,
     Questionnaire,
-    Video
+    Video,
+    Geolocation
   },
   data() {
     return {

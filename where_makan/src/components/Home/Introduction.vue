@@ -26,7 +26,6 @@
         <div class="carousel-caption d-flex flex-column justify-content-center align-items-center">
           <h1 class="intro-text my-3" ref="introText">Hawker Heaven</h1>
           <div class="action-buttons mb-3">
-            <router-link :to="{name: 'Home'}" class="btn custom-button btn-outline-light text-light btn-sm mx-2">Explore Me!</router-link>
             <router-link :to="{name: 'Home'}" class="btn custom-button btn-outline-light text-light btn-sm mx-2">Surprise Me!</router-link>
           </div>
           <Searchbar />
