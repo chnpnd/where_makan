@@ -1,31 +1,26 @@
 <template>
-    <div class = "row">
-        <!-- stalls that this centre has -->
-        <h4 class="display-5 f">Your Favourited Stalls</h4>
-        <div class="card-container">
-            <button @click="filterFav" class="btn btn-custom">
-                check my fav stalls
-            </button>
-
+        <div class="container custom-container">
                 <!-- None  <576px, sm  ≥576px, md  ≥768px, lg  ≥992px, xl  ≥1200px, xxl  ≥1400px -->
-            <div v-if="filteredFoodStall" class='row justify-content-left'>
-                    <v-card v-for="stall in filteredFoodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px;">
-                        <router-link class= "text-decoration-none text-black" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
-                            <v-img :src="stall.store_url" cover max-height="100"></v-img>
-                            <v-card-title>{{ stall.name }} {{ stall.address }}</v-card-title>
-                            <v-card-text> No reviews yet</v-card-text>
-                                <!--    NEED HELP ON WHY IT NEEDS TO CLICK ON 2 CARDS BEFORE SWITCHING(duplicated function)--> 
+            <div v-if="filteredFoodStall">
+                    <div v-for="stall in filteredFoodStall" :key="stall.id" max-width="400" max-height="400" style="margin:10px; background-color: #ffffff;">
+                        <router-link class= "text-decoration-none text-black row" style= "background-color: white;" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
+                            <div class = "col-4">
+                                <img class="img-fluid" :src="stall.store_url">
+                            </div>
+                            <div class="col">
+                                {{ stall.name }} {{ stall.address }}
+                            </div>
                         </router-link>
-                    </v-card>
+                    </div>
             </div> 
             <div v-else><h1>No food is available</h1></div>
-        </div>
     </div>
 
 
 </template>
 
 <script>
+import user from "@/auth.js";
 
 export default {
     props: ['centerId'], // This prop is automatically passed by Vue Router
@@ -54,6 +49,7 @@ export default {
             );
             if (response.ok) {
                 this.favFoodStall = await response.json();
+                this.favFoodStall = this.removeDuplicates(this.favFoodStall, hawker_stall_id);
                 console.log(this.foodStall);
             } else {
                 console.error('Failed to fetch all stall details:', response.statusText);
@@ -78,7 +74,7 @@ export default {
             this.filterFav();
         },
 
-        filterFav() {
+        async filterFav() {
             for (let i =0; i<this.foodStalls.length; i++){
                 var stall = this.foodStalls[i];
                 for (let x = 0; x<this.favFoodStall.length; x++)
@@ -86,8 +82,10 @@ export default {
                         this.filteredFoodStall.push(this.foodStalls[i])
             }
         }
-     }
-    }
+     },
+}
+
+    
   };
 
 </script>
@@ -125,5 +123,13 @@ export default {
     text-overflow: unset;
 }
 
+.img {
+ height: 10px;
+ width: 10px;   
+}
+
+.custom-container {
+    padding: 0;
+}
 
 </style>

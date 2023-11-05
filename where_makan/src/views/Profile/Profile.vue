@@ -98,9 +98,16 @@
             <div class="card mb-4 mb-md-0" style="height:300px;">
               <div class="card-body">
                 <h4 class="text-center">Favourited Stalls</h4>
-                <div class="my-6 text-center " style="height:200px; background-color: #dad6d6;">
+                <div class="my-6 text-center" style="height:200px; background-color: #eeeeee;">
+                  <div v-if="!FavouritedStalls">
+                      <div class="container-fluid h-200 scrollable-container">
+                          <FavouritedStalls />
+                      </div>
+                  </div> 
+                  <div v-else>
                     <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;" >No favourited stalls</h5>
-                </div>
+                  </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -124,9 +131,13 @@
 </template>
   
   <script>
+  import FavouritedStalls from './FavouritedStalls.vue';
   export default {
 
     props: ['accId'], // This prop is automatically passed by Vue Router
+    components: {
+      FavouritedStalls
+    },
     data() {
       return {
         center: null, // Initialize center as null
@@ -175,6 +186,33 @@
 
 h1 {
     text-align: center;
+}
+
+.scrollable-container {
+  height: 200px;
+  overflow: auto;
+  padding-top:1px;
+  padding-left: 12px;
+  padding-right: 12px;
+  scrollbar-width: thin; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.scrollable-container::-webkit-scrollbar {
+  width: 0rem; /* Set the width of the scrollbar (change as needed) */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* Set the color of the scrollbar thumb (change as needed) */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Set the color of the scrollbar track (change as needed) */
+}
+
+/* Hide the scrollbar track for webkit browsers */
+.scrollable-container::-webkit-scrollbar-track {
+  display: none;
 }
 
 </style>
