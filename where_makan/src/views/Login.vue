@@ -112,7 +112,7 @@
   
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                          <input type="email" class="form-control" />
+                          <input type="text" class="form-control" />
                           <label class="form-label" for="form3Example3">Business Name/Email address</label>
                         </div>
   
