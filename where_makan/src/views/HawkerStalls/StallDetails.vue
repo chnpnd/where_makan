@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-4 bg-white">
     
-      <FoodOrder :showOrder="showFoodOrderModal" :selectedFood="selectedFoodItem" @close-modal="showFoodOrderModal = false"/>
+      <FoodOrder :showOrder="showFoodOrderModal" :selectedFood="selectedFoodItem" @close="showFoodOrderModal = false"/>
       <div class="container mt-4">
         <div>
             <backButton />
@@ -154,7 +154,6 @@ export default {
     },
     props: ['stallId'],
     async created() {
-
         try{
           const userInfo = await this.fetchUserData();
           this.userData = userInfo;
@@ -182,7 +181,6 @@ export default {
       openFoodOrderModal(foodItem) {
         this.selectedFoodItem = foodItem;
         this.showFoodOrderModal = true;
-        console.log(this.showFoodOrderModal);
         },
           async fetchUserData() {
             try {
