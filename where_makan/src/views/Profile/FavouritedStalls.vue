@@ -35,7 +35,7 @@ data() {
 },
 created() {
     this.fetchfav();
-    this.getAllData();
+    this.getAllData();  
     this.filterFav();
 },
 methods: {
