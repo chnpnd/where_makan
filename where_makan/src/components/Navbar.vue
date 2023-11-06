@@ -3,7 +3,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <div>
   <div class="container-fluid pl-0 pr-0">
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar  navbar-expand-lg">
   <router-link :to="{name: 'Home'}" class="navbar-brand">
     <img src="@/assets/where_makan_logo.png" alt="Logo" class="navbar-logo">
   </router-link>

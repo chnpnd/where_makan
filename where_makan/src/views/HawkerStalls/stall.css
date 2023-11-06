@@ -7,12 +7,14 @@ body {
 
 .container {
     max-width: 1300px;
+    min-height: 100vh;
 }
 
 .stall-container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
+    
 }
 
 .food-container {
@@ -50,6 +52,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    
     
 }
 

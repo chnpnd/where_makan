@@ -4,12 +4,14 @@
       <div class="col-12 text-center">
         <p v-if="errorMessage">{{ errorMessage }}</p>
          <!--NEW EDITS - the whole file-->
-        <button @click="getLocation" class="btn btn-outline-dark text-dark btn-sm mx-2"> <!-- Use a custom class -->
-          Recommend Hawker Stalls Near Me
-        </button>
+         <div>
+      
+      </div>
 
-        <h1 class="homeH1 text-center">Hawkers Nearby You: </h1>
-
+        <div class = "row">  </div>
+        <button class="btn btn-outline-dark text-dark" @click="getLocation"> <!-- Use a custom class -->
+          Recommend Hawker Stalls Near Me</button>
+        <button>hello</button>
         <div>
           <Carousel class="carousel hawker-card" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
           <Slide  v-for="hawkerCenter in filteredCenters" :key="hawkerCenter.id">

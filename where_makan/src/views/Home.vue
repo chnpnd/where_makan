@@ -6,8 +6,9 @@
 
       <section id="section-2">
         <div class="home-container mt-10">
-          <h1 class="homeH1 text-center">Food Recommended For You:</h1>
-        <Homecards />
+          <h1 class="homeH1 text-center">Hawker Centers Near You:</h1>
+        <!-- <Homecards /> -->
+        <Geolocation />
         </div>
       </section>
 
@@ -40,6 +41,7 @@ import Homecards from '@/components/Home/HomeCards.vue';
 import Questionnaire from '@/components/Home/Questionnaire.vue'; // Moved to Home directory
 import Video from '@/components/Video.vue';
 import { VDivider } from 'vuetify/components/VDivider';
+import Geolocation from '@/components/GeolocationTracker.vue'
 
 
 export default {
@@ -51,6 +53,7 @@ export default {
     Questionnaire,
     Video,
     VDivider,
+    Geolocation,
   },
   data() {
     return {
@@ -69,26 +72,18 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro&display=swap');
 
 
-/* .home-container {
-    background-color: #f8f8f8; 
-    display: flex;
-    width:100%;
-    flex-direction: column;
-    align-items: center; 
-    font-family: 'Source Sans Pro', sans-serif;
-    min-height: 100vh;
-    z-index: 1;
-} */
 
 .home-container{
-  background-color: #f8f8f8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Center both horizontally and vertically */
-  min-height: 100vh;
-  font-family: 'Source Sans Pro', sans-serif;
-  z-index: 1;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center both horizontally and vertically */
+    min-height: 100vh;
+    width: 100vw;
+    font-family: 'Source Sans Pro', sans-serif;
+    z-index: 1;
+  
 }
 
 .action-section {
@@ -101,7 +96,7 @@ export default {
 
 .homeH1 {
     font-size: 26px;
-    color: #625d5d; /* Vintage text color */
+    color: #625d5d; 
     margin-top: 20px;
     margin-bottom: 20px; /* Space after the heading */
     font-family: 'Playfair Display', serif; 
@@ -109,19 +104,20 @@ export default {
 
 .map-section {
     width: 100%;
-    max-width: 1200px; /* You can adjust this if you want a maximum limit on map width */
+    max-width: 1200px; 
     margin: 30px 0;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1); /* Adds a subtle shadow to lift the map a bit */
 }
 
 v-divider {
     height: 2px;
-    background-color: black; /* Vintage gold color */
+    background-color: black; 
     margin: 20px 0;
     width: 80%;
     align-self: center; /* Centering the divider */
     
 }
+
 
 
 

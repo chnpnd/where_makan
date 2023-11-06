@@ -1,17 +1,18 @@
 <template>
-    <div class="container mt-4 bg-white">
-        
-      <div class="container mt-4">
+  <div class="container mt-4 bg-white" style="min-height: 100vh;">
+    
+      <FoodOrder :showOrder="showFoodOrderModal" :selectedFood="selectedFoodItem" @close="showFoodOrderModal = false"/>
+      <FoodDetails :showModal="toggleFoodDetails" :selectedFood="selectedFoodItem"  @close="showFoodDetails = false" />
+      <div class="container mt-4" >
         <div>
             <backButton />
         </div>
         <!-- Food Stall Information -->
-        <div v-if="foodStall" class="stall-container d-flex mb-5">
+        <div v-if="foodStall" class="stall-container d-flex mb-5" >
           <div class="row">
             <div class="col-6">
               <div class="stall-details">
                 <h1 class="display-4 text-left fw-bold">{{ foodStall.name }}</h1>
-               
                 <ul class="list-unstyled pl-1">
                   <li><strong>Phone Number:</strong> {{ foodStall.phone_number }}</li>
                   <li><strong>Address:</strong> {{ foodStall.address }}</li>
@@ -20,17 +21,13 @@
                   <li><strong>Signature Item:</strong> {{ foodStall.signature_item }}</li>
                   <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
                 </ul>
-                    <span class="mx-4 text-center heart" style="background-color: #f8f8f8; border-radius: 50%; padding: 10px;padding-bottom: 15px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);">
-                        <Icon :icon="foodStall.heart ? 'mdi:heart-outline' : 'mdi:heart'" @click="toggleHeart()" :class="{ 'red-heart': !foodStall.heart }" 
-                        style="font-size: 27px;"/>
-                    </span>
                 <a :href="foodStall.source_url" target="_blank" class="btn btn-danger stall-link">Visit My Website</a>
-                
                 <button v-if="userData && showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
               </div>
             </div>
   
             <div class="col-6 stall-image-container">
+              <span v-if="userData" class="favorite-icon" @click="toggleFavorite">{{ isFavorite ? '♥' : '♡' }}</span>
               <img :src="foodStall.store_url" alt="Stall Image" class="stall-image img-thumbnail" />
             </div>
           </div>
@@ -38,12 +35,11 @@
         <!-- Review Form Modal -->
         <LeaveReview v-if="userData" :showModal="showReview" :consumerId="userData.id" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
         <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
-        <FoodDetails :food="selectedFood" :showModal="showFoodDetails" @close="toggleFoodDetails(this.food)" />
 
-        <b-tabs content-class="mt-3">
+        <b-tabs content-class="mt-3" >
           <b-tab title="Food Menu" active>
             <!-- Food Menu -->
-            <div class="container">
+            <div class="container" >
               <h1 class="display-4 text-center mb-4 pl-2">Menu</h1>
               <div v-if="foodList && foodList.length > 0" class="row justify-content-center">
                 <div v-for="food in foodList" :key="food.id" class="col-lg-6 col-md-4 col-sm-6 mb-4">
@@ -57,9 +53,9 @@
                             <h4 class="card-title mb-6">{{ food.name }}</h4>
                             <h5 class="card-text">${{ food.price }}</h5>
                             <div class="position-absolute bottom-0 end-0 p-3" >
-                                <router-link :to="{ name: 'order' }" class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%;background-color: rgb(124, 0, 0) ;">
+                                <button @click="openFoodOrderModal(food)" class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%;background-color: rgb(124, 0, 0) ;">
                                 <Icon icon="iconamoon:sign-plus-bold" style="font-size: 24px;color: white;"></Icon>
-                                </router-link>
+                                </button>
                             </div>
                             <div class="position-absolute bottom-0 end-0 " style="background-color: rgba(255, 255, 255, 0.8); margin-right: 80px;">
                                 <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleFoodDetails(food)">
@@ -78,7 +74,7 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="Reviews">
+          <b-tab title="Reviews" >
             <!-- Reviews Section -->
             <h1 class="display-4 mt-5 text-center">Reviews</h1>
             <div v-if="reviews && reviews.length > 0">
@@ -123,6 +119,7 @@ import LeaveReview from '@/components/LeaveReview.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
 import backButton from '@/components/BackButton/backButton.vue';
 import FoodDetails from '@/views/Food/FoodDetails.vue'; 
+import FoodOrder from '@/components/FoodOrder.vue';
 // import HealthInfo from '@/views/Food/FoodDetail.vue'; 
 
 export default {
@@ -133,8 +130,8 @@ export default {
         backButton,
         Icon,
         FoodDetails,
+        FoodOrder
         // HealthInfo,
-
     },
     data() {
         return {
@@ -152,11 +149,13 @@ export default {
             showDeleteConfirmation: false,
             showFoodDetails: false,
             selectedFood: null,
+            showFoodOrderModal: false,
+            selectedFoodItem: null,
+            isFavorite: false,
         }
     },
     props: ['stallId'],
     async created() {
-
         try{
           const userInfo = await this.fetchUserData();
           this.userData = userInfo;
@@ -174,6 +173,7 @@ export default {
               }
               this.fetchFoodsInStallDetails();
               this.fetchReviews();
+              this.fetchFavoriteStatus();
           }
         }catch(error){
           console.error('An error occurred:', error)
@@ -181,6 +181,10 @@ export default {
         
     },
     methods: {
+      openFoodOrderModal(foodItem) {
+        this.selectedFoodItem = foodItem;
+        this.showFoodOrderModal = true;
+        },
           async fetchUserData() {
             try {
               return await auth.getUser(); // Assuming this returns a Promise with the user data
@@ -226,6 +230,28 @@ export default {
                         }
                     } catch (error) {
                         console.error('An error occurred while fetching consumer:', error);
+                    }
+                }
+            } else {
+                console.error('Failed to fetch reviews:', response.statusText);
+            }
+            } catch (error) {
+            console.error('An error occurred while fetching reviews:', error);
+            }
+        },
+        async fetchFavoriteStatus(){
+          try {
+            const response = await fetch(
+                `https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/get/favourite/${this.userData.id}`
+            );
+            if (response.ok) {
+              this.favoriteStalls = await response.json();
+              console.log(this.favoriteStalls)
+                for(let i = 0; i < this.favoriteStalls.length; ++i)
+                {
+                    if(this.favoriteStalls[i].hawker_stall_id == this.foodStall.id)
+                    {
+                      this.isFavorite = true;
                     }
                 }
             } else {
@@ -315,11 +341,60 @@ export default {
         },
         toggleFoodDetails(food){
           this.selectedFood = food;
-          this.showFoodDetails = !this.showFoodDetails;
+          this.showFoodDetails = true;
         },
-        toggleHeart() {
-            this.foodStall.heart = !this.foodStall.heart;   
-        },
+        async toggleFavorite() {
+          if(this.isFavorite){
+              const reviewData = {
+                id: this.userData.id,
+                hawkerId: this.foodStall, 
+              };
+              const requestOptions = {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reviewData),
+              };
+              
+              try {
+                const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/delete/favourite/${this.userData.id}/stall/${this.foodStall.id}`, requestOptions);
+                if (response.ok) {
+                  this.isFavorite = false;
+                } else {
+                  console.error('Failed to submit the review:', response.statusText);
+                }
+              } 
+              catch (error) {
+                console.error('An error occurred while submitting the review:', error);
+              }
+          }
+          else{
+            const reviewData = {
+                consumer_id: this.userData.id,
+                hawker_stall_id: this.foodStall.id, 
+              };
+              const requestOptions = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reviewData),
+              };
+              try {
+                const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Favourite/api/create/favourite`, requestOptions);
+                if (response.ok) {
+                  this.isFavorite = true;
+                } else {
+                  console.error('Failed to submit the review:', response.statusText);
+                }
+              } 
+              catch (error) {
+                console.error('An error occurred while submitting the review:', error);
+              }
+              
+          }
+       }
     },
     computed: {
         truncatedComments() {

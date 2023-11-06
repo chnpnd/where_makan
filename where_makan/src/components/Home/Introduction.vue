@@ -27,11 +27,11 @@
         <div class="carousel-caption d-flex flex-column justify-content-center align-items-center">
           <h1 class="intro-text my-3" ref="introText">Hawker Heaven</h1>
           <div class="action-buttons mb-3">
-            <router-link :to="{name: 'Home'}" class="btn custom-button btn-outline-light text-light btn-sm mx-2">Explore Me!</router-link>
+            <router-link :to="{name: 'Explore'}" class="btn custom-button btn-outline-light text-light btn-sm mx-2">Explore Me!</router-link>
               <button class="btn custom-button btn-outline-light text-light btn-sm mx-2n" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
               <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
           </div>
-          <Searchbar />
+          <Searchbar class="searchbar"/>
         </div>
         
         <!-- Carousel Controls -->
@@ -89,6 +89,7 @@
   }
 
   .carousel-container {
+    width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -102,19 +103,23 @@
     right: 0;
     bottom: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .carousel-caption {
-
+    
     position: sticky; 
     top: auto; 
     bottom: auto; 
+    margin-bottom: 105px;
     padding-top:20%;
   }
 
   .carousel-img {
     object-fit: cover;
     height: 100%;
+    width: 100%;
   }
 
   /* .carousel-control-prev, .carousel-control-next {
@@ -132,6 +137,9 @@
     font-size: 128px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     color: white;
+    @media (max-width: 768px), (max-width:992px), (max-width:1200px) {
+      font-size: 30px;
+    }
   }
 
   .btn.custom-button {
@@ -153,36 +161,20 @@
     justify-content: center; /* Center the button */
 }
 
-.recommend-button {
-    background-color: grey; 
-    color: #fff; /* White text */
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-family: 'Playfair Display', serif; 
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Transition for smooth color change */
-    text-transform: uppercase; /* Uppercase to make it look more bold */
-    letter-spacing: 1px; /* Space between letters for vintage look */
-}
+@media (max-width: 768px), (max-width:992px), (max-width:1200px) {
+    .carousel-container {
+      height: 50%;
+    }
 
-.recommend-button:hover, .recommend-button:focus {
-    background-color: #8a6d5b; /* Darker shade on hover/focus */
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(176, 142, 110, 0.5); /* Vintage-inspired focus shadow */
-}
+    .carousel-inner {
+      height: auto;
+    }
 
-.home-container {
-  height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 1;
-}
-
-
-
+    .carousel-img {
+      height: auto;
+    }
+   
+  }
 
 
 </style>

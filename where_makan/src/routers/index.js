@@ -18,8 +18,6 @@ import ExchangeRewards from '../views/Rewards/ExchangeRewards.vue';
 import SignUp from '../components/Login/Modal.vue';
 import auth from '../auth';
 
-
-
 const routes = [
     { path: '/', component: Home, name: "Home"},
     { path: '/login', component: Login, name: "Login" },
@@ -39,9 +37,7 @@ const routes = [
     { path: '/editprofile', component: EditProfile, name: "EditProfile", meta: { requiresAuth: true }  },    
     { path: '/myrewards', component: MyRewards, name: "MyRewards", meta: { requiresAuth: true }  },    
     { path: '/exchangerewards', component: ExchangeRewards, name: "ExchangeRewards", meta: { requiresAuth: true }  },   
-    { path: '/signup', component: SignUp, name: "SignUp" },   
-
-
+    { path: '/signup', component: SignUp, name: "SignUp" },  
 ];
 
 const router = createRouter({

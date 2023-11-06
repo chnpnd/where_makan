@@ -175,6 +175,8 @@
   
 <script>
 
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -213,10 +215,11 @@ export default {
                 spiciness: '',
             };
             this.$emit('close');
-        },
-       
-    },
+      },
+      
+},
 };
+
 </script>
 
 <style scoped>
@@ -300,8 +303,5 @@ input[type="checkbox"] {
 .close-btn:hover {
   opacity: 0.7;
 }
-
-
-
 
 </style>

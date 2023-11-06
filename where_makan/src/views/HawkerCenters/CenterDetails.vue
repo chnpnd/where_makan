@@ -28,7 +28,7 @@
                 <h4 class="text-center">Available Stalls: </h4>
                 <div class="card-container">
                 <div v-if="foodStall" class="row justify-content-center">
-                    <div class="card mb-3 p-0 mx-4 stallCard" v-for="stall in foodStall" :key="stall.id" style="max-width: 540px; border-radius: 0; box-shadow:0px 3px 15px rgba(0, 0, 0, 0.1);">
+                    <div class="card mb-3 p-0 mx-4 stallCard" v-for="(stall,index) in foodStall" :key="stall.id" style="max-width: 540px; border-radius: 0; box-shadow:0px 3px 15px rgba(0, 0, 0, 0.1);">
                         <router-link class="text-decoration-none text-black" :to="{ name: 'stall-details', params: { stallId: stall.id } }">
                         <div class="row g-0 p-0" >
                         <div class="col-md-4 ml-0">
@@ -40,8 +40,8 @@
                             <p class="card-text">{{ stall.address }}</p>
                             
                             <!-- replace for review -->
-                            <p class="card-text">{{ stall.review }}</p>
-                            </div>
+                            <p> {{ filterReview[index] }}</p>
+                        </div>
                         </div>
                         </div>
                     </router-link>
@@ -87,11 +87,14 @@
       return {
         center: null, // Initialize center as null
         foodStall: {},
+        reviews: {}, //all reviews
+        filterReview: [] // list of filtered reviews
       };
     },
     created() {
       // Fetch center details based on the centerId prop
       this.fetchCenterDetails();
+      this.fetchReviews();
 
     },
     methods: {
@@ -137,12 +140,54 @@
             console.error('An error occurred while fetching center details:', error);
             }
         },
+        async fetchReviews() {
+                console.log("here")
+                try {
+                const response = await fetch(
+                    `https://stingray-app-4wa63.ondigitalocean.app/Review/api/get/all/review`
+                );
+                if (response.ok) {
+                    this.reviews = await response.json();
+                } else {
+                    console.error('Failed to fetch all review details:', response.statusText);
+                }
+                } catch (error) {
+                console.error('An error occurred while fetching all review details:', error);
+                }
+                this.filterRe();
+
+            },
+     
+
         centerPosition(center) {
             return { lat: center.lat, lng: center.long };
         },
         toggleHeart(stallId) {
             this.foodStall[stallId].heart = !this.foodStall[stallId].heart;   
       },
+
+        filterRe() {
+            for (let i=0; i<this.foodStall.length; i++){
+                var stall = this.foodStall[i];
+                var totalStars = 0;
+                var totalReview = 0;
+                var average = 0;
+                
+                for (let x=0; x<this.reviews.length; x++){
+                    var review = this.reviews[x];
+                    if (review.hawker_stall_id == stall.id){
+                        totalStars += review.rating;
+                        totalReview += 1;
+                    }
+                }
+                average = totalStars / totalReview;
+                console.log("average " + average);
+                this.filterReview.push(average + "*");
+
+            }
+        
+    }, 
+
     },
   };
   </script>

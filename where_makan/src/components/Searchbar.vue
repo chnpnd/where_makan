@@ -6,7 +6,7 @@
                 type="text" 
                 v-model="searchValue" 
                 placeholder="Search food centre or locations"
-                class="input input--biggest input--noborder input--shadow-large input--rounded">
+                class="input input--biggest input--noborder input--shadow-large input--rounded searchbar">
         </div>
          <!-- Combined List -->
         <div class="list-group listContainer">
@@ -193,4 +193,14 @@ export default {
     .list-group-item-action img {
         margin-right: 1rem;
     }
+
+@media (max-width: 768px), (max-width:992), (max-width:1200) {
+    .searchbar{
+        height: 40px;
+        width: 80%;
+    }
+}
+
+
+
 </style>

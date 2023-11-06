@@ -5,11 +5,11 @@
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner" style="width: calc(300px * 5 - 100px);">
             <div class="carousel-item" style="object-fit: cover;" v-for="(group, groupIndex) in groupedHawkerCenters" :key="groupIndex" :class="{ active: groupIndex === 0 }">
-                <div class="row ml-6">
+                <div class="row ml-6 groupedHawkers">
                     <button @click="filterStall" class="btn btn-custom">
                         Check Avg Price
                     </button>
-                    <div class="card col-md-2 hawker-card p-0" v-for="hawkerCenter in group" :key="hawkerCenter.id">
+                    <div class="justify-content-center card col-12 col-sm-6 col-md-4 col-lg-3 hawker-card p-0" v-for="hawkerCenter in group" :key="hawkerCenter.id">
                     <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none" >
                         <div class="image-container">
                             <img :src="hawkerCenter.photo_url" class="d-block w-100 h-50 "  alt="hawker images" >
@@ -17,7 +17,6 @@
                     <div class="card-body">
                     <h5 class="card-title">{{ hawkerCenter.name }}</h5>
                     <p class="card-text">{{ hawkerCenter.address }}</p>
-                    
                     <p>${{ filteredPrice[hawkerCenter.id]}}</p>
                     </div>
                 </router-link>
@@ -41,16 +40,6 @@
     </div>
 </template>
 
-<!--
->>>>>>> 3a26719def2bf5ed8277362050b9862263fe05cf
-    </div>
-=======
-=======
->>>>>>> 79c89a87822581028acd83cfa17596c110b41569
-=======
->>>>>>> main
- 
-  -->
 
 
 
@@ -92,7 +81,6 @@ export default {
             this.foods = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Food/api/get/all/food`);
             this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
             this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
-            this.filterStall;
         },
 
         filterStall() {
@@ -101,8 +89,6 @@ export default {
                 var total_price = 0;
                 var total_food = 0;
                 var avg_price = 0;
-                var num_of_$ = 0;
-                var price_sign = "$";
                 for (let i =0; i<this.foodStalls.length; i++){
                     var stall = this.foodStalls[i];
 
@@ -146,6 +132,8 @@ export default {
 <style scoped>
 @import './HawkerCards.css';
 
+
+
 .carousel-control-prev,
   .carousel-control-next {
     top: 50%; 
@@ -159,6 +147,31 @@ export default {
   text-decoration: underline;
   text-decoration-color: #8a6d5b;
   color: red;
+}
+
+.groupedHawkers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px), (max-width:992px), (max-width:1200px)  {
+    .groupedHawkers{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .carousel {
+        width: 100vw;
+    }
+
+    .carousel-inner{
+        width: 100vw;
+    }
+
+    .btn-custom{
+        width: 100vw;
+    }
 }
 
 
