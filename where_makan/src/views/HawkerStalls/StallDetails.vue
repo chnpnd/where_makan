@@ -2,6 +2,7 @@
   <div class="container mt-4 bg-white">
     
       <FoodOrder :showOrder="showFoodOrderModal" :selectedFood="selectedFoodItem" @close="showFoodOrderModal = false"/>
+      <FoodDetails :showModal="toggleFoodDetails" :selectedFood="selectedFoodItem"  @close="showFoodDetails = false" />
       <div class="container mt-4">
         <div>
             <backButton />
@@ -34,7 +35,6 @@
         <!-- Review Form Modal -->
         <LeaveReview v-if="userData" :showModal="showReview" :consumerId="userData.id" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
         <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
-        <FoodDetails :food="selectedFood" :showModal="showFoodDetails" @close="toggleFoodDetails(this.food)" />
 
         <b-tabs content-class="mt-3">
           <b-tab title="Food Menu" active>
@@ -58,10 +58,10 @@
                                 </button>
                             </div>
                             <div class="position-absolute bottom-0 end-0 " style="background-color: rgba(255, 255, 255, 0.8); margin-right: 80px;">
-                                <button class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleFoodDetails(food)">
+                                <router-link :to="{ name: 'food-details', params: { foodId: food.id } }" class="btn btn-sm py-2 px-2 to-order" style="border-radius: 50%; background-color: rgb(124, 0, 0);" @click="toggleFoodDetails(food)">
                                     <!-- <HealthInfo :showModal="showModal" /> -->
                                 <Icon icon="openmoji:green-salad" style="font-size: 24px;"></Icon>
-                                </button>
+                                </router-link>
                             </div>
                         </div>
                         </div>
@@ -341,7 +341,7 @@ export default {
         },
         toggleFoodDetails(food){
           this.selectedFood = food;
-          this.showFoodDetails = !this.showFoodDetails;
+          this.showFoodDetails = true;
         },
         async toggleFavorite() {
           if(this.isFavorite){
