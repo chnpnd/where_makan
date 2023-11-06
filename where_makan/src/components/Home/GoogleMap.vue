@@ -31,7 +31,7 @@
                     <div class="card-body">
                     <h5 class="card-title">{{ hawkerCenter.name }}</h5>
                     <p class="card-text">{{ hawkerCenter.address }}</p>
-                    <p>${{ filteredPrice[hawkerCenter.id]}}</p>
+                    <p>${{ filteredPrice[hawkerCenter.id][0]}} - ${{ filteredPrice[hawkerCenter.id][1]}}</p>
                     </div>
                 </router-link>
                 </div> 
@@ -95,20 +95,20 @@
         filterStall() {
             for (let y = 0; y<this.hawkerCenters.length; y++){
                 var center = this.hawkerCenters[y];
-                var total_price = 0;
-                var total_food = 0;
-                var avg_price = 0;
+                var minP = 10;
+                var maxP = 0;
                 for (let i =0; i<this.foodStalls.length; i++){
                     var stall = this.foodStalls[i];
-
                     for (let x=0;x<this.foods.length; x++){
                         var food = this.foods[x];
                         if (food.hawker_stall_id === stall.id && center.id === stall.hawker_id){
-                            total_food += 1;
-                            total_price += food.price;}
-                        }
-                avg_price = total_price / total_food;
-                this.filteredPrice[center.id] = Math.ceil(avg_price * 100) / 100;
+                            if(minP > food.price){
+                                minP = food.price;
+                            }
+                            if (maxP < food.price){
+                                maxP = food.price;
+                            }                        }
+                this.filteredPrice[center.id] = [minP, maxP];
                     }
             }
     }
@@ -141,6 +141,7 @@
                 hawkerCenters: filteredHawkerCenters
             };
         }
+    }
     },
   };
 </script>
