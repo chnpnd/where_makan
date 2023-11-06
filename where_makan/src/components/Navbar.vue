@@ -25,7 +25,7 @@
       <li class="nav-item" v-if="!isBusinessUser">
         <router-link :to="{name: 'Explore'}" class="nav-link">Explore</router-link>
       </li>
-      <li class="nav-item" v-if="isBusinessUser && stallID">
+      <li class="nav-item" v-if="isBusinessUser && stallID !== null && stallID !== undefined">
         <router-link :to="{ name: 'stall-details', params: { stallId: stallID }}" class="nav-link">My Stall</router-link>
       </li>
       <li class="nav-item" v-if="isBusinessUser">
@@ -149,8 +149,8 @@
           return user && user.type === 0;
       },
       stallID(){
-        const user = auth.getUser();;
-        return user ? user.stall_id : null;
+        const user = auth.getUser();
+        return user ? user.id : null;
       }
     }
   };

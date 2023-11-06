@@ -162,7 +162,7 @@ export default {
             }
             else if (userType === 0)
             {
-              router.push({ name: 'stall-details', params: { stallId: auth.getStallId() } });
+              router.push({ name: 'stall-details', params: { stallId: auth.getUserID() } });
             }
           } else {
             alert(`Incorrect user type. Expected type ${userType}.`);

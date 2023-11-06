@@ -82,15 +82,14 @@
         <div class="col-md-12">
           <div class="card mb-4 mb-md-0">
             <div class="card-body">
-              <p class="mb-4"><span class="text-danger font-italic me-1">Exchange points</span> Total points
-              </p>
-              <p class="mb-1" style="font-size: .77rem;">Points left </p>
+              <p class="mb-4"><span class="text-danger font-italic me-1">Exchange points</span></p>
+              <p class="mb-1" style="font-size: 1.33rem;">{{points.total_points}} Points </p>
               <div class="progress rounded progress-custom-height">
                 <div
                   class="progress-bar progress-bar-custom"
                   role="progressbar"
                   :style="progressBarStyle"
-                  :aria-valuenow="userData.user_reward"
+                  :aria-valuenow="points.total_points"
                   aria-valuemin="0"
                   aria-valuemax="1000"
                 ></div>
@@ -125,7 +124,7 @@
               <h4 class="text-center">Favourited Stalls</h4>
               <div class="my-6 text-center" style="height:200px; background-color: #eeeeee;">
                 <div v-if="!FavouritedStalls && userData">
-                    <div class="container-fluid h-200 scrollable-container">
+                    <div class="container-fluid h-200 scrollable-container2">
                         <FavouritedStalls :consumerId="userData.id"/>
                     </div>
                 </div> 
@@ -159,12 +158,13 @@ export default {
   },
   data() {
     return {
-      userData: null
+      userData: null,
+      points: [],
     };
   },
   computed: {
     progressBarStyle() {
-      const percentage = this.userData.user_reward / 10; // Since the max is 1000, dividing by 10 gives the percentage.
+      const percentage = this.points.total_points / 10; // Since the max is 1000, dividing by 10 gives the percentage.
       return { width: percentage + '%' };
     }
   },
@@ -172,6 +172,7 @@ export default {
     try{
         const userInfo = await this.fetchUserData();
         this.userData = userInfo;
+        await this.getPoints();
     }
     catch(error){
       console.error('An error occurred:', error)
@@ -185,6 +186,23 @@ export default {
           console.error('Error fetching user data:', error);
         }
     },
+    async getPoints() {
+        try {
+          const response = await fetch(
+              `https://stingray-app-4wa63.ondigitalocean.app/Point/api/get/${this.userData.id}/point`
+          );
+          
+          if (response.ok) {
+                this.points = await response.json();
+                console.log(this.points)
+            } else {
+                console.error('Failed to fetch point:', response.statusText);
+            }
+        } 
+        catch (error) {
+          console.error('An error occurred while fetching user points:', error);
+        }
+      }  
   }    
 };
 </script>
@@ -241,10 +259,6 @@ background-color: #f1f1f1; /* Set the color of the scrollbar track (change as ne
 /* Hide the scrollbar track for webkit browsers */
 .scrollable-container::-webkit-scrollbar-track, .scrollable-container1::-webkit-scrollbar-track, .scrollable-container2::-webkit-scrollbar-track   {
 display: none;
-}
-
-.container{
-  height: 100vh;
 }
 
 </style>
