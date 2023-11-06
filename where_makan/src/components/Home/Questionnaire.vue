@@ -90,14 +90,21 @@
                 </select>
                 <div class="button-container">
                     <button type="button" class="btn btn-secondary text-white mr-4" @click="prevPage">Previous</button>
-                    <button class="btn btn-danger text-white" @click="closeModal">Submit</button>
+                    <button class="btn btn-danger text-white" @click="closeModal(), filterHawkerStallId()">Submit</button>
                 </div>
 
             </template>
 
 
         </div>
+
+        
     </div>
+
+    <div v-for:="stall in finalList">
+        {{ stall.name }}
+    </div>
+
 </template>
   
 <script>
@@ -115,6 +122,9 @@ export default {
                 travelDistance: 'lessThanOneKM',
                 explorePreference: 'yes'
             },
+            foodStalls: [],
+            filteredFoodStall: [],
+            finalList: [],
         };
     },
     props: {
@@ -122,6 +132,9 @@ export default {
             type: Boolean,
             required: true,
         }
+    },
+    created() {
+    this.getAllData();  
     },
     methods: {
 
@@ -213,6 +226,7 @@ export default {
                         }
                     }
                     await console.log(this.finalList);
+                    this.filterHawkerStallId();
 
                 } else {
                     console.error("Failed to fetch data");
@@ -222,6 +236,31 @@ export default {
             }
 
         },
+        async getAllData() {
+        const fetchFromAPI = async (url) => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Failed to fetch data");
+                return await response.json();
+            } catch (error) {
+                console.error("An error occurred while fetching data:", error);
+            }
+        };
+
+        this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
+    
+    },
+        filterHawkerStallId(){
+            for (let i=0; i<this.finalList.length; i++){
+                var food= this.finalList[i];
+                for (let x=0; x<this.foodStalls.length; x++){
+                    var stall = this.foodStalls[x];
+                    if (food.hawker_stall_id === stall.id){
+                        this.filteredFoodStall.push(stall);
+                    }
+                }
+            }
+        }
 
     },
 };

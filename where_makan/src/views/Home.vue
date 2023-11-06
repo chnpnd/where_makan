@@ -6,6 +6,11 @@
 
       <section id="section-2">
         <div class="home-container mt-10">
+          <div class="action-buttons mb-3">
+              <button class="btn custom-button btn-outline-dark text-dark btn-sm mx-2n" @click="toggleQuestionnaire">Recommend Me What to Eat!</button>
+              <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
+          </div>
+          <h1 class="homeH1 text-center">Recommendations</h1>
           <h1 class="homeH1 text-center">Hawker Centers Near You:</h1>
         <!-- <Homecards /> -->
         <Geolocation />
@@ -127,6 +132,10 @@ v-divider {
     
 }
 
+section {
+  padding:10px;
+  margin:10px;
+}
 
 
 /* Add other styles as required */
