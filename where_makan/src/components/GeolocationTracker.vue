@@ -166,5 +166,5 @@ export default {
 .btn-custom:hover {
   background-color: #2980b9; /* Change color on hover */
 }
-@import './HawkerCards.css';
+@import '@/Home/HawkerCards.css';
 </style>

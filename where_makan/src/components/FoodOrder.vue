@@ -67,7 +67,7 @@ export default {
       publishableKey: "pk_test_51MrLT6LBkZwSamzsNhao318a2xHlKl5jVLkcOSnXKKPCMSVBjOKJGaNmLZ96ons6fAD3psuHFSagxw842GBgQUAC00iQmwuOSA",
       lineItems: [
         {
-          price: 'price_1O8hhTLBkZwSamzsGGHTjCrR', // The id of the one-time price you created in your Stripe dashboard
+          price: 'price_1O9UewLBkZwSamzsOCAkpgmR', // The id of the one-time price you created in your Stripe dashboard
           quantity: 1,
         },
       ],
