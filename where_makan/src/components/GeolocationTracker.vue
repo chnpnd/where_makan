@@ -4,14 +4,8 @@
       <div class="col-12 text-center">
         <p v-if="errorMessage">{{ errorMessage }}</p>
          <!--NEW EDITS - the whole file-->
-         <div>
-      
-      </div>
-
-        <div class = "row">  </div>
-        <button class="btn btn-outline-dark text-dark" @click="getLocation"> <!-- Use a custom class -->
-          Recommend Hawker Stalls Near Me</button>
-        <button>hello</button>
+         <button class="btn btn-outline-dark text-dark" @click="getLocation"> Recommend Hawker Stalls Near Me </button>
+       
         <div>
           <Carousel class="carousel hawker-card" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
           <Slide  v-for="hawkerCenter in filteredCenters" :key="hawkerCenter.id">
@@ -20,11 +14,10 @@
                       <v-img :src="hawkerCenter.photo_url" cover></v-img>
                       <v-card-title>{{ hawkerCenter.name }}</v-card-title>
                       <v-card-text>{{ hawkerCenter.address }}</v-card-text>
-
                   </router-link>
               </v-card>
           </Slide>
-      </Carousel>
+          </Carousel>
         </div>
        
       </div>
@@ -63,6 +56,7 @@ export default {
   },
   methods: {
     getLocation() {
+      console.log('getLocation method called');
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
           (position) => {

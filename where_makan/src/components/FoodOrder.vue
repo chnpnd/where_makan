@@ -7,7 +7,7 @@
             <div class="modal-header">
               <h5 class="modal-title">Complete your order</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeOrderModal">
-                <span aria-hidden="true">&times;</span>
+                x
               </button>
             </div>
             <div class="modal-body">
@@ -41,11 +41,14 @@
 
 import VueMask from 'v-mask';
 import { StripeCheckout } from '@vue-stripe/vue-stripe';
+import QRCode from 'qrcode';
+import auth from '../auth';
 
 
 export default {
   components: {
-    StripeCheckout
+    StripeCheckout,
+    QRCode
   },
   directives: {
     mask: VueMask.VueMaskDirective,
@@ -62,7 +65,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      isLoading: false,
       publishableKey: "pk_test_51MrLT6LBkZwSamzsNhao318a2xHlKl5jVLkcOSnXKKPCMSVBjOKJGaNmLZ96ons6fAD3psuHFSagxw842GBgQUAC00iQmwuOSA",
       lineItems: [
         {
@@ -70,15 +73,100 @@ export default {
           quantity: 1,
         },
       ],
+      base64QRCode: '',
     };
   },
   methods: {
     closeOrderModal() {
       this.$emit('close');
     },
-    submit () {
-      // You will be redirected to Stripe's secure checkout page
-      this.$refs.checkoutRef.redirectToCheckout();
+    async submit () {
+      await this.AddSale();
+      await this.generateQRCode();
+      await this.AddPoint();
+      await this.createOrder();
+    },
+    async generateQRCode(){
+      const userId = auth.getUserID();
+      const status = "completed";
+      const baseUrl = 'https://stingray-app-4wa63.ondigitalocean.app/Order/api/update/order';
+      const qrCodeUrl = `${baseUrl}/${userId}/${status}`;
+
+      try {
+        // Convert the QR code to a Data URL (Base64 encoded)
+        const qrCodeDataUri = await QRCode.toDataURL(qrCodeUrl);
+        this.base64QRCode = qrCodeDataUri;
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+      }
+    },
+    async AddPoint(){
+      const userId = auth.getUserID(); 
+      const point = parseInt(this.selectedFood.price);
+      const baseUrl = 'https://stingray-app-4wa63.ondigitalocean.app/Point/api/add';
+      const responseUrl = `${baseUrl}/${userId}/point/${point}`;
+
+      const requestOptions = {
+          method: 'POST',
+        };
+
+      try{
+        const response = await fetch(responseUrl, requestOptions);
+          if(response.ok){
+            console.log("ok")
+          }
+      }catch(e){
+        console.log("error");
+      }
+    },
+    async AddSale(){
+      const hawkerID = this.selectedFood.hawker_stall_id; 
+      const foodID = this.selectedFood.id; 
+      const baseUrl = 'https://stingray-app-4wa63.ondigitalocean.app/Sales/api/update/sales';
+      const responseUrl = `${baseUrl}/${hawkerID}/food/${foodID}`;
+
+      const requestOptions = {
+          method: 'PUT',
+        };
+      try{
+        const response = await fetch(responseUrl, requestOptions);
+          if(response.ok){
+            console.log("ok")
+          }
+      }catch(e){
+        console.log("error");
+      }
+    },
+    async createOrder() {
+      const orderDetails = {
+        consumer_id: auth.getUserID(), 
+        hawker_stall_id: this.selectedFood.hawkerStallId, 
+        food_id: this.selectedFood.id,
+        order_date: new Date().toISOString(), 
+        total_amount: this.selectedFood.price,
+        status: "pending",
+        qrCode: this.base64QRCode
+      };
+      const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(orderDetails),
+        };
+      try {
+        const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/Order/api/create/order`,requestOptions);
+        console.log(requestOptions);
+        if (response.ok) {
+          // Handle the success (e.g., show a message to the user, redirect, etc.)
+          this.$refs.checkoutRef.redirectToCheckout();
+        } else {
+          // Handle any errors that the server might return
+          console.error('Failed to submit the order:', response.statusText);
+          }
+        } catch (error) {
+        console.log(error.message);
+      }
     },
   }
 };

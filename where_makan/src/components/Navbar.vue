@@ -22,8 +22,11 @@
       <li class="nav-item active" v-if="isLoggedIn">
         <a class="nav-link" href="#" @click="confirmLogout">Logout</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="!isBusinessUser">
         <router-link :to="{name: 'Explore'}" class="nav-link">Explore</router-link>
+      </li>
+      <li class="nav-item" v-if="isBusinessUser && stallID">
+        <router-link :to="{ name: 'stall-details', params: { stallId: stallID }}" class="nav-link">My Stall</router-link>
       </li>
       <li class="nav-item" v-if="isBusinessUser">
         <router-link :to="{name: 'Analytics'}" class="nav-link">Analytics</router-link>
@@ -145,6 +148,10 @@
           const user = auth.getUser();
           return user && user.type === 0;
       },
+      stallID(){
+        const user = auth.getUser();;
+        return user ? user.stall_id : null;
+      }
     }
   };
 </script>

@@ -12,13 +12,14 @@
         </div>
       </section>
 
-      <section>
+    <!--  <section>
         <v-divider></v-divider>
         <div class="home-container">
           <h1 class="homeH1 text-center">Hawkers Nearby You: </h1>
             <HawkerCard />
         </div>
       </section>
+      -->
 
       <section>
         <v-divider></v-divider>
@@ -74,16 +75,14 @@ export default {
 
 
 .home-container{
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center both horizontally and vertically */
-    min-height: 100vh;
-    width: 100vw;
-    font-family: 'Source Sans Pro', sans-serif;
-    z-index: 1;
-  
+  background-color: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center both horizontally and vertically */
+  min-height: 10vh;
+  font-family: 'Source Sans Pro', sans-serif;
+  z-index: 1;
 }
 
 .action-section {
@@ -118,10 +117,5 @@ v-divider {
     
 }
 
-
-
-
-
-/* Add other styles as required */
 </style>
 

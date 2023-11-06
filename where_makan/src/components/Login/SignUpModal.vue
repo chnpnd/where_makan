@@ -23,22 +23,16 @@
 
                 <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
-                <form>
+                <form @submit.prevent="handleSignup(1)">
                 <!-- Business Name -->
                 <div class="form-outline mb-4">
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" v-model="username"/>
                     <label class="form-label text-danger" for="form3Example3">Username</label>
-                </div>
-
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                    <input type="text" class="form-control" />
-                    <label class="form-label text-danger" for="form3Example4">Email Address</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" v-model="password"/>
                     <label class="form-label text-danger" for="form3Example4">Password</label>
                 </div>
 
@@ -50,22 +44,15 @@
             </div>
 
             <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
-                <form>
+                <form @submit.prevent="handleSignup(0)">
                 <!-- Business Name -->
                 <div class="form-outline mb-4">
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" v-model="username"/>
                     <label class="form-label text-danger" for="form3Example3">Business name</label>
                 </div>
-
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                    <input type="text" class="form-control" />
-                    <label class="form-label text-danger" for="form3Example4">Email Address</label>
-                </div>
-
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" v-model="password" />
                     <label class="form-label text-danger" for="form3Example4">Password</label>
                 </div>
 
@@ -84,15 +71,53 @@
   </template>
   
   <script>
+  import { ref } from 'vue';
+  import auth from '../../auth';
+  import { useRouter } from 'vue-router';
+  
   export default {
+    setup(){
+      const router = useRouter();
+      const username = ref('');
+      const password = ref('');
+      const showModal = ref(false);
+
+      const handleSignup = async (userType) => {
+        const created = await auth.signup(username.value, password.value, userType);
+        if (created) {
+          const success = await auth.login(username.value, password.value);
+          if (success) {
+            if (auth.getType() === userType) {
+              alert('Successful log in!');
+              if(userType === 1)
+              {
+                router.push({ name: 'Home' });
+              }
+              else if (userType === 0)
+              {
+                router.push({ name: 'stall-details', params: { stallId: auth.getStallId() } });
+              }
+            } else {
+              alert(`Incorrect user type. Expected type ${userType}.`);
+            }
+          } 
+          else {
+            alert('Failed to login, please try again.');
+          }
+        }
+        else {
+            alert('Failed to signup, please try again.');
+        }
+      }
+      return{
+        showModal,
+        username,
+        password,
+        handleSignup
+      }
+    },
     props: {
       showModal: Boolean,
-    },
-    data() {
-      return {
-        username: '',
-        password: '',
-      };
     },
     methods: {
       closeModal() {
