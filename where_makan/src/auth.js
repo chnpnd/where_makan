@@ -28,10 +28,16 @@ export default {
         if(response.ok)
         {
             const userData = await response.json();
-            console.log(userData)
+            console.log(userData);
             if(userData && userData.type !== undefined)
             {
                 user.value = userData;
+                const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/stall/${userData.id}`);
+                if (!response.ok) {
+                  throw new Error('Failed to fetch stall details');
+                }
+                const stallData = await response.json();
+                user.value.stall_id = stallData.hawker_id;
                 return true;
             }
             else {
@@ -49,6 +55,43 @@ export default {
       return false;
     }
   },
+
+  async signup(username, password, userType) {
+    const userInput = {
+      username: username,
+      password: password,
+      type: userType,
+      full_name: "",
+      doB: "",
+      address: "",
+      phone_number: 0,
+      profile_image: "",
+      user_reward: 0
+    }; // Replace this with your actual user data
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInput),
+    };
+    try {
+        const response = await fetch(`https://stingray-app-4wa63.ondigitalocean.app/User/api/create/user`, requestOptions);
+        if(response.ok)
+        {
+          return true;
+        }
+        else {
+            console.error('Failed to signup', response.statusText);
+            return false;
+        }
+    }
+    catch (error) {
+      console.error('An error occurred while submitting the review:', error);
+      return false;
+    }
+  },
+
 
   logout() {
     user.value = null;
@@ -74,6 +117,10 @@ export default {
 
   getType(){
     return user.value ? user.value.type : null;
+  },
+  
+  getStallId() {
+    // Assuming stall_id is stored at the top level of user.value
+    return user.value ? user.value.stall_id : null;
   }
-
 };

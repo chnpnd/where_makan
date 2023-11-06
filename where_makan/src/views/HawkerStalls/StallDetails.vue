@@ -2,7 +2,6 @@
   <div class="container mt-4 bg-white">
     
       <FoodOrder :showOrder="showFoodOrderModal" :selectedFood="selectedFoodItem" @close="showFoodOrderModal = false"/>
-      <FoodDetails :showModal="toggleFoodDetails" :selectedFood="selectedFoodItem"  @close="showFoodDetails = false" />
       <div class="container mt-4">
         <div>
             <backButton />
@@ -22,7 +21,8 @@
                   <li><strong>Cuisine Type:</strong> {{ cuisine }}</li>
                 </ul>
                 <a :href="foodStall.source_url" target="_blank" class="btn btn-danger stall-link">Visit My Website</a>
-                <button v-if="userData && showReviewBtn" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
+                <button v-if="userData && showReviewBtn && userData.type == 1" @click="toggleReviewForm" class="btn btn-secondary ml-3 review-button"> Leave a Review</button>
+                <button v-if="userData && userData.type == 0" @click="togglePostForm" class="btn btn-secondary ml-3 review-button"> Leave a Post</button>
               </div>
             </div>
   
@@ -35,6 +35,8 @@
         <!-- Review Form Modal -->
         <LeaveReview v-if="userData" :showModal="showReview" :consumerId="userData.id" :stallId="stallId" @close="toggleReviewForm" @review-submitted="handleReviewSubmitted" />
         <EditReviewModal v-if="showEditModal" :showEditModal="showEditModal" :review="selectedReview" @close="toggleEditReviewForm" @review-submitted="handleReviewSubmitted" />
+        <LeavePost v-if="userData" :showModal="showPost" :userId="userData.id" :stallId="stallId" @close="togglePostForm" @post-submitted="handlePostSubmitted" />
+        <EditPostModal v-if="showEditPostModal" :showEditPostModal="showEditPostModal" :post="selectedPost" @close="toggleEditPostForm" @post-submitted="handlePostSubmitted" />
 
         <b-tabs content-class="mt-3">
           <b-tab title="Food Menu" active>
@@ -107,6 +109,39 @@
             </div>
             <p v-else class="text-muted text-center mt-5">No reviews yet</p>
           </b-tab>
+
+          <b-tab title="Posts">
+            <!-- Posts Section -->
+            <h1 class="display-4 mt-5 text-center">Posts</h1>
+            <div v-if="posts && posts.length > 0">
+              <div class="review-grid mt-4">
+                <div v-for="post in posts" :key="post.id" class="review-card card mb-4 p-3" :class="{ 'user-own-review': post.business_owner_id === userData.id }">
+                  <div class="card-body d-flex">
+                    <!-- Left side with image and consumer name -->
+                    <div class="left-side mr-4">
+                      <img :src="post.post_image" alt="Consumer Image" class="consumer-image" />
+                      <div class="mt-2">
+                        <strong class="highlighted-name">{{ post.consumer_name }}</strong>
+                      </div>
+                      <div v-if="post.consumer_name === loggedInUsername" class="mt-2">
+                        <button @click="editPost(post)" class="btn btn-outline-primary btn-sm">Edit</button>
+                        <button @click="deletePost(post)" class="btn btn-outline-danger btn-sm ml-2">Remove</button>
+                      </div>
+                    </div>
+                    <!-- Right side with ratings and comment -->
+                    <div class="right-side flex-grow-1">
+                      <p class="mb-2">{{ formatDate(post.date) }}</p>
+                      <p class="mb-2">{{ truncatedDescription[posts.indexOf(post)] }}</p>
+                      <span v-if="post.description.length > maxCommentLength" class="text-primary" @click="toggleDescriptionExpand(post)">
+                        {{ post.expanded ? 'Show Less' : 'Read More' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p v-else class="text-muted text-center mt-5">No posts yet</p>
+          </b-tab>
         </b-tabs>
       </div>
     </div>
@@ -116,7 +151,9 @@
 import auth from '../../auth';
 import { Icon } from '@iconify/vue';
 import LeaveReview from '@/components/LeaveReview.vue';
+import LeavePost from '@/components/LeavePost.vue';
 import EditReviewModal from '@/components/EditReviewModal.vue';
+import EditPostModal from '@/components/EditPostModal.vue';
 import backButton from '@/components/BackButton/backButton.vue';
 import FoodDetails from '@/views/Food/FoodDetails.vue'; 
 import FoodOrder from '@/components/FoodOrder.vue';
@@ -127,6 +164,8 @@ export default {
     components:{
         LeaveReview,
         EditReviewModal,
+        LeavePost,
+        EditPostModal,
         backButton,
         Icon,
         FoodDetails,
@@ -142,10 +181,14 @@ export default {
             cuisine: {},
             maxCommentLength: 600,
             reviews: { consumer_id: '', hawker_stall_id: '', rating: '', comment: '', imageBase64: '', date: '', consumer_name: ''},
+            posts: { id: '', business_owner_id: '', hawker_stall_id: '', description: '', likes_count: '', post_image: '', date: '', consumer_name: ''},
             showReview: false,
+            showPost: false,
             showReviewBtn: true,
             showEditModal: false,
+            showEditPostModal: false,
             selectedReview: {},
+            selectedPost: {},
             showDeleteConfirmation: false,
             showFoodDetails: false,
             selectedFood: null,
@@ -173,6 +216,7 @@ export default {
               }
               this.fetchFoodsInStallDetails();
               this.fetchReviews();
+              this.fetchPosts();
               this.fetchFavoriteStatus();
           }
         }catch(error){
@@ -239,6 +283,35 @@ export default {
             console.error('An error occurred while fetching reviews:', error);
             }
         },
+        async fetchPosts() {
+            try {
+              const response = await fetch(
+                  `https://stingray-app-4wa63.ondigitalocean.app/Post/api/get/all/post`
+              );
+              if (response.ok) {
+                  this.posts = await response.json();
+                  for(let i = 0; i < this.posts.length; ++i)
+                  {
+                      try {
+                          const response = await fetch(
+                              `https://stingray-app-4wa63.ondigitalocean.app/User/api/get/user/${this.posts[i].business_owner_id}/name`
+                          );
+                          if (response.ok) {
+                              this.posts[i].consumer_name = await response.text();
+                          } else {
+                              console.error('Failed to fetch consumer:', response.statusText);
+                          }
+                      } catch (error) {
+                          console.error('An error occurred while fetching consumer:', error);
+                      }
+                  }
+              } else {
+                  console.error('Failed to fetch posts:', response.statusText);
+              }
+            } catch (error) {
+              console.error('An error occurred while fetching posts:', error);
+            }
+        },
         async fetchFavoriteStatus(){
           try {
             const response = await fetch(
@@ -266,12 +339,25 @@ export default {
         },
         editReview(review)
         {
-            this.selectedReview = review;
+            this.selectedPost = review;
             this.toggleEditReviewForm();
         },
         toggleEditReviewForm()
         {
             this.showEditModal = !this.showEditModal;
+        },
+
+        togglePostForm() {
+            this.showPost = !this.showPost; // Set to true to show the modal
+        },
+        editPost(post)
+        {
+            this.selectedPost = post;
+            this.toggleEditPostForm();
+        },
+        toggleEditPostForm()
+        {
+            this.showEditPostModal = !this.showEditPostModal;
         },
         displayStars(rating) 
         {
@@ -296,8 +382,15 @@ export default {
         handleReviewSubmitted() {
             this.fetchReviews();
         },
+        handlePostSubmitted() {
+            this.fetchPosts();
+        },
         toggleCommentExpand(review) {
             review.expanded = !review.expanded;
+            this.$forceUpdate(); // Force Vue to update the DOM
+        },
+        toggleDescriptionExpand(post) {
+          post.expanded = !post.expanded;
             this.$forceUpdate(); // Force Vue to update the DOM
         },
         displayLimitedComment(fullComment) {
@@ -332,8 +425,38 @@ export default {
                 } catch (error) {
                     console.error('An error occurred while deleting the review:', error);
                 }
-            } 
-                
+            }  
+            else {
+                // User canceled the deletion
+                this.showDeleteConfirmation = false;
+            }
+        },
+        async deletePost(post) {
+            // Display a confirmation dialog for deletion
+            const confirmDeletion = confirm('Are you sure you want to delete this post?');
+            if (confirmDeletion) {
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                };
+                try {
+                    const response = await fetch(
+                    `https://stingray-app-4wa63.ondigitalocean.app/Post/api/delete/post/${post.id}`,
+                    requestOptions
+                    );
+                    if (response.ok) {
+                        alert('Post deleted successfully!');
+                        this.posts = await response.json();
+                        this.$emit('post-deleted');
+                    } else {
+                        console.error('Failed to delete the post:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('An error occurred while deleting the post:', error);
+                }
+            }  
             else {
                 // User canceled the deletion
                 this.showDeleteConfirmation = false;
@@ -403,6 +526,15 @@ export default {
                     return review.comment.substring(0, this.maxCommentLength) + '...';
                 }
                 return review.comment;
+            });
+        },
+
+        truncatedDescription() {
+            return this.posts.map((post) => {
+                if (post.description.length > this.maxCommentLength && !post.expanded) {
+                    return post.description.substring(0, this.maxCommentLength) + '...';
+                }
+                return post.description;
             });
         },
     },

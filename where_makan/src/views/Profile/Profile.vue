@@ -18,7 +18,7 @@
     <div class="col-lg-4">
       <div class="card mb-4">
         <div class="card-body text-center">
-          <img src="src/assets/profile_img.jpeg" alt="avatar"
+          <img src="@/assets/profile_img.jpeg" alt="avatar"
             class="rounded-circle img-fluid" style="width: 150px;">
           <h5 class="my-3">{{userData.full_name}}</h5>
           <p class="text-muted mb-1">Full Stack Developer</p>
@@ -33,8 +33,15 @@
         <div class="card-body p-0 " style="height: 390px;" >
               <h4 class="my-4 text-center">Your Recent Activity</h4>
               <div class="mx-5 text-center" style="height: 300px;background-color: #dad6d6;">
+                <div v-if="!PastOrder && userData">
+                    <div class="container-fluid h-200 scrollable-container">
+                        <PastOrder :consumerId="userData.id"/>
+                    </div>
+                </div> 
+                <div v-else>
                   <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;">No recent activity</h5>
-              </div>
+                </div>
+                </div>
           </div>
           </div>
     </div>
@@ -147,12 +154,13 @@
 import auth from '../../auth';
 import FavouritedStalls from './FavouritedStalls.vue';
 import Rewards from './Rewards.vue';
-
+import PastOrder from './PastOrder.vue';
 export default {
 
   components: {
     FavouritedStalls,
-    Rewards
+    Rewards,
+    PastOrder,
   },
   data() {
     return {

@@ -109,7 +109,7 @@
                       <!-- Email input -->
                       <div class="form-outline mb-4">
                         <input type="text" class="form-control" v-model="username"/>
-                        <label class="form-label" for="form3Example3">Business Username</label>
+                        <label class="form-label" for="form3Example3">Business name</label>
                       </div>
 
                       <!-- Password input -->
@@ -158,7 +158,14 @@ export default {
         if (success) {
           if (auth.getType() === userType) {
             alert('Successful log in!');
-            router.push({ name: 'Home' });
+            if(userType === 1)
+            {
+              router.push({ name: 'Home' });
+            }
+            else if (userType === 0)
+            {
+              router.push({ name: 'stall-details', params: { stallId: auth.getStallId() } });
+            }
           } else {
             alert(`Incorrect user type. Expected type ${userType}.`);
           }
