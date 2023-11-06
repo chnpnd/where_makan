@@ -80,7 +80,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Center both horizontally and vertically */
-  min-height: 10vh;
+  min-height: 100vh;
   font-family: 'Source Sans Pro', sans-serif;
   z-index: 1;
 }

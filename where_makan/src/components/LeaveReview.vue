@@ -24,13 +24,13 @@
           <label for="comments">Your Review</label>
           <textarea id="comments" v-model="review.comments" rows="5" class="form-control vintage-input" placeholder="Your thoughts..."></textarea>
         </div>
-        <div class="form-group">
-          <label for="image">Upload an Image:</label>
+        <div class="form-group mt-4" >
+          <label for="image" class="mx-2">Upload an Image: </label>
           <input type="file" id="image" accept="image/*" @change="handleImageUpload" />
         </div>
         <button @click="submitReview" class="btn btn-vintage">Submit Review</button>
       </div>
-      <button @click="closeModal" class="close-button">Close</button>
+      <button @click="closeModal" class="btn btn-outline-secondary mt-2">Close</button>
     </div>
   </div>
 </template>
@@ -126,10 +126,10 @@ export default {
   
 <style scoped>
   .vintage-container {
-    background-color: #f5f5dc;
+    background-color: #f8f8f8;
     background-image: url('path_to_your_paper_texture.png'); /* Replace with a subtle paper texture */
     padding: 2rem;
-    border: 2px solid #d1c7ac;
+    border: 2px solid #f8f8f8;
     border-radius: 10px;
     font-family: 'Times New Roman', Times, serif; /* or another vintage-style font */
     box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.2);
@@ -145,14 +145,14 @@ export default {
   }
   
   .review-form label {
-    color: #5a4a42;
+    color: #b36a5c;
     font-weight: bold;
     font-size: 1.1rem;
   }
   
   .vintage-input {
-    background-color: #faf8e4;
-    border: 2px solid #d1c7ac;
+    background-color: #dcd9d3;
+    border: 2px solid #dcd9d3;
     border-radius: 5px;
     color: #5a4a42;
     margin-top: 0.5rem;

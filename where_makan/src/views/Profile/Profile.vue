@@ -17,22 +17,27 @@
           </div>-->
         </div>
       </div>
-      <div class="card mb-4 mb-lg-0">
-        <div class="card-body p-0 " style="height: 390px;" >
-              <h4 class="my-4 text-center">Your Recent Activity</h4>
-              <div class="mx-5 text-center" style="height: 300px;background-color: #dad6d6;">
-                <div v-if="!PastOrder && userData">
-                    <div class="container-fluid h-200 scrollable-container">
-                        <PastOrder :consumerId="userData.id"/>
+
+      <div>
+          <div class="card mb-4 mb-md-0" style="height:850px;">
+            <div class="card-body">
+              <h4 class="text-center">Your Rewards</h4>
+              <div class="my-6 text-center " style="height:750px; background-color: #eeeeee;">
+                  <div v-if="!Rewards> 0 && userData">
+                    <div class="container-fluid h-200 scrollable-container1">
+                      <Rewards :consumerId="userData.id"/>
                     </div>
-                </div> 
-                <div v-else>
-                  <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;">No recent activity</h5>
-                </div>
-                </div>
+                  </div>
+                  <div v-else>
+                    <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;">No rewards available</h5>
+                  </div>
+              </div>
+            </div>
           </div>
-          </div>
+        </div>
+
     </div>
+    
     <div class="col-lg-8">
       <div class="card mb-4">
         <div class="card-body">
@@ -94,8 +99,27 @@
           </div>
         </div>
       </div>
+      
       <div class="row">
-        <div class="col-md-6">
+        <div class="card mb-4 mb-lg-0">
+        <div class="card-body p-0 " style="height: 290px;" >
+              <h4 class="my-4 text-center">Your Recent Activity</h4>
+              <div class="mx-5 text-center" style="height: 200px;background-color: #eeeeee;">
+                <div v-if="!PastOrder && userData">
+                    <div class="container-fluid scrollable-container2">
+                        <PastOrder :consumerId="userData.id"/>
+                    </div>
+                </div> 
+                <div v-else>
+                  <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;">No recent activity</h5>
+                </div>
+                </div>
+          </div>
+          </div>
+      </div>
+
+      <div class="row">
+        <div>
           <div class="card mb-4 mb-md-0" style="height:300px;">
             <div class="card-body">
               <h4 class="text-center">Favourited Stalls</h4>
@@ -109,23 +133,6 @@
                   <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;" >No favourited stalls</h5>
                 </div>
                 </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card mb-4 mb-md-0" style="height:300px;">
-            <div class="card-body">
-              <h4 class="text-center">Your Rewards</h4>
-              <div class="my-6 text-center " style="height:200px; background-color: #dad6d6;">
-                  <div v-if="!Rewards> 0 && userData">
-                    <div class="container-fluid h-200 scrollable-container">
-                      <Rewards :consumerId="userData.id"/>
-                    </div>
-                  </div>
-                  <div v-else>
-                    <h5 class="d-flex align-items-center justify-content-center text-muted" style="height: 100%;">No rewards available</h5>
-                  </div>
-              </div>
             </div>
           </div>
         </div>
@@ -190,6 +197,26 @@ h1 {
 }
 
 .scrollable-container {
+height: 300px;
+overflow: auto;
+padding-top:1px;
+padding-left: 12px;
+padding-right: 12px;
+scrollbar-width: thin; /* For Firefox */
+-ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.scrollable-container1 {
+height: 730px;
+overflow: auto;
+padding-top:1px;
+padding-left: 12px;
+padding-right: 12px;
+scrollbar-width: thin; /* For Firefox */
+-ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.scrollable-container2 {
 height: 200px;
 overflow: auto;
 padding-top:1px;
@@ -199,20 +226,20 @@ scrollbar-width: thin; /* For Firefox */
 -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
-.scrollable-container::-webkit-scrollbar {
+.scrollable-container::-webkit-scrollbar, .scrollable-container1::-webkit-scrollbar , .scrollable-container2::-webkit-scrollbar  {
 width: 0rem; /* Set the width of the scrollbar (change as needed) */
 }
 
-.scrollable-container::-webkit-scrollbar-thumb {
+.scrollable-container::-webkit-scrollbar-thumb, .scrollable-container1::-webkit-scrollbar-thumb, .scrollable-container2::-webkit-scrollbar-thumb {
 background-color: #888; /* Set the color of the scrollbar thumb (change as needed) */
 }
 
-.scrollable-container::-webkit-scrollbar-track {
+.scrollable-container::-webkit-scrollbar-track,.scrollable-container1::-webkit-scrollbar-track,.scrollable-container2::-webkit-scrollbar-track {
 background-color: #f1f1f1; /* Set the color of the scrollbar track (change as needed) */
 }
 
 /* Hide the scrollbar track for webkit browsers */
-.scrollable-container::-webkit-scrollbar-track {
+.scrollable-container::-webkit-scrollbar-track, .scrollable-container1::-webkit-scrollbar-track, .scrollable-container2::-webkit-scrollbar-track   {
 display: none;
 }
 
