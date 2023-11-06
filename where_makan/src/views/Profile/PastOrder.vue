@@ -7,15 +7,12 @@
                         No.
                     </div>
                     <div class = "col-3">
-                        Food Name
-                    </div>
-                    <div class = "col-2">
                         Amount
                     </div>
-                    <div class = "col-3">
+                    <div class = "col-4">
                         Order Date
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         Order Status
                     </div>
                 </div>
@@ -25,15 +22,12 @@
                             {{index+1}}
                         </div>
                         <div class = "col-3">
-                            {{ filterFood[index] }}
-                        </div>
-                        <div class = "col-2">
                             ${{ order.total_amount }}
                         </div>
-                        <div class = "col-3">
+                        <div class = "col-4">
                             {{ order.order_date.slice(0,10) }}
                         </div>
-                        <div class="col-2">
+                        <div class="col-3">
                             {{ order.status }}
                         </div>
                     </div>
