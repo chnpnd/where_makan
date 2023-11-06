@@ -1,16 +1,25 @@
 <template>
-  <main class="snap-scroll-container">
-      <section>
+  <div>
+      <div class="carousel" >
           <Introduction />
-      </section>
+      </div>
 
-      <section id="section-2">
-        <div class="home-container mt-10">
+
+        <div class="home-container mt-10" >
+          <h1 class="homeH1 text-center">Recommendations</h1>
+          <div class="action-buttons text-center">
+              <button class="btn custom-button btn-outline-dark text-dark btn-sm mx-auto " @click="toggleQuestionnaire" >Recommend Me What to Eat!</button>
+              <Questionnaire :showModal="showQuestionnaire" @close="toggleQuestionnaire" />
+          </div>
+          <v-divider></v-divider>
+        </div>
+          
+        <div>
           <h1 class="homeH1 text-center">Hawker Centers Near You:</h1>
         <!-- <Homecards /> -->
         <Geolocation />
         </div>
-      </section>
+
 
     <!--  <section>
         <v-divider></v-divider>
@@ -21,14 +30,14 @@
       </section>
       -->
 
-      <section>
+      <div>
         <v-divider></v-divider>
         <div class="home-container">
         <Video />
         </div>
-      </section>
+      </div>
 
-  </main>
+    </div>
 
 </template>
 
@@ -74,16 +83,7 @@ export default {
 
 
 
-.home-container{
-  background-color: #f8f8f8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Center both horizontally and vertically */
-  min-height: 100vh;
-  font-family: 'Source Sans Pro', sans-serif;
-  z-index: 1;
-}
+
 
 .action-section {
     margin: 20px 0; /* Provide space above and below the button */
@@ -117,5 +117,13 @@ v-divider {
     
 }
 
+@media (max-width: 576px) {
+  .carousel{
+    height: 50%;
+  }
+}
+
+
+/* Add other styles as required */
 </style>
 
