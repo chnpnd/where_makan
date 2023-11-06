@@ -90,7 +90,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Center both horizontally and vertically */
-  min-height: 100vh;
+  min-height: 10vh;
   font-family: 'Source Sans Pro', sans-serif;
   z-index: 1;
 }
@@ -126,7 +126,6 @@ v-divider {
     align-self: center; /* Centering the divider */
     
 }
-
 
 
 
