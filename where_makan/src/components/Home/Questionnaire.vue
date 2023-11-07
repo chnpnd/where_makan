@@ -110,9 +110,9 @@
           <Slide  v-for="hawkerCenter in filteredCenters" :key="hawkerCenter.id">
               <v-card class="hawker-card">
                   <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
-                      <v-img :src="hawkerCenter.photo_url" cover></v-img>
+                      <v-img :src="hawkerCenter.url" cover></v-img>
                       <v-card-title>{{ hawkerCenter.name }}</v-card-title>
-                      <v-card-text>{{ hawkerCenter.address }}</v-card-text>
+                      <v-card-text>{{ hawkerCenter.price }}</v-card-text>
                   </router-link>
               </v-card>
           </Slide>
@@ -122,6 +122,29 @@
       </div>
     </div>
   </div>
+
+  <div class="container-fluid h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-12 text-center">
+        <p v-if="errorMessage">{{ errorMessage }}</p>
+        <div>
+          <Carousel class="carousel hawker-card" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
+          <Slide  v-for="hawkerCenter in filteredHHCenters" :key="hawkerCenter.id">
+              <v-card class="hawker-card">
+                  <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
+                      <v-img :src="hawkerCenter.url" cover></v-img>
+                      <v-card-title>{{ hawkerCenter.name }}</v-card-title>
+                      <v-card-text>{{ hawkerCenter.price }}</v-card-text>
+                  </router-link>
+              </v-card>
+          </Slide>
+          </Carousel>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
 
 
 
@@ -145,7 +168,7 @@ export default {
             currentSlide: 0,  // Track the current slide index
             slickOptions: 
           {
-              slidesToShow: 2,
+              slidesToShow: 4,
               arrows: true
           },
             showModal: false,
@@ -264,7 +287,7 @@ export default {
                         }
                     }
                     await console.log(this.finalList);
-                    this.filterHawkerStallId();
+                    await this.filterHawkerStallId();
 
                 } else {
                     console.error("Failed to fetch data");
@@ -290,6 +313,25 @@ export default {
 
     },
         filterHawkerStallId(){
+
+            for (let i=0; i<this.finalList.length; i++){
+                console.log(this.finalList[i]["url"])
+                this.filteredCenters.push(this.finalList[i])
+                // var food= this.finalList[i];
+                // for (let x=0; x<this.foodStalls.length; x++){
+                //     var stall = this.foodStalls[x];
+                //     if (food.hawker_stall_id === stall.id){
+                //         for(let y=0; y<this.hawkerCenters.length; y++){
+                //             var center = this.hawkerCenters[y];
+                //             if(stall.hawker_id === center.id){
+                //                 this.filteredCenters.push(this.hawkerCenters[y])
+                //             }
+
+                //         }
+                //     }
+                // }
+            }
+
             for (let i=0; i<this.finalList.length; i++){
                 var food= this.finalList[i];
                 for (let x=0; x<this.foodStalls.length; x++){
@@ -298,13 +340,18 @@ export default {
                         for(let y=0; y<this.hawkerCenters.length; y++){
                             var center = this.hawkerCenters[y];
                             if(stall.hawker_id === center.id){
-                                this.filteredCenters.push(this.hawkerCenters[y])
+                                this.filteredHHCenters.push(this.hawkerCenters[y])
                             }
 
                         }
                     }
                 }
             }
+            // for (let i=0; i<this.finalList.length; i++){
+            //     this.filteredCenters.push(finalList[i])
+            // }
+
+            // console.log(this.finalList)
         }
 
 
