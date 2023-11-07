@@ -98,24 +98,56 @@
 
         </div>
         
-        <div v-for:="stall in finalList">
-        {{ stall.name }}
-        </div>
-
-        
+    
     </div>
+    
+  <div class="container-fluid h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-12 text-center">
+        <p v-if="errorMessage">{{ errorMessage }}</p>
+        <div>
+          <Carousel class="carousel hawker-card" :modelValue="currentSlide" :items-to-show="slickOptions.slidesToShow" :arrows="slickOptions.arrows">
+          <Slide  v-for="hawkerCenter in filteredCenters" :key="hawkerCenter.id">
+              <v-card class="hawker-card">
+                  <router-link :to="{ name: 'center-details', params: { centerId: hawkerCenter.id } }" class="text-black text-decoration-none">
+                      <v-img :src="hawkerCenter.photo_url" cover></v-img>
+                      <v-card-title>{{ hawkerCenter.name }}</v-card-title>
+                      <v-card-text>{{ hawkerCenter.address }}</v-card-text>
+                  </router-link>
+              </v-card>
+          </Slide>
+          </Carousel>
+        </div>
+       
+      </div>
+    </div>
+  </div>
 
 
 
 </template>
   
 <script>
+import { Carousel, Slide } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
+import HawkerCard from '@/components/Home/HawkerCentreCards.vue';
 
 import axios from 'axios';
 
 export default {
+    components: {
+      Carousel,
+      Slide,
+      HawkerCard
+  },
     data() {
         return {
+            currentSlide: 0,  // Track the current slide index
+            slickOptions: 
+          {
+              slidesToShow: 2,
+              arrows: true
+          },
             showModal: false,
             page: 1,
             answers: {
@@ -129,6 +161,8 @@ export default {
             foodStalls: [],
             filteredFoodStall: [],
             finalList: [],
+            hawkerCenters: [],
+            filteredCenters: [], 
         };
     },
     props: {
@@ -252,7 +286,8 @@ export default {
         };
 
         this.foodStalls = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/HawkerStall/api/get/all/hawkerstore`);
-    
+        this.hawkerCenters = await fetchFromAPI(`https://stingray-app-4wa63.ondigitalocean.app/Hawker/api/get/all/hawkers/`);
+
     },
         filterHawkerStallId(){
             for (let i=0; i<this.finalList.length; i++){
@@ -260,11 +295,18 @@ export default {
                 for (let x=0; x<this.foodStalls.length; x++){
                     var stall = this.foodStalls[x];
                     if (food.hawker_stall_id === stall.id){
-                        this.filteredFoodStall.push(stall);
+                        for(let y=0; y<this.hawkerCenters.length; y++){
+                            var center = this.hawkerCenters[y];
+                            if(stall.hawker_id === center.id){
+                                this.filteredCenters.push(this.hawkerCenters[y])
+                            }
+
+                        }
                     }
                 }
             }
         }
+
 
     },
 };
